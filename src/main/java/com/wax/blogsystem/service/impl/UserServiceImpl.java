@@ -1,5 +1,6 @@
 package com.wax.blogsystem.service.impl;
 
+import com.wax.blogsystem.common.pojo.Page;
 import com.wax.blogsystem.dao.UserMapper;
 import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.service.UserService;
@@ -22,8 +23,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> selectByCondition(User user) {
-       return  userMapper.selectByCondition(user);
+    public List<User> selectByCondition(User user, Page page) {
+       return  userMapper.selectByCondition(user,page);
     }
 
     @Override

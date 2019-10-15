@@ -1,5 +1,6 @@
 package com.wax.blogsystem.dao;
 
+import com.wax.blogsystem.common.pojo.Page;
 import com.wax.blogsystem.domain.User;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    List<User> selectByCondition(User user);
+    List<User> selectByCondition(User user, Page page);
 
     int selectByConditionCount(User user);
 }

@@ -19,16 +19,17 @@
   <select id="selectByCondition" parameterType="com.wax.blogsystem.domain.User" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from user where 1=1
-    <if test="username != null">
+    from user  where 1=1
+    <if test="param1.username != null">
       and username = #{username}
     </if>
-    <if test="password != null">
+    <if test="param1.password != null">
       and password = #{password}
     </if>
-    <if test="name != null">
+    <if test="param1.name != null">
       and name = #{name}
     </if>
+    limit #{param2.startIndex},#{param2.endIndex}
   </select>
   <select id="selectByConditionCount" parameterType="com.wax.blogsystem.domain.User" resultType="java.lang.Integer">
     select

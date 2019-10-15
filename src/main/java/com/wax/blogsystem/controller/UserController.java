@@ -2,6 +2,8 @@ package com.wax.blogsystem.controller;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.wax.blogsystem.common.JSONUtil;
+import com.wax.blogsystem.common.PageUtil;
+import com.wax.blogsystem.common.pojo.Page;
 import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +31,9 @@ public class UserController {
 
     @RequestMapping(value = "queryList.do")
     @ResponseBody
-    public String queryList(User user){
-        List<User> list =  userService.selectByCondition(user);
+    public String queryList(User user, Page page){
+        Page scope = PageUtil.queryScope(page);
+        List<User> list =  userService.selectByCondition(user,scope);
         int count = userService.selectByConditionCount(user);
         return JSONUtil.layUITable(list,count);
     }
