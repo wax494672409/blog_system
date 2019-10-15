@@ -16,4 +16,6 @@ public class MainController {
     public String goUserList(){
         return "/user/userList";
     }
+
+
 }

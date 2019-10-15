@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>后台管理</title>
+    <link rel="stylesheet" th:href="@{/third/layui/css/layui.css}">
 </head>
 <body>
-    userList
+    <table id="demo" lay-filter="test"></table>
+<script src="/third/layui/layui.js"></script>
+<script th:inline="none">
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 200
+            ,url: '/user/queryList.do' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'id', title: 'ID',  sort: true, fixed: 'left'}
+                ,{field: 'username', title: '用户名' }
+                ,{field: 'password', title: '密码', sort: true}
+                ,{field: 'name', title: '姓名'}
+            ]]
+        });
+
+    });
+</script>
 </body>
 </html>
