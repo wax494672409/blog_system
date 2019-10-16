@@ -2,6 +2,7 @@ package com.wax.blogsystem.dao;
 
 import com.wax.blogsystem.common.pojo.Page;
 import com.wax.blogsystem.domain.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    List<User> selectByCondition(User user, Page page);
+    List<User> selectByCondition(@Param("user") User user, @Param("page") Page page);
 
     int selectByConditionCount(User user);
 }

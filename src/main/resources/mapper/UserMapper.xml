@@ -16,32 +16,32 @@
     from user
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="selectByCondition" parameterType="com.wax.blogsystem.domain.User" resultMap="BaseResultMap">
+  <select id="selectByCondition" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from user  where 1=1
-    <if test="param1.username != null">
-      and username = #{username}
+    <if test="user.username != null and user.username!= '' ">
+      and username = #{user.username}
     </if>
-    <if test="param1.password != null">
+    <if test="user.password != null and user.password != '' ">
       and password = #{password}
     </if>
-    <if test="param1.name != null">
-      and name = #{name}
+    <if test="user.name != null and user.name != '' ">
+      and name = #{user.name}
     </if>
-    limit #{param2.startIndex},#{param2.endIndex}
+      limit #{page.startIndex},#{page.endIndex}
   </select>
   <select id="selectByConditionCount" parameterType="com.wax.blogsystem.domain.User" resultType="java.lang.Integer">
     select
     count(id)
     from user where 1=1
-    <if test="username != null">
+    <if test="username != null and username!= ''">
       and username = #{username}
     </if>
-    <if test="password != null">
+    <if test="password != null and password!= ''">
       and password = #{password}
     </if>
-    <if test="name != null">
+    <if test="name != null and name!= ''">
       and name = #{name}
     </if>
   </select>

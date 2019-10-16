@@ -12,4 +12,8 @@ public class Page {
     private int startIndex;
 
     private int endIndex;
+
+    //是否是搜索
+    private String isSearch;
+
 }

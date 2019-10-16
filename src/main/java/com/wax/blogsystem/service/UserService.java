@@ -7,12 +7,16 @@ import java.util.List;
 
 public interface UserService {
 
-    void insert(User user);
+    void insertSelective(User user);
 
 
     List<User> selectByCondition(User user, Page page);
 
 
     int selectByConditionCount(User user);
+
+    User selectByPrimaryKey(String id);
+
+    void updateByPrimaryKeySelective(User user);
 
 }

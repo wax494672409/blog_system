@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public void insert(User user) {
+    public void insertSelective(User user) {
         userMapper.insertSelective(user);
     }
 
@@ -30,5 +30,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public int selectByConditionCount(User user) {
         return userMapper.selectByConditionCount(user);
+    }
+
+
+    @Override
+    public User selectByPrimaryKey(String id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void updateByPrimaryKeySelective(User user) {
+        userMapper.updateByPrimaryKeySelective(user);
     }
 }

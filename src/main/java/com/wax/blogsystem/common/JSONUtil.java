@@ -9,16 +9,28 @@ import java.util.Map;
 
 public class JSONUtil {
 
+    public static String success(){
+        return result(true,null,null);
+    }
+
     public static String success(String msg){
-        return result(0,null,0,msg);
+        return result(true,null,msg);
     }
 
     public static String layUITable(List<?> list,int count){
-        return result(0,list,count,null);
+        return resultTable(0,list,count,null);
     }
 
 
-    public static String result(int num, Object data,int count, String msg) {
+    public static String result(boolean b,Object data,String msg){
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("flag", b);
+        map.put("data", data);
+        map.put("msg", msg);
+        return JSON.toJSONString(map);
+    }
+
+    public static String resultTable(int num, Object data,int count, String msg) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("code", num);
         map.put("data", data);

@@ -70,7 +70,8 @@
 <script th:src="@{/third/layui/layui.js}"></script>
 <script>
     <!--这里是放置js代码区域-->
-    layui.use(['element', 'layer', 'jquery'], function () {
+    layui.use(['element', 'layer', 'jquery','form'], function () {
+        var form = layui.form;
         var element = layui.element;
         // var layer = layui.layer;
         var $ = layui.$;
@@ -120,7 +121,7 @@
             }
         };
         function FrameWH() {
-            var h = $(window).height()-150;
+            var h = $(window).height()-200;
             $("iframe").css("height",h+"px");
         }
     });
