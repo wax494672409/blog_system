@@ -60,8 +60,9 @@
                 dataType : "json",
                 success: function (result) {
                     if(result.flag){
-                        layer.alert(result.msg, function(){
-                            layer.closeAll()
+                        var index = layer.alert(result.msg, function(){
+                            layer.close(index);
+                            layer.close(window.top.dialog_Add);
                         })
                     }
                 }

@@ -18,4 +18,10 @@ public class MainController {
     }
 
 
+    @RequestMapping(value = "goLoginPage.do")
+    public String goLoginPage(){
+        return "login";
+    }
+
+
 }
