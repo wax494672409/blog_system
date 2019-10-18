@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>后台管理</title>
+    <link rel="stylesheet" th:href="@{/third/layui/css/layui.css}">
+</head>
+<body>
+    <div class="layui-container">
+        <form class="layui-form" lay-filter="example" id ="roleFrom" style="margin-top: 220px;">
+            <div class="layui-row">
+                <div class="layui-md-md4 layui-col-md-offset4">
+                    <label class="layui-form-label">角色</label>
+                    <div class="layui-inline">
+                        <select name="roleId" id="s_roleCode">
+                            <option value="">请选择一个角色</option>
+                            <option th:each="role:${roleList}" th:text="${role.name}" th:value="${role.code}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="layui-row">
+                <div class="layui-md-md4 layui-col-md-offset4">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" id = "btn-submit" >确定</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="/third/layui/layui.js"></script>
+    <script>
+        layui.use(['form','jquery'], function(){
+            var $ = layui.$;
+            var form = layui.form;
+
+            
+        });
+    </script>
+</body>
+</html>

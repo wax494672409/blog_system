@@ -2,6 +2,8 @@ package com.wax.blogsystem.dao;
 
 import com.wax.blogsystem.domain.Role;
 
+import java.util.List;
+
 public interface RoleMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,7 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+    List<Role> selectAll();
+
 }

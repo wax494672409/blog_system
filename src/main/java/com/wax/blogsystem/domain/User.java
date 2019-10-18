@@ -1,6 +1,12 @@
 package com.wax.blogsystem.domain;
 
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
 public class User {
+
     private String id;
 
     private String username;
@@ -9,35 +15,10 @@ public class User {
 
     private String name;
 
-    public String getId() {
-        return id;
-    }
+    private String roleCode;
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
+    private String delTag;
 
-    public String getUsername() {
-        return username;
-    }
+    private Date createTime;
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
 }

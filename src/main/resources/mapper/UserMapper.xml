@@ -6,9 +6,12 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+    <result column="del_tag" jdbcType="VARCHAR" property="delTag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, name
+    id, username, password, name, role_code
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
@@ -29,6 +32,11 @@
     <if test="user.name != null and user.name != '' ">
       and name = #{user.name}
     </if>
+    <if test="user.roleCode != null and user.roleCode != '' ">
+      and role_code = #{user.roleCode}
+    </if>
+      and del_tag = '1'
+      order by create_time desc
       limit #{page.startIndex},#{page.endIndex}
   </select>
   <select id="selectByConditionCount" parameterType="com.wax.blogsystem.domain.User" resultType="java.lang.Integer">
@@ -44,9 +52,14 @@
     <if test="name != null and name!= ''">
       and name = #{name}
     </if>
+    <if test="roleCode != null and roleCode != '' ">
+      and role_code = #{roleCode}
+    </if>
+      and del_tag = '1'
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from user
+    update user
+    set del_tag = '0'
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.wax.blogsystem.domain.User">
@@ -70,6 +83,15 @@
       <if test="name != null">
         name,
       </if>
+      <if test="roleCode != null">
+        role_code,
+      </if>
+      <if test="delTag != null">
+        del_tag,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -84,6 +106,15 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="roleCode != null">
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="delTag != null">
+        #{delTag,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wax.blogsystem.domain.User">
@@ -97,6 +128,9 @@
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null">
+        #{roleCode,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}

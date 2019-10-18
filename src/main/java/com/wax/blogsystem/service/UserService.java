@@ -12,6 +12,9 @@ public interface UserService {
 
     List<User> selectByCondition(User user, Page page);
 
+    void deleteByPrimaryKey(String id);
+
+    void deleteByPrimaryKeys(String ids);
 
     int selectByConditionCount(User user);
 

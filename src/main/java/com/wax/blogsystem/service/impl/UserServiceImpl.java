@@ -6,6 +6,7 @@ import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,6 +22,19 @@ public class UserServiceImpl implements UserService {
         userMapper.insertSelective(user);
     }
 
+    @Override
+    public void deleteByPrimaryKey(String id) {
+        userMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByPrimaryKeys(String ids) {
+        String[] id = ids.split(",");
+        for(int i=0;i<id.length;i++){
+            deleteByPrimaryKey(id[i]);
+        }
+    }
 
     @Override
     public List<User> selectByCondition(User user, Page page) {
