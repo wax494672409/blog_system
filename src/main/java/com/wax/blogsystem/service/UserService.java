@@ -20,6 +20,8 @@ public interface UserService {
 
     User selectByPrimaryKey(String id);
 
+    User selectByUsername(String username);
+
     void updateByPrimaryKeySelective(User user);
 
 }

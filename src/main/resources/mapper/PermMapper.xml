@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wax.blogsystem.dao.RoleMapper">
-  <resultMap id="BaseResultMap" type="com.wax.blogsystem.domain.Role">
+<mapper namespace="com.wax.blogsystem.dao.PermMapper">
+  <resultMap id="BaseResultMap" type="com.wax.blogsystem.domain.Perm">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, code
+    id, name, code, url, role_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from sys_role
+    from sys_perm
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByRoleId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from sys_role
-    where code = #{code,jdbcType=VARCHAR}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from sys_role
+    from sys_perm
+    where role_id = #{roleId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from sys_role
+    delete from sys_perm
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.wax.blogsystem.domain.Role">
-    insert into sys_role (id, name, code
-      )
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.wax.blogsystem.domain.Perm">
+    insert into sys_perm (id, name, code, 
+      url, role_id)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wax.blogsystem.domain.Role">
-    insert into sys_role
+  <insert id="insertSelective" parameterType="com.wax.blogsystem.domain.Perm">
+    insert into sys_perm
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -47,6 +44,12 @@
       </if>
       <if test="code != null">
         code,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="roleId != null">
+        role_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -59,10 +62,16 @@
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wax.blogsystem.domain.Role">
-    update sys_role
+  <update id="updateByPrimaryKeySelective" parameterType="com.wax.blogsystem.domain.Perm">
+    update sys_perm
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -70,13 +79,21 @@
       <if test="code != null">
         code = #{code,jdbcType=VARCHAR},
       </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wax.blogsystem.domain.Role">
-    update sys_role
+  <update id="updateByPrimaryKey" parameterType="com.wax.blogsystem.domain.Perm">
+    update sys_perm
     set name = #{name,jdbcType=VARCHAR},
-      code = #{code,jdbcType=VARCHAR}
+      code = #{code,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

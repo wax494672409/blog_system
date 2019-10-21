@@ -19,4 +19,6 @@ public interface RoleMapper {
 
     List<Role> selectAll();
 
+    Role selectByCode(String code);
+
 }

@@ -166,7 +166,7 @@
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'changeRoleCode'){
                 $.ajax({
-                    url: '/user/goUserChangeRole.do' ,
+                    url: '/user/goUserChangeRole.do'+'?userId='+data.id ,
                     type: 'GET',
                     //data: {qrCode:qrCode},
                     dataType : "html",
@@ -175,12 +175,9 @@
                             type: 1,
                             anim: 0,
                             title: "更改角色",
-                            area: ['50%', '50%'],
+                            area: ['50%', '51%'],
                             end: function(){
                                 refreshTable();
-                            },
-                            success: function(layero, index) {
-                                layer.iframeAuto(index);
                             },
                             content: result
                         });

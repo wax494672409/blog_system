@@ -17,6 +17,11 @@ public class JSONUtil {
         return result(true,null,msg);
     }
 
+    public static String error(String msg){
+        return result(false,null,msg);
+    }
+
+
     public static String layUITable(List<?> list,int count){
         return resultTable(0,list,count,null);
     }

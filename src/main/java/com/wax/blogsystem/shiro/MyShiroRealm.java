@@ -1,22 +1,35 @@
 package com.wax.blogsystem.shiro;
 
+import com.wax.blogsystem.dao.PermMapper;
+import com.wax.blogsystem.dao.RoleMapper;
+import com.wax.blogsystem.domain.Perm;
+import com.wax.blogsystem.domain.Role;
 import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.service.UserService;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
+
+    @Resource
+    private PermMapper permMapper;
+
+    @Resource
+    private RoleMapper roleMapper;
+
 
     //权限信息，包括角色以及权限
     @Override
@@ -27,24 +40,45 @@ public class MyShiroRealm extends AuthorizingRealm {
         //也就是SimpleAuthenticationInfo构造的时候第一个参数传递需要User对象
         User user  = (User)principals.getPrimaryPrincipal();
 
-//        for(SysRole role:user.getRoleList()){
-//            authorizationInfo.addRole(role.getRole());
-//            for(SysPermission p:role.getPermissions()){
-//                authorizationInfo.addStringPermission(p.getPermission());
-//            }
-//        }
+        authorizationInfo.addRole(user.getRoleCode());
+
+        Role role = roleMapper.selectByCode(user.getRoleCode());
+
+        List<Perm> perms =  permMapper.selectByRoleId(role.getId());
+        List<String> permCodes = new ArrayList<String>();
+        for(Perm perm : perms){
+            permCodes.add(perm.getCode());
+        }
+        authorizationInfo.addStringPermissions(permCodes);
 
         return authorizationInfo;
     }
 
     /*主要是用来进行身份认证的，也就是说验证用户输入的账号和密码是否正确。*/
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        User user = new User();
-        user.setUsername("admin");
-        user.setPassword("111111");
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
-        return info;
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        System.out.println("MyShiroRealm.doGetAuthenticationInfo()");
+
+        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken)token;
+        //获取用户的输入的账号,密码.
+        String userName = usernamePasswordToken.getUsername();
+        String password = new String(usernamePasswordToken.getPassword());
+        System.out.println(usernamePasswordToken.getUsername());
+        //通过username从数据库中查找 User对象.
+        //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
+        User user = userService.selectByUsername(userName);
+
+
+        System.out.println("----->>user="+user);
+        if(user == null){
+            return null;
+        }
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+                user, //这里传入的是user对象，比对的是用户名，直接传入用户名也没错，但是在授权部分就需要自己重新从数据库里取权限
+                user.getPassword(), //密码
+                getName()  //realm name
+        );
+        return authenticationInfo;
     }
 
 

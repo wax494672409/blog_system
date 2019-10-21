@@ -7,39 +7,59 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>后台管理</title>
-    <link rel="stylesheet" th:href="@{/third/layui/css/layui.css}">
 </head>
 <body>
-    <div class="layui-container">
-        <form class="layui-form" lay-filter="example" id ="roleFrom" style="margin-top: 220px;">
+        <div class="layui-form" style="margin-top: 50px">
             <div class="layui-row">
-                <div class="layui-md-md4 layui-col-md-offset4">
-                    <label class="layui-form-label">角色</label>
+                <div class="layui-md-md4 layui-col-md-offset4 layui-xs-md4 layui-col-xs-offset4">
                     <div class="layui-inline">
                         <select name="roleId" id="s_roleCode">
                             <option value="">请选择一个角色</option>
-                            <option th:each="role:${roleList}" th:text="${role.name}" th:value="${role.code}"></option>
+                            <option th:each="role:${roleList}" th:value="${role.code}" th:text="${role.name}"></option>
                         </select>
                     </div>
                 </div>
+                <div class="layui-md-md4 layui-xs-md4"></div>
             </div>
+            <input type="hidden" th:value="${userId}" id="userId" />
             <br>
             <div class="layui-row">
-                <div class="layui-md-md4 layui-col-md-offset4">
-                    <div class="layui-input-block">
-                        <button class="layui-btn" id = "btn-submit" >确定</button>
+                <div class="layui-md-md4 layui-col-md-offset4 layui-xs-md4 layui-col-xs-offset4">
+                    <div style="margin-left: 70px">
+                        <button class="layui-btn" id = "change_btn" >修改</button>
                     </div>
                 </div>
+                <div class="layui-md-md4 layui-xs-md4"></div>
             </div>
-        </form>
-    </div>
-    <script src="/third/layui/layui.js"></script>
+        </div>
     <script>
-        layui.use(['form','jquery'], function(){
+        layui.use(['form','jquery','layer'], function(){
             var $ = layui.$;
             var form = layui.form;
+            var layer = layui.layer;
+            form.render();
 
-            
+
+            $("#change_btn").on('click',function () {
+                var userId = $("#userId").val();
+                var code = $("#s_roleCode").val();
+                var user = {};
+                user.id = userId;
+                user.roleCode = code;
+                $.ajax({
+                    url: '/user/saveOrUpdate.do',
+                    type: 'POST',
+                    data: user,
+                    dataType : "json",
+                    success: function (result) {
+                        var index = layer.alert(result.msg, function(){
+                            layer.close(index);
+                            layer.close(window.top.dialog_Add);
+                        })
+                    }
+                });
+            });
+
         });
     </script>
 </body>

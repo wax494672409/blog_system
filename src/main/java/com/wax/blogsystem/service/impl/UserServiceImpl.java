@@ -53,6 +53,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User selectByUsername(String username) {
+        return userMapper.selectByUsername(username);
+    }
+
+    @Override
     public void updateByPrimaryKeySelective(User user) {
         userMapper.updateByPrimaryKeySelective(user);
     }

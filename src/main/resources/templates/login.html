@@ -5,6 +5,30 @@
     <title>Title</title>
 </head>
 <body>
-    loginPage
+        用户名<input type="text"  id = "username"/>
+        密码<input type="text" id = "password" />
+        <input type="button" id="btn" value="登录" >
+    <script src="/third/layui/layui.js"></script>
+    <script>
+        layui.use('jquery', function(){
+            var $ = layui.$;
+            $("#btn").on('click',function () {
+                var username = $("#username").val();
+                var password = $("#password").val();
+                var user = {};
+                user.username = username;
+                user.password = password;
+                $.ajax({
+                    url: '/login.do',
+                    type: 'GET',
+                    data: user,
+                    dataType : "json",
+                    success: function (result) {
+
+                    }
+                });
+            })
+        });
+    </script>
 </body>
 </html>

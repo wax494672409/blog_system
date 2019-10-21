@@ -48,9 +48,10 @@ public class UserController {
     }
 
     @RequestMapping(value="/goUserChangeRole.do")
-    public String goUserChangeRole(Model model){
+    public String goUserChangeRole(String userId,Model model){
         List<Role> list =  roleService.selectAll();
         model.addAttribute("roleList",list);
+        model.addAttribute("userId",userId);
         return "/user/userChangeRole";
     }
 
@@ -85,7 +86,7 @@ public class UserController {
 
     @RequestMapping(value = "/delete.do")
     @ResponseBody
-    public String delete(String ids){
+    public String delete(String ids) {
         userService.deleteByPrimaryKeys(ids);
         return JSONUtil.success();
     }

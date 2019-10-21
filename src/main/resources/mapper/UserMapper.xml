@@ -19,6 +19,12 @@
     from user
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
   <select id="selectByCondition" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -130,7 +136,7 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="roleCode != null">
-        #{roleCode,jdbcType=VARCHAR},
+        role_code = #{roleCode,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
