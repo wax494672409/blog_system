@@ -1,5 +1,6 @@
 package com.wax.blogsystem.shiro;
 
+import com.wax.blogsystem.common.Encript;
 import com.wax.blogsystem.dao.PermMapper;
 import com.wax.blogsystem.dao.RoleMapper;
 import com.wax.blogsystem.domain.Perm;
@@ -74,7 +75,7 @@ public class MyShiroRealm extends AuthorizingRealm {
             return null;
         }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                user, //这里传入的是user对象，比对的是用户名，直接传入用户名也没错，但是在授权部分就需要自己重新从数据库里取权限
+                user.getUsername(), //这里传入的是user对象，比对的是用户名，直接传入用户名也没错，但是在授权部分就需要自己重新从数据库里取权限
                 user.getPassword(), //密码
                 getName()  //realm name
         );

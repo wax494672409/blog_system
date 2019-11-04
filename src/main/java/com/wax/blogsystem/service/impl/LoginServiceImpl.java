@@ -1,6 +1,7 @@
 package com.wax.blogsystem.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
+import com.wax.blogsystem.common.Encript;
 import com.wax.blogsystem.common.JSONUtil;
 import com.wax.blogsystem.service.LoginService;
 import org.apache.shiro.SecurityUtils;
@@ -31,6 +32,7 @@ public class LoginServiceImpl implements LoginService {
 //        }
 
         // 3、将用户名和密码封装到UsernamePasswordToken
+        //String md5Password = Encript.md5(password);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 
         // 4、认证

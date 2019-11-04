@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class LoginController {
 
@@ -19,5 +21,13 @@ public class LoginController {
     public String login(String username,String password){
         return loginService.login(username,password);
     }
+
+    @RequestMapping(value = "/logout.do")
+    public String logout()
+    {
+        loginService.logout();
+        return "login";
+    }
+
 
 }

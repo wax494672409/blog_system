@@ -1,5 +1,6 @@
 package com.wax.blogsystem.service.impl;
 
+import com.wax.blogsystem.common.Encript;
 import com.wax.blogsystem.common.pojo.Page;
 import com.wax.blogsystem.dao.UserMapper;
 import com.wax.blogsystem.domain.User;
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void insertSelective(User user) {
+        user.setPassword(Encript.md5(user.getPassword()));
         userMapper.insertSelective(user);
     }
 
