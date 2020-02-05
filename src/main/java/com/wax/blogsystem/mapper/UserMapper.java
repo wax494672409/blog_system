@@ -1,12 +1,14 @@
-package com.wax.blogsystem.dao;
+package com.wax.blogsystem.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wax.blogsystem.common.pojo.Page;
 import com.wax.blogsystem.domain.User;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
     int deleteByPrimaryKey(String id);
 
     int insert(User record);

@@ -45,11 +45,11 @@ public class LoginServiceImpl implements LoginService {
         }catch (UnknownAccountException e)
         {
             e.printStackTrace();
-            msg = "UnknownAccountException -- > 账号不存在：";
+            msg = "账号不存在";
         }
         catch (IncorrectCredentialsException e)
         {
-            msg = "IncorrectCredentialsException -- > 密码不正确：";
+            msg = "密码不正确";
         }
         catch (AuthenticationException e) {
             e.printStackTrace();

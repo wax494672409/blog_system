@@ -1,5 +1,6 @@
 package com.wax.blogsystem.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wax.blogsystem.domain.Role;
 
 import java.util.List;

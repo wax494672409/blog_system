@@ -1,15 +1,17 @@
 package com.wax.blogsystem.controller;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.druid.util.StringUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wax.blogsystem.common.JSONUtil;
 import com.wax.blogsystem.common.PageUtil;
 import com.wax.blogsystem.common.SysCode;
-import com.wax.blogsystem.common.pojo.Page;
 import com.wax.blogsystem.domain.Role;
 import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.service.RoleService;
 import com.wax.blogsystem.service.UserService;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +33,6 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-
     @RequestMapping(value="/goUserAdd.do")
     public String goUserAdd(String id,Model model){
         if(StringUtils.isEmpty(id)){
@@ -39,11 +40,11 @@ public class UserController {
             model.addAttribute("user",user);
             model.addAttribute("state","add");
         }
-        else{
-            User user = userService.selectByPrimaryKey(id);
-            model.addAttribute("user",user);
-            model.addAttribute("state","update");
-        }
+//        else{
+//            User user = userService.selectByPrimaryKey(id);
+//            model.addAttribute("user",user);
+//            model.addAttribute("state","update");
+//        }
         return "/user/userAdd";
     }
 
@@ -68,7 +69,7 @@ public class UserController {
             userService.insertSelective(user);
         }
         else{
-            userService.updateByPrimaryKeySelective(user);
+            //userService.updateByPrimaryKeySelective(user);
             return JSONUtil.success(SysCode.TIPMESSAGE.UPDATESUCCESS);
         }
         return JSONUtil.success(SysCode.TIPMESSAGE.SAVESUCCESS);
@@ -76,11 +77,9 @@ public class UserController {
 
     @RequestMapping(value = "/queryList.do")
     @ResponseBody
-    public String queryList(User user, Page page,String isSearch){
-        Page scope = PageUtil.queryScope(page);
-        List<User> list =  userService.selectByCondition(user,scope);
-        int count = userService.selectByConditionCount(user);
-        return JSONUtil.layUITable(list,count);
+    public String queryList(Page<User> page, User user){
+        IPage<User> iPage = userService.selectPage(page, user);
+        return JSONUtil.layUITable(iPage.getRecords(),iPage.getTotal());
     }
 
 

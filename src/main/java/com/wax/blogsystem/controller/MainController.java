@@ -16,13 +16,13 @@ public class MainController {
     private RoleService roleService;
 
 
-    @RequestMapping(value = "goMainPage.do")
+    @RequestMapping(value = "/goMainPage.do")
     public String goMainPage(){
         return "main";
     }
 
 
-    @RequestMapping(value = "goUserList.do")
+    @RequestMapping(value = "/goUserList.do")
     public String goUserList(Model model){
         List<Role> list =  roleService.selectAll();
         model.addAttribute("roleList",list);
@@ -30,7 +30,7 @@ public class MainController {
     }
 
 
-    @RequestMapping(value = "goLoginPage.do")
+    @RequestMapping(value = "/goLoginPage.do")
     public String goLoginPage(){
         return "login";
     }

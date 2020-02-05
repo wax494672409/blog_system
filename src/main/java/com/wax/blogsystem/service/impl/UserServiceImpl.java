@@ -1,8 +1,12 @@
 package com.wax.blogsystem.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wax.blogsystem.common.Encript;
-import com.wax.blogsystem.common.pojo.Page;
-import com.wax.blogsystem.dao.UserMapper;
+import com.wax.blogsystem.mapper.UserMapper;
 import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +19,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Resource
+    @Autowired
     private UserMapper userMapper;
 
     @Override
@@ -39,28 +43,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> selectByCondition(User user, Page page) {
-       return  userMapper.selectByCondition(user,page);
+    public User selectOne(QueryWrapper queryWrapper) {
+        return userMapper.selectOne(queryWrapper);
     }
 
     @Override
-    public int selectByConditionCount(User user) {
-        return userMapper.selectByConditionCount(user);
-    }
-
-
-    @Override
-    public User selectByPrimaryKey(String id) {
-        return userMapper.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public User selectByUsername(String username) {
-        return userMapper.selectByUsername(username);
-    }
-
-    @Override
-    public void updateByPrimaryKeySelective(User user) {
-        userMapper.updateByPrimaryKeySelective(user);
+    public IPage<User> selectPage(Page<User> page, User user) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        if(!StringUtils.isEmpty(user.getUsername())){
+            queryWrapper.like("username", user.getUsername());
+        }
+        if(!StringUtils.isEmpty(user.getRoleCode())){
+            queryWrapper.eq("role_code",user.getRoleCode());
+        }
+        return userMapper.selectPage(page,queryWrapper);
     }
 }

@@ -10,7 +10,7 @@
         <input type="button" id="btn" value="登录" >
     <script src="/third/layui/layui.js"></script>
     <script>
-        layui.use('jquery', function(){
+        layui.use(['table','laypage','form','jquery'], function(){
             var $ = layui.$;
             $("#btn").on('click',function () {
                 var username = $("#username").val();
@@ -24,7 +24,13 @@
                     data: user,
                     dataType : "json",
                     success: function (result) {
-
+                        debugger
+                        if(!result.flag){
+                            layer.msg(result.msg)
+                        }
+                        else{
+                            window.open("/goMainPage.do","_self");
+                        }
                     }
                 });
             })

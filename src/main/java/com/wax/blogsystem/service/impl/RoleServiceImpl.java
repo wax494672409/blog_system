@@ -1,6 +1,7 @@
 package com.wax.blogsystem.service.impl;
 
-import com.wax.blogsystem.dao.RoleMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.wax.blogsystem.mapper.RoleMapper;
 import com.wax.blogsystem.domain.Role;
 import com.wax.blogsystem.service.RoleService;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> selectAll() {
-        return roleMapper.selectAll();
+        return roleMapper.selectList(null);
     }
 }

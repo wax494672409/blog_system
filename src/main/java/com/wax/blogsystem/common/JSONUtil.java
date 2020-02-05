@@ -22,7 +22,7 @@ public class JSONUtil {
     }
 
 
-    public static String layUITable(List<?> list,int count){
+    public static String layUITable(List<?> list,long count){
         return resultTable(0,list,count,null);
     }
 
@@ -35,7 +35,7 @@ public class JSONUtil {
         return JSON.toJSONString(map);
     }
 
-    public static String resultTable(int num, Object data,int count, String msg) {
+    public static String resultTable(int num, Object data,long count, String msg) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("code", num);
         map.put("data", data);

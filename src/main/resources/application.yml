@@ -97,11 +97,17 @@ spring:
       cache: false    #页面不加载缓存，修改即时生效
 
   #------------mybatis--------------
-mybatis:
-  type-aliases-package: com.wax.blogsystem.domain
-  #config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:/mapper/*.xml
+#mybatis:
+#  type-aliases-package: com.wax.blogsystem.domain
+#  #config-location: classpath:mybatis/mybatis-config.xml
+#  mapper-locations: classpath:/mapper/*.xml
+#mybatis-plus:
+#  mapper-locations: classpath:/mapper/*.xml
+#  type-aliases-package: com.wax.blogsystem.domain
+  #type-aliases-super-type: java.lang.Object
+  #type-handlers-package: com.example.springbootdemo.typeHandler
+  #type-enums-package: com.example.springbootdemo.enums
 # 打印sql
 logging:
-  level:
-    com.wax.blogsystem.dao : debug
+        level:
+          com.wax.blogsystem.mapper : debug

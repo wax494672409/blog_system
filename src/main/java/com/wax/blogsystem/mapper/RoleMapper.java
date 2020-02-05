@@ -1,10 +1,12 @@
-package com.wax.blogsystem.dao;
+package com.wax.blogsystem.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wax.blogsystem.domain.Role;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface RoleMapper {
+public interface RoleMapper extends BaseMapper<Role> {
     int deleteByPrimaryKey(String id);
 
     int insert(Role record);
