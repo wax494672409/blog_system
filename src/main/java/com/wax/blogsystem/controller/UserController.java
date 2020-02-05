@@ -40,11 +40,13 @@ public class UserController {
             model.addAttribute("user",user);
             model.addAttribute("state","add");
         }
-//        else{
-//            User user = userService.selectByPrimaryKey(id);
-//            model.addAttribute("user",user);
-//            model.addAttribute("state","update");
-//        }
+        else{
+            QueryWrapper<User> queryWrapper = new QueryWrapper();
+            queryWrapper.eq("id",id);
+            User user = userService.selectOne(queryWrapper);
+            model.addAttribute("user",user);
+            model.addAttribute("state","update");
+        }
         return "/user/userAdd";
     }
 
@@ -59,20 +61,8 @@ public class UserController {
 
     @RequestMapping(value = "/saveOrUpdate.do",method = RequestMethod.POST)
     @ResponseBody
-    public String save(User user){
-        if(StringUtils.isEmpty(user.getId())){
-            UUID Id = UUID.randomUUID();
-            user.setId(Id.toString());
-            user.setDelTag(SysCode.DELTAG.WSC);
-            user.setRoleCode(SysCode.ROLECODE.PTYH);
-            user.setCreateTime(new Date());
-            userService.insertSelective(user);
-        }
-        else{
-            //userService.updateByPrimaryKeySelective(user);
-            return JSONUtil.success(SysCode.TIPMESSAGE.UPDATESUCCESS);
-        }
-        return JSONUtil.success(SysCode.TIPMESSAGE.SAVESUCCESS);
+    public String saveOrUpdate(User user){
+        return userService.saveOrUpdate(user);
     }
 
     @RequestMapping(value = "/queryList.do")

@@ -9,8 +9,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void insertSelective(User user);
-
+    String saveOrUpdate(User user);
 
     void deleteByPrimaryKey(String id);
 

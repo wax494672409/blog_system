@@ -50,6 +50,7 @@
         </div>
     </form>
 </div>
+<script src="/third/layui/layui.js"></script>
 <script>
     //Demo
     layui.use(['form','jquery'], function(){
@@ -68,8 +69,9 @@
                 success: function (result) {
                     if(result.flag){
                         var index = layer.alert(result.msg, function(){
+                            debugger
                             layer.close(index);
-                            layer.close(window.top.dialog_Add);
+                            parent.layer.close(window.top.dialog_Add);
                         })
                     }
                 }

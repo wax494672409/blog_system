@@ -88,25 +88,18 @@
                 ,data = checkStatus.data; //获取选中的数据
             switch(obj.event){
                 case 'add':
-                    $.ajax({
-                        url: '/user/goUserAdd.do',
-                        type: 'GET',
-                        //data: {qrCode:qrCode},
-                        dataType : "html",
-                        success: function (result) {
-                            var tk_index = parent.layer.open({
-                                type: 1,
-                                anim: 0,
-                                title: "用户添加",
-                                area: ['90%', '90%'],
-                                end: function(){
-                                    refreshTable();
-                                },
-                                content: result
-                            });
-                            window.top.dialog_Add = tk_index;
-                        }
+                    var tk_index =parent.layer.open({
+                        type: 2,
+                        anim: 0,
+                        title: "用户添加",
+                        area: ['60%', '60%'],
+                        end: function(){
+                            refreshTable();
+                        },
+                        content: ['/user/goUserAdd.do','no']
                     });
+                    debugger
+                    window.top.dialog_Add = tk_index;
                     break;
                 case 'update':
                     if(data.length === 0){
@@ -114,25 +107,37 @@
                     } else if(data.length > 1){
                         parent.layer.msg('只能同时编辑一个');
                     } else {
-                        $.ajax({
-                            url: '/user/goUserAdd.do'+'?id='+checkStatus.data[0].id ,
-                            type: 'GET',
-                            //data: {qrCode:qrCode},
-                            dataType : "html",
-                            success: function (result) {
-                                var tk_index =parent.layer.open({
-                                    type: 1,
-                                    anim: 0,
-                                    title: "用户修改",
-                                    area: ['90%', '90%'],
-                                    end: function(){
-                                        refreshTable();
-                                    },
-                                    content: result
-                                });
-                                window.top.dialog_Add = tk_index;
-                            }
+                        var tk_index =parent.layer.open({
+                            type: 2,
+                            anim: 0,
+                            title: "用户修改",
+                            area: ['60%', '60%'],
+                            end: function(){
+                                refreshTable();
+                            },
+                            content: ['/user/goUserAdd.do'+'?id='+checkStatus.data[0].id,'no']
                         });
+                        window.top.dialog_Add = tk_index;
+                        // $.ajax({
+                        //     url: '/user/goUserAdd.do'+'?id='+checkStatus.data[0].id ,
+                        //     type: 'GET',
+                        //     //data: {qrCode:qrCode},
+                        //     dataType : "html",
+                        //     success: function (result) {
+                        //         debugger
+                        //         var tk_index =parent.layer.open({
+                        //             type: 2,
+                        //             anim: 0,
+                        //             title: "用户修改",
+                        //             area: ['90%', '90%'],
+                        //             end: function(){
+                        //                 refreshTable();
+                        //             },
+                        //             content: [result,'no']
+                        //         });
+                        //         window.top.dialog_Add = tk_index;
+                        //     }
+                        // });
                     }
                     break;
                 case 'delete':
@@ -152,7 +157,7 @@
                                 success: function (result) {
                                     if(result.flag){
                                         parent.layer.alert("删除成功", function(index){
-                                            layer.close(index);
+                                            parent.layer.close(index);
                                             refreshTable();
                                         })
                                     }

@@ -26,7 +26,7 @@ public class MainController {
     public String goUserList(Model model){
         List<Role> list =  roleService.selectAll();
         model.addAttribute("roleList",list);
-        return "/user/userList";
+        return "user/userList";
     }
 
 

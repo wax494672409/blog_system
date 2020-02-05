@@ -2,10 +2,13 @@ package com.wax.blogsystem.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wax.blogsystem.common.Encript;
+import com.wax.blogsystem.common.JSONUtil;
+import com.wax.blogsystem.common.SysCode;
 import com.wax.blogsystem.mapper.UserMapper;
 import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.service.UserService;
@@ -14,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,23 +28,33 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public void insertSelective(User user) {
-        user.setPassword(Encript.md5(user.getPassword()));
-        userMapper.insertSelective(user);
+    public String saveOrUpdate(User user) {
+        if(StringUtils.isEmpty(user.getId())){
+            user.setDelTag(SysCode.DELTAG.WSC);
+            user.setRoleCode(SysCode.ROLECODE.PTYH);
+            user.setCreateTime(new Date());
+            user.setPassword(Encript.md5(user.getPassword()));
+            userMapper.insert(user);
+            return JSONUtil.success(SysCode.TIPMESSAGE.SAVESUCCESS);
+        }
+        else {
+            userMapper.updateById(user);
+            return JSONUtil.success(SysCode.TIPMESSAGE.UPDATESUCCESS);
+        }
     }
 
     @Override
     public void deleteByPrimaryKey(String id) {
+
         userMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     @Transactional
     public void deleteByPrimaryKeys(String ids) {
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         String[] id = ids.split(",");
-        for(int i=0;i<id.length;i++){
-            deleteByPrimaryKey(id[i]);
-        }
+        userMapper.updateBatchByIds(id);
     }
 
     @Override
@@ -56,6 +71,7 @@ public class UserServiceImpl implements UserService {
         if(!StringUtils.isEmpty(user.getRoleCode())){
             queryWrapper.eq("role_code",user.getRoleCode());
         }
+        queryWrapper.eq("del_tag", SysCode.DELTAG.WSC);
         return userMapper.selectPage(page,queryWrapper);
     }
 }
