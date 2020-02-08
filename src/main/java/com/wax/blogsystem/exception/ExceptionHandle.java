@@ -18,8 +18,11 @@ public class ExceptionHandle{
         if(ex instanceof UnauthorizedException) {
             return JSONUtil.error("无权限,请申请相关权限");
         }
+        if(ex instanceof UnauthenticatedException){
+            return JSONUtil.error("请重新登录");
+        }
         else {
-            System.out.println(ex);
+            ex.printStackTrace();
         }
         return null;
     }

@@ -6,6 +6,7 @@ import com.wax.blogsystem.mapper.RoleMapper;
 import com.wax.blogsystem.domain.Perm;
 import com.wax.blogsystem.domain.Role;
 import com.wax.blogsystem.domain.User;
+import com.wax.blogsystem.service.RoleService;
 import com.wax.blogsystem.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -27,7 +28,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     private PermMapper permMapper;
 
     @Autowired
-    private RoleMapper roleMapper;
+    private RoleService roleService;
 
 
     //权限信息，包括角色以及权限
@@ -40,14 +41,13 @@ public class MyShiroRealm extends AuthorizingRealm {
 
         authorizationInfo.addRole(user.getRoleCode());
 
-        Role role = roleMapper.selectByCode(user.getRoleCode());
-
-        List<Perm> perms =  permMapper.selectByRoleId(role.getId());
-        List<String> permCodes = new ArrayList<String>();
-        for(Perm perm : perms){
-            permCodes.add(perm.getCode());
-        }
-        authorizationInfo.addStringPermissions(permCodes);
+//        Role role = roleService.selectOneByCode(user.getRoleCode());
+//        List<Perm> perms =  permMapper.selectByRoleId(role.getId());
+//        List<String> permCodes = new ArrayList<String>();
+//        for(Perm perm : perms){
+//            permCodes.add(perm.getCode());
+//        }
+//        authorizationInfo.addStringPermissions(permCodes);
 
         return authorizationInfo;
     }

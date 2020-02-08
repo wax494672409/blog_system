@@ -20,4 +20,13 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> selectAll() {
         return roleMapper.selectList(null);
     }
+
+    @Override
+    public Role selectOneByCode(String code) {
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code",code);
+        return roleMapper.selectOne(queryWrapper);
+    }
+
+
 }

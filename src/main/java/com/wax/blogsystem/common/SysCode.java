@@ -27,4 +27,30 @@ public class SysCode {
         String WSC = "1";
     }
 
+    public static interface NUM{
+
+        int ZERO = 0;
+
+        int ONE = 1;
+
+        int TWO = 2;
+
+        int THREE = 3;
+
+    }
+
+    public static interface BLOG_STATUS{
+
+        /**
+         * 草稿
+         */
+        String DRAFT = "draft";
+
+        /**
+         * 已发表
+         */
+        String RELEASED = "released";
+
+    }
+
 }

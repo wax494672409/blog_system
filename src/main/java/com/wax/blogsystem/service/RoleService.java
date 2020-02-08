@@ -10,4 +10,6 @@ public interface RoleService {
     List<Role> selectAll();
 
 
+    Role selectOneByCode(String code);
+
 }

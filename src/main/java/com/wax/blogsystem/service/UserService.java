@@ -11,10 +11,7 @@ public interface UserService {
 
     String saveOrUpdate(User user);
 
-    void deleteByPrimaryKey(String id);
-
     void deleteByPrimaryKeys(String ids);
-
 
     User selectOne (QueryWrapper queryWrapper);
 

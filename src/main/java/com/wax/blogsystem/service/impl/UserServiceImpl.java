@@ -44,12 +44,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteByPrimaryKey(String id) {
-
-        userMapper.deleteByPrimaryKey(id);
-    }
-
-    @Override
     @Transactional
     public void deleteByPrimaryKeys(String ids) {
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
@@ -72,6 +66,7 @@ public class UserServiceImpl implements UserService {
             queryWrapper.eq("role_code",user.getRoleCode());
         }
         queryWrapper.eq("del_tag", SysCode.DELTAG.WSC);
+        queryWrapper.orderByDesc("create_time");
         return userMapper.selectPage(page,queryWrapper);
     }
 }

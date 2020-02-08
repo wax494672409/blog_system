@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface UserMapper extends BaseMapper<User> {
 
-    int deleteByPrimaryKey(String id);
-
     /**
      *
      * @param ids

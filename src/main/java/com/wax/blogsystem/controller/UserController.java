@@ -65,6 +65,7 @@ public class UserController {
         return userService.saveOrUpdate(user);
     }
 
+    @RequiresRoles("admin")
     @RequestMapping(value = "/queryList.do")
     @ResponseBody
     public String queryList(Page<User> page, User user){
