@@ -12,4 +12,6 @@ public interface BlogService {
     String saveOrUpdate(Blog blog);
 
     Blog selectById(String id);
+
+    List<Blog> selectByUserId(String userId);
 }

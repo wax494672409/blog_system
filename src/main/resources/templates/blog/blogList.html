@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/blog/blogList.css" rel="stylesheet">
+</head>
+<body>
+<div id="home">
+    <div id="header">
+        <div id="blogTitle">
+            <div class="title"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle"
+                                  href="https://www.cnblogs.com/bootyWind/" th:value="${user.name}">Violet丶</a>
+            </div>
+            <div class="subtitle">
+
+            </div>
+
+        </div>
+        <div id="navigator">
+
+            <ul id="navList">
+                <li id="nav_sitehome"><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+                    博客园</a>
+                </li>
+                <li id="nav_myhome">
+                    <a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/bootyWind/">
+                        首页</a>
+                </li>
+                <li id="nav_newpost">
+
+                    <a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+                        新随笔</a>
+                </li>
+                <li id="nav_contact">
+                    <a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/Violet%E4%B8%B6">
+                        联系</a></li>
+                <li id="nav_rss">
+                    <a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/bootyWind/rss/">
+                        订阅</a></li>
+                <li id="nav_admin">
+                    <a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+                        管理</a>
+                </li>
+            </ul>
+
+            <div class="blogStats">
+
+<span id="stats_post_count">随笔 -
+0&nbsp;</span>
+                <span id="stats_article_count">文章 -
+0&nbsp;</span>
+                <!-- <span id="stats-comment_count"></span> -->
+                <span id="stats_comment_count">评论 -
+0</span>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="mainContent">
+            <div class="forFlow">
+
+                <div class="day" th:each="blog:${blogList}">
+                    <div class="dayTitle">
+                        <a href="https://www.cnblogs.com/zxcoder/archive/2020/02/09.html" th:text="${blog.releaseTime}">2020年2月9日</a>
+                    </div>
+                    <div class="postTitle">
+
+
+                        <a class="postTitle2" href="https://www.cnblogs.com/zxcoder/p/12287410.html" th:text="${blog.title}">
+                            树/森林和二叉树的转换
+                        </a>
+
+                    </div>
+                    <div class="postCon">
+                        <div class="c_b_p_desc">
+                            <span th:text="'摘要：'+${blog.summary}"></span>
+                            <a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" class="c_b_p_desc_readmore">阅读全文</a>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="postDesc">
+                        <span th:text=" 'posted @' +${blog.createTime} + ' '+ ${blog.authorName}+  ' 阅读 ('+${blog.viewNum}+') 评论 ('+${blog.commentNum}+')'"></span>
+                        <a href="" rel="nofollow">
+                            编辑
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="topicListFooter">
+                    <div id="nav_next_page">
+                        <a href="https://www.cnblogs.com/zxcoder/default.html?page=2">
+                            下一页
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="sideBar">
+            <div id="sideBarMain">
+                <div id="sidebar_news" class="newsItem">
+                    <h3 class="catListTitle">公告</h3>
+                    <div id="blog-news">
+                        <div id="profile_block">
+                            昵称：
+                            <a href="https://home.cnblogs.com/u/bootyWind/">
+                                Violet丶
+                            </a>
+                            <br>
+                            园龄：
+                            <a href="https://home.cnblogs.com/u/bootyWind/" title="入园时间：2019-05-23">
+                                8个月
+                            </a>
+                            <br>
+                            粉丝：
+                            <a href="https://home.cnblogs.com/u/bootyWind/followers/">
+                                0
+                            </a>
+                            <br>
+                            关注：
+                            <a href="https://home.cnblogs.com/u/bootyWind/followees/">
+                                20
+                            </a>
+                            <div id="p_b_follow"></div>
+                            <script>getFollowStatus('8de832fd-8d53-4fa6-85a4-08d6df797148');</script>
+                        </div>
+                    </div>
+                </div>
+                <div id="calendar">
+                    <div id="blog-calendar" style="">
+                        <table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar"
+                               border="0">
+                            <tbody>
+                            <tr>
+                                <td colspan="7">
+                                    <table class="CalTitle" cellspacing="0" border="0">
+                                        <tbody>
+                                        <tr>
+                                            <td class="CalNextPrev">
+                                                <a href="javascript:void(0);"
+                                                   onclick="loadBlogCalendar('2020/01/09'); return false;">&lt;</a>
+                                            </td>
+                                            <td align="center">2020年2月</td>
+                                            <td align="right" class="CalNextPrev">
+                                                <a href="javascript:void(0);"
+                                                   onclick="loadBlogCalendar('2020/03/09'); return false;">&gt;</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                                <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                                <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                                <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                                <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                                <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                                <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+                            </tr>
+                            <tr>
+                                <td class="CalOtherMonthDay" align="center">26</td>
+                                <td class="CalOtherMonthDay" align="center">27</td>
+                                <td class="CalOtherMonthDay" align="center">28</td>
+                                <td class="CalOtherMonthDay" align="center">29</td>
+                                <td class="CalOtherMonthDay" align="center">30</td>
+                                <td class="CalOtherMonthDay" align="center">31</td>
+                                <td class="CalWeekendDay" align="center">
+                                    1
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="CalWeekendDay" align="center">
+                                    2
+                                </td>
+                                <td class="" align="center">
+                                    3
+                                </td>
+                                <td class="" align="center">
+                                    4
+                                </td>
+                                <td class="" align="center">
+                                    5
+                                </td>
+                                <td class="" align="center">
+                                    6
+                                </td>
+                                <td class="" align="center">
+                                    7
+                                </td>
+                                <td class="CalWeekendDay" align="center">
+                                    8
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="CalTodayDay" align="center">
+                                    9
+                                </td>
+                                <td class="" align="center">
+                                    10
+                                </td>
+                                <td class="" align="center">
+                                    11
+                                </td>
+                                <td class="" align="center">
+                                    12
+                                </td>
+                                <td class="" align="center">
+                                    13
+                                </td>
+                                <td class="" align="center">
+                                    14
+                                </td>
+                                <td class="CalWeekendDay" align="center">
+                                    15
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="CalWeekendDay" align="center">
+                                    16
+                                </td>
+                                <td class="" align="center">
+                                    17
+                                </td>
+                                <td class="" align="center">
+                                    18
+                                </td>
+                                <td class="" align="center">
+                                    19
+                                </td>
+                                <td class="" align="center">
+                                    20
+                                </td>
+                                <td class="" align="center">
+                                    21
+                                </td>
+                                <td class="CalWeekendDay" align="center">
+                                    22
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="CalWeekendDay" align="center">
+                                    23
+                                </td>
+                                <td class="" align="center">
+                                    24
+                                </td>
+                                <td class="" align="center">
+                                    25
+                                </td>
+                                <td class="" align="center">
+                                    26
+                                </td>
+                                <td class="" align="center">
+                                    27
+                                </td>
+                                <td class="" align="center">
+                                    28
+                                </td>
+                                <td class="CalWeekendDay" align="center">
+                                    29
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="CalOtherMonthDay" align="center">
+                                    1
+                                </td>
+                                <td class="CalOtherMonthDay" align="center">
+                                    2
+                                </td>
+                                <td class="CalOtherMonthDay" align="center">
+                                    3
+                                </td>
+                                <td class="CalOtherMonthDay" align="center">
+                                    4
+                                </td>
+                                <td class="CalOtherMonthDay" align="center">
+                                    5
+                                </td>
+                                <td class="CalOtherMonthDay" align="center">
+                                    6
+                                </td>
+                                <td class="CalOtherMonthDay" align="center">
+                                    7
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="leftcontentcontainer">
+                    <!-- begin:SingleColumn -->
+                    <div id="blog-sidecolumn">
+                        <!-- 搜索 -->
+                        <div id="sidebar_search" class="sidebar-block">
+                            <div id="sidebar_search" class="mySearch">
+                                <h3 class="catListTitle">搜索</h3>
+                                <div id="sidebar_search_box">
+                                    <div id="widget_my_zzk" class="div_my_zzk">
+                                        <input type="text" id="q" onkeydown="return zzk_go_enter(event);"
+                                               class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button"
+                                                                                 value="找找看" id="btnZzk"
+                                                                                 class="btn_my_zzk">
+                                    </div>
+                                    <div id="widget_my_google" class="div_my_zzk">
+                                        <input type="text" name="google_q" id="google_q"
+                                               onkeydown="return google_go_enter(event);"
+                                               class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button"
+                                                                                 value="谷歌搜索" class="btn_my_zzk">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 常用链接 -->
+                        <div id="sidebar_shortcut" class="sidebar-block">
+                            <h3 class="catListTitle">
+                                常用链接
+                            </h3>
+                            <ul>
+                                <li>
+                                    <a href="https://www.cnblogs.com/bootyWind/p/" title="我的博客的随笔列表">我的随笔</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.cnblogs.com/bootyWind/MyComments.html"
+                                       title="我的发表过的评论列表">我的评论</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.cnblogs.com/bootyWind/OtherPosts.html"
+                                       title="我评论过的随笔列表">我的参与</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.cnblogs.com/bootyWind/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.cnblogs.com/bootyWind/tag/" title="我的博客的标签列表">我的标签</a>
+                                </li>
+                            </ul>
+                            <!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+                            <div id="itemListLin_con" style="display:none">
+                                <ul>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!-- 最新随笔 -->
+
+
+                        <!-- 我的标签 -->
+                        <div id="sidebar_toptags" class="sidebar-block">
+
+                        </div>
+
+                        <!-- 积分与排名 -->
+
+
+                        <!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+                        <div id="sidebar_categories">
+
+
+                        </div>
+
+                        <!-- 最新评论 -->
+                        <div id="sidebar_recentcomments" class="sidebar-block">
+
+                        </div>
+
+
+                        <!-- 阅读排行榜 -->
+                        <div id="sidebar_topviewedposts" class="sidebar-block">
+
+                        </div>
+
+                        <!-- 评论排行榜 -->
+                        <div id="sidebar_topcommentedposts" class="sidebar-block">
+
+                        </div>
+
+                        <!-- 推荐排行榜 -->
+                        <div id="sidebar_topdiggedposts" class="sidebar-block">
+
+                        </div>
+                    </div>
+                    <script>loadBlogSideColumn();</script>
+                    <!-- end:  SingleColumn -->
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div id="footer">
+        <!--done-->
+        Copyright © 2020 Violet丶
+        <br><span id="poweredby">Powered by .NET Core 3.1.1 on Linux</span>
+
+    </div>
+</div>
+</body>
+</html>

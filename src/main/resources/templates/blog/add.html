@@ -20,6 +20,7 @@
     </div>
     <button id="btn1">发布</button>
     <button id="btn2">存为草稿</button>
+    <button id="btn3">获取text</button>
 </div>
 <script src="/third/jquery/jquery-3.4.1.js"></script>
 <script type="text/javascript">
@@ -69,7 +70,8 @@
             data: {
                 title :title,
                 content:content,
-                status: status
+                status: status,
+                summary: getSummary()
             },
             dataType : "json",
             success: function (result) {
@@ -83,13 +85,15 @@
         var title = $("#title").val();
         var content = editor.txt.html();
         var status = "draft";
+        var summary = editor.txt.text().substring(0,79);
         $.ajax({
             url: '/blog/saveOrUpdate.do',
             type: 'POST',
             data: {
                 title :title,
                 content:content,
-                status: status
+                status: status,
+                summary: getSummary()
             },
             dataType : "json",
             success: function (result) {
@@ -97,6 +101,25 @@
             }
         });
     })
+
+    //获取text
+    $("#btn3").click(function () {
+        console.log(editor.txt.text());
+    })
+
+    //获取摘要
+    function getSummary() {
+        var summary = '';
+        var text = editor.txt.text().substring(0,79);
+        if (text.length>100){
+            summary = text.substring(0,99);
+        }
+        else {
+            summary = text.substring(0,text.length-1);
+        }
+        return summary;
+    }
+
 </script>
 </body>
 </html>

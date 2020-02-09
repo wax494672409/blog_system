@@ -56,6 +56,14 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectOne(queryWrapper);
     }
 
+    @Override
+    public List<Blog> selectByUserId(String userId) {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("author",userId);
+        queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        return blogMapper.selectList(queryWrapper);
+    }
 
 
 }

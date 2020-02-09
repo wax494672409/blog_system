@@ -44,6 +44,12 @@ public class Blog {
     public String content;
 
     /**
+     * 摘要
+     */
+    @TableField(value = "SUMMARY",exist = true)
+    public String summary;
+
+    /**
      * 创建时间
      */
     @TableField(value = "CREATE_TIME",exist = true)
@@ -85,6 +91,10 @@ public class Blog {
     @TableField(value = "COMMENT_NUM",exist = true)
     public int commentNum;
 
-
+    /**
+     * 阅读数
+     */
+    @TableField(value = "VIEW_NUM",exist = true)
+    public int viewNum;
 
 }

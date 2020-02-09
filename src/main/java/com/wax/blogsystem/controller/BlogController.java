@@ -2,8 +2,10 @@ package com.wax.blogsystem.controller;
 
 import com.wax.blogsystem.common.WangEditor;
 import com.wax.blogsystem.domain.Blog;
+import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.service.BlogService;
 import org.apache.commons.io.FileUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/blog")
@@ -35,6 +38,16 @@ public class BlogController {
         model.addAttribute("blog",blog);
         return "blog/blog_one";
     }
+
+    @GetMapping(value = "/goBlogListPage.do")
+    public String goBlogListPage(String id,Model model){
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        List<Blog> list = blogService.selectByUserId(id);
+        model.addAttribute("user",user);
+        model.addAttribute("blogList",list);
+        return "blog/blogList";
+    }
+
 
     @RequestMapping(value = "/uploadImg.do")
     @ResponseBody
