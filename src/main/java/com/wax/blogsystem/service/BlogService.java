@@ -1,6 +1,8 @@
 package com.wax.blogsystem.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wax.blogsystem.domain.Blog;
 
 import java.util.List;
@@ -13,5 +15,10 @@ public interface BlogService {
 
     Blog selectById(String id);
 
-    List<Blog> selectByUserId(String userId);
+    IPage<Blog> selectPageByUserId(Page<Blog> page, String userId);
+
+    void addViewNum(Blog blog);
+
+    int getTotalNum(String id);
+
 }

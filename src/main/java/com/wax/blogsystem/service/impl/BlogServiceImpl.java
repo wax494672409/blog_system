@@ -2,6 +2,8 @@ package com.wax.blogsystem.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wax.blogsystem.common.JSONUtil;
 import com.wax.blogsystem.common.SysCode;
 import com.wax.blogsystem.domain.Blog;
@@ -57,12 +59,27 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> selectByUserId(String userId) {
+    public IPage<Blog> selectPageByUserId(Page<Blog> page, String userId) {
         QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("author",userId);
         queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
         queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
-        return blogMapper.selectList(queryWrapper);
+        return blogMapper.selectPage(page,queryWrapper);
+    }
+
+    @Override
+    public void addViewNum(Blog blog) {
+        blog.setViewNum(blog.getViewNum()+1);
+        blogMapper.updateById(blog);
+    }
+
+    @Override
+    public int getTotalNum(String id) {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("author",id);
+        queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        return blogMapper.selectCount(queryWrapper);
     }
 
 

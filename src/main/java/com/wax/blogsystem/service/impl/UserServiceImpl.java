@@ -69,4 +69,11 @@ public class UserServiceImpl implements UserService {
         queryWrapper.orderByDesc("create_time");
         return userMapper.selectPage(page,queryWrapper);
     }
+
+    @Override
+    public User selectById(String id) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",id);
+        return userMapper.selectOne(queryWrapper);
+    }
 }

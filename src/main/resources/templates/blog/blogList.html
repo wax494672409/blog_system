@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="/css/blog/blogList.css" rel="stylesheet">
+    <link href="/css/page.css" rel="stylesheet">
 </head>
 <body>
 <div id="home">
     <div id="header">
         <div id="blogTitle">
             <div class="title"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle"
-                                  href="https://www.cnblogs.com/bootyWind/" th:value="${user.name}">Violet丶</a>
+                                  href="https://www.cnblogs.com/bootyWind/" th:text="${user.name}">Violet丶</a>
             </div>
             <div class="subtitle">
 
@@ -60,39 +61,40 @@
     <div id="main">
         <div id="mainContent">
             <div class="forFlow">
-
-                <div class="day" th:each="blog:${blogList}">
-                    <div class="dayTitle">
-                        <a href="https://www.cnblogs.com/zxcoder/archive/2020/02/09.html" th:text="${blog.releaseTime}">2020年2月9日</a>
-                    </div>
-                    <div class="postTitle">
-
-
-                        <a class="postTitle2" href="https://www.cnblogs.com/zxcoder/p/12287410.html" th:text="${blog.title}">
-                            树/森林和二叉树的转换
-                        </a>
-
-                    </div>
-                    <div class="postCon">
-                        <div class="c_b_p_desc">
-                            <span th:text="'摘要：'+${blog.summary}"></span>
-                            <a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" class="c_b_p_desc_readmore">阅读全文</a>
+                <div class="blogList" th:fragment="blog_list">
+                    <div class="day"  th:each="blog:${blogList}">
+                        <div class="dayTitle">
+                            <a href="https://www.cnblogs.com/zxcoder/archive/2020/02/09.html" th:text="${blog.releaseTime}">2020年2月9日</a>
                         </div>
+                        <div class="postTitle">
+
+
+                            <a class="postTitle2" th:href="'/blog/goBlogOnePage.do?id='+${blog.id}" th:text="${blog.title}">
+                                树/森林和二叉树的转换
+                            </a>
+
+                        </div>
+                        <div class="postCon">
+                            <div class="c_b_p_desc">
+                                <span th:text="'摘要：'+${blog.summary}"></span>
+                                <a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" class="c_b_p_desc_readmore">阅读全文</a>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="postDesc">
+                            <span th:text=" 'posted @' +${#dates.format(blog.createTime, 'yyyy-MM-dd hh:mm:ss')} + ' '+ ${blog.authorName}+  ' 阅读 ('+${blog.viewNum}+') 评论 ('+${blog.commentNum}+')'"></span>
+                            <a href="" rel="nofollow">
+                                编辑
+                            </a>
+                        </div>
+                        <div class="clear"></div>
                     </div>
-                    <div class="clear"></div>
-                    <div class="postDesc">
-                        <span th:text=" 'posted @' +${blog.createTime} + ' '+ ${blog.authorName}+  ' 阅读 ('+${blog.viewNum}+') 评论 ('+${blog.commentNum}+')'"></span>
-                        <a href="" rel="nofollow">
-                            编辑
-                        </a>
-                    </div>
-                    <div class="clear"></div>
                 </div>
                 <div class="topicListFooter">
-                    <div id="nav_next_page">
-                        <a href="https://www.cnblogs.com/zxcoder/default.html?page=2">
-                            下一页
-                        </a>
+                    <div id="homepage_bottom_pager" class="topicListFooter">
+                        <div id="test1" class="pager">
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -104,7 +106,7 @@
                     <div id="blog-news">
                         <div id="profile_block">
                             昵称：
-                            <a href="https://home.cnblogs.com/u/bootyWind/">
+                            <a href="https://home.cnblogs.com/u/bootyWind/" th:text="${user.name}">
                                 Violet丶
                             </a>
                             <br>
@@ -393,10 +395,45 @@
     <div class="clear"></div>
     <div id="footer">
         <!--done-->
-        Copyright © 2020 Violet丶
-        <br><span id="poweredby">Powered by .NET Core 3.1.1 on Linux</span>
+        <span th:text="'Copyright © 2020 '+${user.name}"></span>
+        <br><span id="poweredby">Powered by JAVA on windows</span>
 
     </div>
 </div>
+<script src="/third/layui/layui.js"></script>
+<script src="/third/jquery/jquery-3.4.1.js"></script>
+<script th:inline="javascript">
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+        var $ = layui.$;
+
+        var pageSize = 10;
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+            ,count: [[${totalNum}]] //数据总数，从服务端得到
+            ,limit: pageSize
+            ,jump : function(obj, first){
+                getList(obj.curr);
+            }
+        });
+
+
+        function getList(currentPage) {
+            $.ajax({
+                url: '/blog/getBlogList.do',
+                type: 'POST',
+                data: {
+                    size:pageSize,
+                    current:currentPage,
+                    id:[[${user.id}]]
+                },
+                success: function (result) {
+                    $(".blogList").html(result);
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>

@@ -17,4 +17,6 @@ public interface UserService {
 
     IPage<User> selectPage(Page<User> page,User user);
 
+    User selectById(String id);
+
 }
