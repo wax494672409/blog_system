@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="/third/layui/css/layui.css" rel="stylesheet">
+    <link href="/css/page.css" rel="stylesheet">
     <link href="/css/blog/blogOne.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.js"></script>
+    <link href="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.css" rel="stylesheet">
 </head>
 <body>
 <div id="home">
@@ -45,12 +48,12 @@
 
             <div class="blogStats">
 
-<span id="stats_post_count">随笔 -
+<span id="stats_post_count" th:text="'博客数-'+${totalNum}">随笔 -
 97&nbsp;</span>
-                <span id="stats_article_count">文章 -
-0&nbsp;</span>
+<!--                <span id="stats_article_count">文章 - -->
+<!--0&nbsp;</span>-->
                 <!-- <span id="stats-comment_count"></span> -->
-                <span id="stats_comment_count">评论 -
+                <span id="stats_comment_count" th:text="'评论-'+${blog.commentNum}">评论 -
 3</span>
             </div>
         </div>
@@ -125,10 +128,10 @@
                                 </div>
                             </div>
                             <div class="postDesc">posted @
-                                <span id="post-date">2020-02-09 15:58</span>&nbsp;
-                                <a href="https://www.cnblogs.com/zxcoder/">Keane1998</a>&nbsp;
-                                阅读(<span id="post_view_count">21</span>)&nbsp;
-                                评论(<span id="post_comment_count">0</span>)&nbsp;
+                                <span id="post-date" th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd hh:mm:ss')}">2020-02-09 15:58</span>&nbsp;
+                                <a href="https://www.cnblogs.com/zxcoder/" th:text="${blog.authorName}">Keane1998</a>&nbsp;
+                                阅读(<span id="post_view_count" th:text="${blog.viewNum}">21</span>)&nbsp;
+                                评论(<span id="post_comment_count" th:text="${blog.commentNum}">0</span>)&nbsp;
                                 <a href="https://i.cnblogs.com/EditPosts.aspx?postid=12287410" rel="nofollow">编辑</a>&nbsp;
                                 <a href="javascript:void(0)" onclick="AddToWz(12287410);return false;">收藏</a></div>
                         </div>
@@ -155,31 +158,33 @@
                                 <p>
                                     昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled" size="50" value="Violet丶">
                                 </p>
+                                <br>
                                 <div class="commentbox_main">
-                                    <div class="commentbox_title">
-                                        <div class="commentbox_title_left">评论内容：</div>
-                                        <div class="commentbox_title_right">
-                                            <img id="ubb_quote" class="comment_icon" src="https://static.cnblogs.com/images/ubb/quote.gif" alt="引用" title="添加引用" onclick="insertUBB('tbCommentBody','quote')">
-                                            <img id="ubb_bold" class="comment_icon" src="https://static.cnblogs.com/images/ubb/b.png" alt="粗体" title="添加粗体" onclick="insertUBB('tbCommentBody','b')">
-                                            <img id="ubb_url" class="comment_icon" src="https://static.cnblogs.com/images/ubb/lk.png" alt="链接" title="添加链接" onclick="insertUbbUrl('tbCommentBody')">
-                                            <img id="ubb_indent" class="comment_icon" src="https://static.cnblogs.com/images/ubb/indent.png" alt="缩进" title="添加首行缩进" onclick="insertIndent('tbCommentBody')">
-                                            <img id="ubb_code" class="comment_icon" src="https://static.cnblogs.com/images/ubb/InsertCode.gif" alt="代码" title="添加代码" onclick="insertUbbCode()">
-                                            <img id="ubb_img" class="comment_icon" src="https://static.cnblogs.com/images/ubb/img.gif" alt="图片" title="上传图片" onclick="OpenImageUploadWindow();">
-                                        </div>
-                                    </div>
-                                    <div style="display:none">
-                                        <span id="comment_edit_id"></span><span id="span_parentcomment_id"></span>
-                                        <span id="span_parent_id"></span>
-                                        <span id="span_comment_replyto"></span>
-                                        <span id="span_comment_posted"></span>
-                                    </div>
-                                    <textarea id="tbCommentBody" class="comment_textarea"></textarea>
+<!--                                    <div class="commentbox_title">-->
+<!--                                        <div class="commentbox_title_left">评论内容：</div>-->
+<!--                                        <div class="commentbox_title_right">-->
+<!--                                            <img id="ubb_quote" class="comment_icon" src="https://static.cnblogs.com/images/ubb/quote.gif" alt="引用" title="添加引用" onclick="insertUBB('tbCommentBody','quote')">-->
+<!--                                            <img id="ubb_bold" class="comment_icon" src="https://static.cnblogs.com/images/ubb/b.png" alt="粗体" title="添加粗体" onclick="insertUBB('tbCommentBody','b')">-->
+<!--                                            <img id="ubb_url" class="comment_icon" src="https://static.cnblogs.com/images/ubb/lk.png" alt="链接" title="添加链接" onclick="insertUbbUrl('tbCommentBody')">-->
+<!--                                            <img id="ubb_indent" class="comment_icon" src="https://static.cnblogs.com/images/ubb/indent.png" alt="缩进" title="添加首行缩进" onclick="insertIndent('tbCommentBody')">-->
+<!--                                            <img id="ubb_code" class="comment_icon" src="https://static.cnblogs.com/images/ubb/InsertCode.gif" alt="代码" title="添加代码" onclick="insertUbbCode()">-->
+<!--                                            <img id="ubb_img" class="comment_icon" src="https://static.cnblogs.com/images/ubb/img.gif" alt="图片" title="上传图片" onclick="OpenImageUploadWindow();">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div style="display:none">-->
+<!--                                        <span id="comment_edit_id"></span><span id="span_parentcomment_id"></span>-->
+<!--                                        <span id="span_parent_id"></span>-->
+<!--                                        <span id="span_comment_replyto"></span>-->
+<!--                                        <span id="span_comment_posted"></span>-->
+<!--                                    </div>-->
+<!--                                    <textarea id="tbCommentBody" class="comment_textarea"></textarea>-->
+                                    <div id="commentBox" style="width:600px"></div>
                                 </div>
                                 <p id="commentbox_opt">
                                     <input id="btn_comment_submit" type="button" class="comment_btn" value="提交评论">
-                                    <span id="span_comment_canceledit" style="display:none"><a href="javascript:void(0);" onclick="return CancelCommentEdit()">不改了</a></span>
-                                    <a href="javascript:void(0);" onclick="return logout();">退出</a>
-                                    <a id="commentbox_opt_sub" href="javascript:void(0);" title="订阅后有新评论时会邮件通知您" onclick="commentManager.Subscribe()">订阅评论</a>
+<!--                                    <span id="span_comment_canceledit" style="display:none"><a href="javascript:void(0);" onclick="return CancelCommentEdit()">不改了</a></span>-->
+<!--                                    <a href="javascript:void(0);" onclick="return logout();">退出</a>-->
+<!--                                    <a id="commentbox_opt_sub" href="javascript:void(0);" title="订阅后有新评论时会邮件通知您" onclick="commentManager.Subscribe()">订阅评论</a>-->
                                 </p>
                                 <div id="tip_comment2" style="color:Red"></div>
                                 <p>[Ctrl+Enter快捷键提交]</p>
@@ -568,5 +573,37 @@
 
     </div>
 </div>
+<script src="/third/jquery/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#commentBox')
+    // 自定义菜单配置
+    editor.customConfig.menus = [
+        'bold',
+        'italic',
+        'quote',
+        'emoticon',
+        'underline'
+    ]
+    editor.create()
+
+    $('#btn_comment_submit').click(function(){
+        var content = editor.txt.html();
+        $.ajax({
+            url: '/blog/saveOrUpdate.do',
+            type: 'POST',
+            data: {
+                content:content
+            },
+            dataType : "json",
+            success: function (result) {
+                alert(result.msg);
+            }
+        });
+    });
+
+
+
+</script>
 </body>
 </html>

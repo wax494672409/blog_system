@@ -64,6 +64,7 @@ public class BlogServiceImpl implements BlogService {
         queryWrapper.eq("author",userId);
         queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
         queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.orderByDesc("release_time");
         return blogMapper.selectPage(page,queryWrapper);
     }
 

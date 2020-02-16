@@ -42,6 +42,8 @@ public class BlogController {
     public String goBlogOnePage(String id, Model model) {
         Blog blog = blogService.selectById(id);
         blogService.addViewNum(blog);
+        int totalNum = blogService.getTotalNum(blog.getAuthor());
+        model.addAttribute("totalNum",totalNum);
         model.addAttribute("blog",blog);
         return "blog/blog_one";
     }
