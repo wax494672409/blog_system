@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @TableName("sys_comment")
 public class Comment {
@@ -19,14 +21,20 @@ public class Comment {
     @TableField(value = "SENDER",exist = true)
     private String sender;
 
+    @TableField(value = "SENDER_NAME",exist = true)
+    private String senderName;
+
     @TableField(value = "RECEIVER",exist = true)
     private String receiver;
+
+    @TableField(value = "RECEIVER_NAME",exist = true)
+    private String receiverName;
 
     @TableField(value = "BLOG_ID",exist = true)
     private String blogId;
 
     @TableField(value = "CREATE_TIME",exist = true)
-    private String createTime;
+    private Date createTime;
 
     @TableField(value = "DEL_TAG",exist = true)
     private String delTag;

@@ -49,7 +49,7 @@ INSERT INTO `user` VALUES ('16', 'wax1', '123456', '王鑫1', 'user2', '1', NULL
 INSERT INTO `user` VALUES ('1790ac61-c618-4357-82b5-d6273eb68143', 'user102', '1111', '用户102', 'user2', '1', NULL);
 INSERT INTO `user` VALUES ('1b4e712c-709e-4684-bcbf-1f22f8444cb1', 'user106', '1111', '用户106', 'user2', '1', NULL);
 INSERT INTO `user` VALUES ('2', 'wax', '123456', '王鑫', 'admin', '0', NULL);
-INSERT INTO `user` VALUES ('21157384-f282-4afe-bbd5-d7bca794bc91', 'xinwang', '1111', '王鑫', 'user2', '1', NULL);
+INSERT INTO `user` VALUES ('21157384-f282-4afe-bbd5-d7bca794bc91', 'head', '1111', '王鑫', 'user2', '1', NULL);
 INSERT INTO `user` VALUES ('2390ea66-e9c9-47f5-a068-636f0b1d48af', 'user22', '1111', '用户22', 'user2', '1', NULL);
 INSERT INTO `user` VALUES ('2869f62f-44ea-4a5a-bfcb-49cfb5a37e6c', 'user109', '1111', '用户109', 'user2', '1', NULL);
 INSERT INTO `user` VALUES ('3', 'wax', '123456', '王鑫', 'admin', '0', NULL);

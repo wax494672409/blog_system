@@ -33,4 +33,10 @@ public class User {
     @TableField(value = "CREATE_TIME",exist = true)
     private Date createTime;
 
+    @TableField(value = "follow_num",exist = true)
+    private int followNum;
+
+    @TableField(value = "pic_url",exist = true)
+    private String picUrl;
+
 }

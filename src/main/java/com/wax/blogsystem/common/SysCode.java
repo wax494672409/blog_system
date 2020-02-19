@@ -7,6 +7,8 @@ public class SysCode {
         String SAVESUCCESS = "保存成功";
         //修改成功
         String UPDATESUCCESS = "修改成功";
+        //评论成功
+        String COMMENTSUCCESS = "评论成功";
 
     }
 

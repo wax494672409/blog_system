@@ -21,4 +21,8 @@ public interface BlogService {
 
     int getTotalNum(String id);
 
+    void addCommentNum(Blog blog);
+
+    List<Blog> getTopViewList(Page<Blog> page);
+
 }

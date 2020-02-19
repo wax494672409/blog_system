@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wax.blogsystem.common.JSONUtil;
-import com.wax.blogsystem.common.PageUtil;
-import com.wax.blogsystem.common.SysCode;
 import com.wax.blogsystem.domain.Role;
 import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.service.RoleService;
@@ -15,13 +13,12 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -32,6 +29,14 @@ public class UserController {
 
     @Autowired
     private RoleService roleService;
+
+    @GetMapping(value = "/goPersonalPage.do")
+    public String goPersonPage(String id,Model model){
+        User user = userService.selectById(id);
+        model.addAttribute("user",user);
+        return "user/personal";
+    }
+
 
     @RequestMapping(value="/goUserAdd.do")
     public String goUserAdd(String id,Model model){

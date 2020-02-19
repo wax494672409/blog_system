@@ -83,5 +83,18 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectCount(queryWrapper);
     }
 
+    @Override
+    public void addCommentNum(Blog blog) {
+        blog.setCommentNum(blog.getCommentNum()+1);
+        blogMapper.updateById(blog);
+    }
+
+    @Override
+    public List<Blog> getTopViewList(Page<Blog> page) {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("view_num");
+        return blogMapper.selectPage(page,queryWrapper).getRecords();
+    }
+
 
 }

@@ -3,8 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="/third/layui/css/layui.css" rel="stylesheet">
+    <title th:text="${blog.title}">Title</title>
     <link href="/css/page.css" rel="stylesheet">
     <link href="/css/blog/blogOne.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.js"></script>
@@ -15,7 +14,9 @@
     <div id="header">
         <div id="blogTitle">
 
-            <div class="title"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" th:href="@{'/blog/goBlogListPage.do?id='+${blog.author}}" th:text="${blog.authorName}">zxCoder</a>
+            <div class="title"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle"
+                                  th:href="@{'/blog/goBlogListPage.do?id='+${blog.author}}"
+                                  th:text="${blog.authorName}">zxCoder</a>
             </div>
             <div class="subtitle">
                 愿上层楼骋远目，勿在浮沙筑高台
@@ -50,8 +51,8 @@
 
 <span id="stats_post_count" th:text="'博客数-'+${totalNum}">随笔 -
 97&nbsp;</span>
-<!--                <span id="stats_article_count">文章 - -->
-<!--0&nbsp;</span>-->
+                <!--                <span id="stats_article_count">文章 - -->
+                <!--0&nbsp;</span>-->
                 <!-- <span id="stats-comment_count"></span> -->
                 <span id="stats_comment_count" th:text="'评论-'+${blog.commentNum}">评论 -
 3</span>
@@ -66,44 +67,56 @@
                         <div class="post">
                             <h1 class="postTitle">
 
-                                <a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/zxcoder/p/12287410.html" th:text="${blog.title}">树/森林和二叉树的转换</a>
+                                <a id="cb_post_title_url" class="postTitle2"
+                                   href="https://www.cnblogs.com/zxcoder/p/12287410.html" th:text="${blog.title}">树/森林和二叉树的转换</a>
 
                             </h1>
                             <div class="clear"></div>
                             <div class="postBody">
 
-                                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown" th:utext="${blog.content}">
+                                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown"
+                                     th:utext="${blog.content}">
                                 </div>
                                 <div id="MySignature"></div>
                                 <div class="clear"></div>
                                 <div id="blog_post_info_block">
                                     <div id="EntryTag">
                                         标签:
-                                        <a href="https://www.cnblogs.com/zxcoder/tag/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>,             <a href="https://www.cnblogs.com/zxcoder/tag/%E9%A2%98%E8%A7%A3/">题解</a></div>
+                                        <a href="https://www.cnblogs.com/zxcoder/tag/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>,
+                                        <a href="https://www.cnblogs.com/zxcoder/tag/%E9%A2%98%E8%A7%A3/">题解</a></div>
 
                                     <div id="blog_post_info">
                                         <div id="green_channel">
-                                            <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(12287410,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
-                                            <a id="green_channel_follow" onclick="follow('199fa240-4742-4d05-1216-08d70e5dea1c');" href="javascript:void(0);">关注我</a>
-                                            <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
-                                            <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="https://common.cnblogs.com/images/icon_weibo_24.png" alt=""></a>
-                                            <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="https://common.cnblogs.com/images/wechat.png" alt=""></a>
+                                            <a href="javascript:void(0);" id="green_channel_digg"
+                                               onclick="DiggIt(12287410,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+                                            <a id="green_channel_follow"
+                                               onclick="follow('199fa240-4742-4d05-1216-08d70e5dea1c');"
+                                               href="javascript:void(0);">关注我</a>
+                                            <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;"
+                                               href="javascript:void(0);">收藏该文</a>
+                                            <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博"
+                                               onclick="ShareToTsina()"><img
+                                                    src="https://common.cnblogs.com/images/icon_weibo_24.png"
+                                                    alt=""></a>
+                                            <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信"
+                                               onclick="shareOnWechat()"><img
+                                                    src="https://common.cnblogs.com/images/wechat.png" alt=""></a>
                                         </div>
-                                        <div id="author_profile">
-                                            <div id="author_profile_info" class="author_profile_info">
-                                                <a href="https://home.cnblogs.com/u/zxcoder/" target="_blank"><img src="https://pic.cnblogs.com/face/1751607/20190728230136.png" class="author_avatar" alt=""></a>
-                                                <div id="author_profile_detail" class="author_profile_info">
-                                                    <a href="https://home.cnblogs.com/u/zxcoder/">Keane1998</a><br>
-                                                    <a href="https://home.cnblogs.com/u/zxcoder/followees/">关注 - 1</a><br>
-                                                    <a href="https://home.cnblogs.com/u/zxcoder/followers/">粉丝 - 8</a>
-                                                </div>
-                                            </div>
-                                            <div class="clear"></div>
-                                            <div id="author_profile_honor"></div>
-                                            <div id="author_profile_follow">
-                                                <a href="javascript:void(0);" onclick="follow('199fa240-4742-4d05-1216-08d70e5dea1c');return false;">+加关注</a>
-                                            </div>
-                                        </div>
+                                        <!--                                        <div id="author_profile">-->
+                                        <!--                                            <div id="author_profile_info" class="author_profile_info">-->
+                                        <!--                                                <a href="https://home.cnblogs.com/u/zxcoder/" target="_blank"><img src="https://pic.cnblogs.com/face/1751607/20190728230136.png" class="author_avatar" alt=""></a>-->
+                                        <!--                                                <div id="author_profile_detail" class="author_profile_info">-->
+                                        <!--                                                    <a href="https://home.cnblogs.com/u/zxcoder/">Keane1998</a><br>-->
+                                        <!--                                                    <a href="https://home.cnblogs.com/u/zxcoder/followees/">关注 - 1</a><br>-->
+                                        <!--                                                    <a href="https://home.cnblogs.com/u/zxcoder/followers/">粉丝 - 8</a>-->
+                                        <!--                                                </div>-->
+                                        <!--                                            </div>-->
+                                        <!--                                            <div class="clear"></div>-->
+                                        <!--                                            <div id="author_profile_honor"></div>-->
+                                        <!--                                            <div id="author_profile_follow">-->
+                                        <!--                                                <a href="javascript:void(0);" onclick="follow('199fa240-4742-4d05-1216-08d70e5dea1c');return false;">+加关注</a>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
                                         <div id="div_digg">
                                             <div class="diggit" onclick="votePost(12287410,'Digg')">
                                                 <span class="diggnum" id="digg_count">0</span>
@@ -118,11 +131,15 @@
 
                                         <script type="text/javascript">
                                             currentDiggType = 0;
-                                        </script></div>
+                                        </script>
+                                    </div>
                                     <div class="clear"></div>
                                     <div id="post_next_prev">
 
-                                        <a href="https://www.cnblogs.com/zxcoder/p/12274776.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/zxcoder/p/12274776.html" title="发布于 2020-02-07 21:53">Leetcode837_新21点</a>
+                                        <a href="https://www.cnblogs.com/zxcoder/p/12274776.html"
+                                           class="p_n_p_prefix">« </a> 上一篇： <a
+                                            href="https://www.cnblogs.com/zxcoder/p/12274776.html"
+                                            title="发布于 2020-02-07 21:53">Leetcode837_新21点</a>
 
                                     </div>
                                 </div>
@@ -135,115 +152,219 @@
                                 <a href="https://i.cnblogs.com/EditPosts.aspx?postid=12287410" rel="nofollow">编辑</a>&nbsp;
                                 <a href="javascript:void(0)" onclick="AddToWz(12287410);return false;">收藏</a></div>
                         </div>
-                        <script src="https://common.cnblogs.com/highlight/9.12.0/highlight.min.js"></script>
-                        <script>markdown_highlight();</script>
-                        <script>
-                            var allowComments = true, cb_blogId = 529647, cb_blogApp = 'zxcoder', cb_blogUserGuid = '199fa240-4742-4d05-1216-08d70e5dea1c';
-                            var cb_entryId = 12287410, cb_entryCreatedDate = '2020-02-09 15:58', cb_postType = 1;
-                            loadViewCount(cb_entryId);
-                        </script><a name="!comments"></a>
-                        <div id="blog-comments-placeholder"></div>
-                        <script>
-                            var commentManager = new blogCommentManager();
-                            commentManager.renderComments(0);
-                        </script>
+                        <a name="!comments"></a>
+                        <div id="blog-comments-placeholder">
+                            <div id="comment_pager_top">
 
+                            </div>
+                            <div class="feedback_area_title">评论列表</div>
+                            <div class="feedbackNoItems"></div>
+                            <div class="commentList" th:fragment="comment_list">
+                                <div class="feedbackItem" th:each="comment,commentStat:${comments}">
+                                    <div class="feedbackListSubtitle">
+                                        <div class="feedbackManage">
+                                            &nbsp;&nbsp;
+                                            <span class="comment_actions">
+                                                <a href="javascript:void(0);">
+                                                    回复
+                                                </a>
+                                                <a href="javascript:void(0);">
+                                                    引用
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <!-- Title -->
+                                        <a href="#4491338" class="layer" th:text="'#'+${commentStat.index+1}+'楼'">#1楼</a>
+                                        <a name="4491338" id="comment_anchor_4491338"></a>
+                                        <span id="comment-maxId" style="display:none">4491338</span>
+                                        <span id="comment-maxDate" style="display:none">2020/1/30 下午5:59:21</span>
+                                        <!-- PostDate -->
+                                        <span class="comment_date" th:text="${#dates.format(comment.createTime, 'yyyy-MM-dd hh:mm:ss')}">2020-01-30 17:59</span>
+                                        <!--NameLink-->
+                                        <a id="a_comment_author_4491338" th:href="@{'/blog/goBlogListPage.do?id='+${comment.sender}}"
+                                           target="_blank" th:text="${comment.senderName}">HotSpot-Researcher</a>
+                                        <div class="feedbackCon">
+                                            <div id="comment_body_4491338" class="blog_comment_body" th:utext="${comment.content}">
+                                                我刚出版了一本《深入解析Java编译器：源码剖析与实例详解》，在书中语法糖去除章节详细介绍了内部类的实现机制，希望大家能共同研究，有兴趣留下微信或加我微信mazhimazh
+                                            </div>
+                                            <div class="comment_vote">
+                                                <span class="comment_error" style="color: red"></span>
+                                                <a href="javascript:void(0);" class="comment_digg">
+                                                    支持(0)
+                                                </a>
+                                                <a href="javascript:void(0);" class="comment_burry">
+                                                    反对(0)
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="comment_pager_bottom">
+                                <div id="test1" class="pager">
+
+                                </div>
+                            </div>
+                        </div>
                         <div id="comment_form" class="commentform">
                             <a name="commentform"></a>
                             <div id="divCommentShow"></div>
-                            <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
-                            <div id="comment_form_container"><script type="text/javascript" src="https://mention.cnblogs.com//bundles/mention.js?id=20160615"></script>
+                            <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);"
+                                                                                         onclick="return RefreshCommentList();"
+                                                                                         id="lnk_RefreshComments"
+                                                                                         runat="server"
+                                                                                         clientidmode="Static">刷新评论</a><a
+                                    href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+                            <div id="comment_form_container">
+<!--                                <script type="text/javascript"-->
+<!--                                        src="https://mention.cnblogs.com//bundles/mention.js?id=20160615"></script>-->
                                 <div id="commentform_title">发表评论</div>
                                 <span id="tip_comment" style="color:Red"></span>
                                 <p>
-                                    昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled" size="50" value="Violet丶">
+                                    昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled"
+                                              size="50" th:value="${loginUser.name}">
                                 </p>
                                 <br>
                                 <div class="commentbox_main">
-<!--                                    <div class="commentbox_title">-->
-<!--                                        <div class="commentbox_title_left">评论内容：</div>-->
-<!--                                        <div class="commentbox_title_right">-->
-<!--                                            <img id="ubb_quote" class="comment_icon" src="https://static.cnblogs.com/images/ubb/quote.gif" alt="引用" title="添加引用" onclick="insertUBB('tbCommentBody','quote')">-->
-<!--                                            <img id="ubb_bold" class="comment_icon" src="https://static.cnblogs.com/images/ubb/b.png" alt="粗体" title="添加粗体" onclick="insertUBB('tbCommentBody','b')">-->
-<!--                                            <img id="ubb_url" class="comment_icon" src="https://static.cnblogs.com/images/ubb/lk.png" alt="链接" title="添加链接" onclick="insertUbbUrl('tbCommentBody')">-->
-<!--                                            <img id="ubb_indent" class="comment_icon" src="https://static.cnblogs.com/images/ubb/indent.png" alt="缩进" title="添加首行缩进" onclick="insertIndent('tbCommentBody')">-->
-<!--                                            <img id="ubb_code" class="comment_icon" src="https://static.cnblogs.com/images/ubb/InsertCode.gif" alt="代码" title="添加代码" onclick="insertUbbCode()">-->
-<!--                                            <img id="ubb_img" class="comment_icon" src="https://static.cnblogs.com/images/ubb/img.gif" alt="图片" title="上传图片" onclick="OpenImageUploadWindow();">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div style="display:none">-->
-<!--                                        <span id="comment_edit_id"></span><span id="span_parentcomment_id"></span>-->
-<!--                                        <span id="span_parent_id"></span>-->
-<!--                                        <span id="span_comment_replyto"></span>-->
-<!--                                        <span id="span_comment_posted"></span>-->
-<!--                                    </div>-->
-<!--                                    <textarea id="tbCommentBody" class="comment_textarea"></textarea>-->
+                                    <!--                                    <div class="commentbox_title">-->
+                                    <!--                                        <div class="commentbox_title_left">评论内容：</div>-->
+                                    <!--                                        <div class="commentbox_title_right">-->
+                                    <!--                                            <img id="ubb_quote" class="comment_icon" src="https://static.cnblogs.com/images/ubb/quote.gif" alt="引用" title="添加引用" onclick="insertUBB('tbCommentBody','quote')">-->
+                                    <!--                                            <img id="ubb_bold" class="comment_icon" src="https://static.cnblogs.com/images/ubb/b.png" alt="粗体" title="添加粗体" onclick="insertUBB('tbCommentBody','b')">-->
+                                    <!--                                            <img id="ubb_url" class="comment_icon" src="https://static.cnblogs.com/images/ubb/lk.png" alt="链接" title="添加链接" onclick="insertUbbUrl('tbCommentBody')">-->
+                                    <!--                                            <img id="ubb_indent" class="comment_icon" src="https://static.cnblogs.com/images/ubb/indent.png" alt="缩进" title="添加首行缩进" onclick="insertIndent('tbCommentBody')">-->
+                                    <!--                                            <img id="ubb_code" class="comment_icon" src="https://static.cnblogs.com/images/ubb/InsertCode.gif" alt="代码" title="添加代码" onclick="insertUbbCode()">-->
+                                    <!--                                            <img id="ubb_img" class="comment_icon" src="https://static.cnblogs.com/images/ubb/img.gif" alt="图片" title="上传图片" onclick="OpenImageUploadWindow();">-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div style="display:none">-->
+                                    <!--                                        <span id="comment_edit_id"></span><span id="span_parentcomment_id"></span>-->
+                                    <!--                                        <span id="span_parent_id"></span>-->
+                                    <!--                                        <span id="span_comment_replyto"></span>-->
+                                    <!--                                        <span id="span_comment_posted"></span>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <textarea id="tbCommentBody" class="comment_textarea"></textarea>-->
                                     <div id="commentBox" style="width:600px"></div>
                                 </div>
                                 <p id="commentbox_opt">
                                     <input id="btn_comment_submit" type="button" class="comment_btn" value="提交评论">
-<!--                                    <span id="span_comment_canceledit" style="display:none"><a href="javascript:void(0);" onclick="return CancelCommentEdit()">不改了</a></span>-->
-<!--                                    <a href="javascript:void(0);" onclick="return logout();">退出</a>-->
-<!--                                    <a id="commentbox_opt_sub" href="javascript:void(0);" title="订阅后有新评论时会邮件通知您" onclick="commentManager.Subscribe()">订阅评论</a>-->
+                                    <!--                                    <span id="span_comment_canceledit" style="display:none"><a href="javascript:void(0);" onclick="return CancelCommentEdit()">不改了</a></span>-->
+                                    <!--                                    <a href="javascript:void(0);" onclick="return logout();">退出</a>-->
+                                    <!--                                    <a id="commentbox_opt_sub" href="javascript:void(0);" title="订阅后有新评论时会邮件通知您" onclick="commentManager.Subscribe()">订阅评论</a>-->
                                 </p>
                                 <div id="tip_comment2" style="color:Red"></div>
                                 <p>[Ctrl+Enter快捷键提交]</p>
                             </div>
                             <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
-                            <div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-ucancode')">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://cloud.tencent.com/act/developer?fromSource=gwzcw.3196333.3196333.3196333&amp;utm_medium=cpc&amp;utm_id=gwzcw.3196333.3196333.3196333" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-腾讯云')">【推荐】开发者上云福利，腾讯云1核4G云服务器11元/月起</a><br><a href="https://cloud.baidu.com/campaign/Annualceremony-2020/index.html?track=cp:dsp|pf:pc|pp:chui-bokeyuan-huodong-20niandushengdian-BCC-cpaxingshi-20200107|pu:cpa-xingshi|ci:2020ndsd|kw:2185443" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-百度云')">【推荐】开年盛典，百度智能云1核1G云服务器84元/年</a><br><a href="https://developer.aliyun.com/topic/feiyan2020?utm_content=g_1000102348" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-阿里云-疫情公益专题')">【推荐】像阿里巴巴一样远程办公，这些资源+工具+方案都好用</a><br><a href="https://developer.aliyun.com/topic/feiyan2020?utm_content=g_1000102348" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-阿里云-疫情公益专题')">【推荐】疫情期间如何高效工作？阿里巴巴为你提供办公工具和资源</a><br></div>
-                            <div id="opt_under_post"></div>
-                            <script async="async" src="https://www.googletagservices.com/tag/js/gpt.js"></script>
-                            <script>
-                                var googletag = googletag || {};
-                                googletag.cmd = googletag.cmd || [];
-                            </script>
-                            <script>
-                                googletag.cmd.push(function () {
-                                    googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
-                                    googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
-                                    googletag.pubads().enableSingleRequest();
-                                    googletag.enableServices();
-                                });
-                            </script>
-                            <div id="cnblogs_c1" class="c_ad_block">
-                                <div id="div-gpt-ad-1546353474406-0" style="height:250px; width:300px;" data-google-query-id="CJ3MxI-zxucCFQm8lgodWVsDmQ"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C1_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C1_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" srcdoc="" style="border: 0px; vertical-align: bottom;" data-google-container-id="1" data-load-complete="true"></iframe></div></div>
+                            <div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank"
+                                               onclick="ga('send', 'event', 'Link', 'click', 'T2-ucancode')">【推荐】超50万行VC++源码:
+                                大型组态工控、电力仿真CAD与GIS源码库</a><br><a
+                                    href="https://cloud.tencent.com/act/developer?fromSource=gwzcw.3196333.3196333.3196333&amp;utm_medium=cpc&amp;utm_id=gwzcw.3196333.3196333.3196333"
+                                    target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-腾讯云')">【推荐】开发者上云福利，腾讯云1核4G云服务器11元/月起</a><br><a
+                                    href="https://cloud.baidu.com/campaign/Annualceremony-2020/index.html?track=cp:dsp|pf:pc|pp:chui-bokeyuan-huodong-20niandushengdian-BCC-cpaxingshi-20200107|pu:cpa-xingshi|ci:2020ndsd|kw:2185443"
+                                    target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-百度云')">【推荐】开年盛典，百度智能云1核1G云服务器84元/年</a><br><a
+                                    href="https://developer.aliyun.com/topic/feiyan2020?utm_content=g_1000102348"
+                                    target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-阿里云-疫情公益专题')">【推荐】像阿里巴巴一样远程办公，这些资源+工具+方案都好用</a><br><a
+                                    href="https://developer.aliyun.com/topic/feiyan2020?utm_content=g_1000102348"
+                                    target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-阿里云-疫情公益专题')">【推荐】疫情期间如何高效工作？阿里巴巴为你提供办公工具和资源</a><br>
                             </div>
-                            <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="树、森林和二叉树的转换" href="https://www.cnblogs.com/zhuyf87/archive/2012/11/04/2753950.html" target="_blank" onclick="clickRecomItmem(2753950)">树、森林和二叉树的转换</a><br>·  <a title="树、二叉树、森林的转换" href="https://www.cnblogs.com/laiqun/p/5901864.html" target="_blank" onclick="clickRecomItmem(5901864)">树、二叉树、森林的转换</a><br>·  <a title="树、森林和二叉树的转换" href="https://www.cnblogs.com/wangwenji/p/10223888.html" target="_blank" onclick="clickRecomItmem(10223888)">树、森林和二叉树的转换</a><br>·  <a title="森林与二叉树的转换" href="https://www.cnblogs.com/moomcake/p/10027302.html" target="_blank" onclick="clickRecomItmem(10027302)">森林与二叉树的转换</a><br>·  <a title="森林、树与二叉树相互转换" href="https://www.cnblogs.com/guweiwei/p/7058186.html" target="_blank" onclick="clickRecomItmem(7058186)">森林、树与二叉树相互转换</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/12287410">更多推荐...</a><div id="cnblogs_t5"><a href="https://developer.aliyun.com/topic/feiyan2020?utm_content=g_1000102348" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T5-阿里云-疫情公益专题')">疫情期间如何高效工作？阿里巴巴为你提供办公工具和资源！</a></div></div></div>
+<!--                            <div id="opt_under_post"></div>-->
+<!--                            <script async="async" src="https://www.googletagservices.com/tag/js/gpt.js"></script>-->
+<!--                            <script>-->
+<!--                                var googletag = googletag || {};-->
+<!--                                googletag.cmd = googletag.cmd || [];-->
+<!--                            </script>-->
+<!--                            <script>-->
+<!--                                googletag.cmd.push(function () {-->
+<!--                                    googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());-->
+<!--                                    googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());-->
+<!--                                    googletag.pubads().enableSingleRequest();-->
+<!--                                    googletag.enableServices();-->
+<!--                                });-->
+<!--                            </script>-->
+                            <div id="cnblogs_c1" class="c_ad_block">
+                                <div id="div-gpt-ad-1546353474406-0" style="height:250px; width:300px;"
+                                     data-google-query-id="CJ3MxI-zxucCFQm8lgodWVsDmQ">
+                                    <div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none;">
+                                        <iframe id="google_ads_iframe_/1090369/C1_0" title="3rd party ad content"
+                                                name="google_ads_iframe_/1090369/C1_0" width="300" height="250"
+                                                scrolling="no" marginwidth="0" marginheight="0" frameborder="0"
+                                                srcdoc="" style="border: 0px; vertical-align: bottom;"
+                                                data-google-container-id="1" data-load-complete="true"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="under_post_news">
+                                <div class="recomm-block"><b>相关博文：</b><br>· <a title="树、森林和二叉树的转换"
+                                                                               href="https://www.cnblogs.com/zhuyf87/archive/2012/11/04/2753950.html"
+                                                                               target="_blank"
+                                                                               onclick="clickRecomItmem(2753950)">树、森林和二叉树的转换</a><br>·
+                                    <a title="树、二叉树、森林的转换" href="https://www.cnblogs.com/laiqun/p/5901864.html"
+                                       target="_blank" onclick="clickRecomItmem(5901864)">树、二叉树、森林的转换</a><br>· <a
+                                            title="树、森林和二叉树的转换" href="https://www.cnblogs.com/wangwenji/p/10223888.html"
+                                            target="_blank" onclick="clickRecomItmem(10223888)">树、森林和二叉树的转换</a><br>· <a
+                                            title="森林与二叉树的转换" href="https://www.cnblogs.com/moomcake/p/10027302.html"
+                                            target="_blank" onclick="clickRecomItmem(10027302)">森林与二叉树的转换</a><br>· <a
+                                            title="森林、树与二叉树相互转换" href="https://www.cnblogs.com/guweiwei/p/7058186.html"
+                                            target="_blank" onclick="clickRecomItmem(7058186)">森林、树与二叉树相互转换</a><br>» <a
+                                            target="_blank"
+                                            href="https://recomm.cnblogs.com/blogpost/12287410">更多推荐...</a>
+                                    <div id="cnblogs_t5"><a
+                                            href="https://developer.aliyun.com/topic/feiyan2020?utm_content=g_1000102348"
+                                            target="_blank"
+                                            onclick="ga('send', 'event', 'Link', 'click', 'T5-阿里云-疫情公益专题')">疫情期间如何高效工作？阿里巴巴为你提供办公工具和资源！</a>
+                                    </div>
+                                </div>
+                            </div>
                             <div id="cnblogs_c2" class="c_ad_block">
-                                <div id="div-gpt-ad-1539008685004-0" style="height:60px; width:468px;" data-google-query-id="CJ7MxI-zxucCFQm8lgodWVsDmQ">
+                                <div id="div-gpt-ad-1539008685004-0" style="height:60px; width:468px;"
+                                     data-google-query-id="CJ7MxI-zxucCFQm8lgodWVsDmQ">
 
-                                    <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C2_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C2_0" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" srcdoc="" style="border: 0px; vertical-align: bottom;" data-google-container-id="2" data-load-complete="true"></iframe></div></div>
+                                    <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none;">
+                                        <iframe id="google_ads_iframe_/1090369/C2_0" title="3rd party ad content"
+                                                name="google_ads_iframe_/1090369/C2_0" width="468" height="60"
+                                                scrolling="no" marginwidth="0" marginheight="0" frameborder="0"
+                                                srcdoc="" style="border: 0px; vertical-align: bottom;"
+                                                data-google-container-id="2" data-load-complete="true"></iframe>
+                                    </div>
+                                </div>
                             </div>
                             <div id="under_post_kb">
                                 <div class="itnews c_ad_block">
                                     <b>最新 IT 新闻</b>:
                                     <br>
-                                    ·              <a href="//news.cnblogs.com/n/655592/" target="_blank">杭州所有企业为员工建钉钉“健康码”</a>
+                                    · <a href="//news.cnblogs.com/n/655592/" target="_blank">杭州所有企业为员工建钉钉“健康码”</a>
                                     <br>
-                                    ·              <a href="//news.cnblogs.com/n/655591/" target="_blank">华为中国企业业务部致信合作伙伴：将提供大量支持</a>
+                                    · <a href="//news.cnblogs.com/n/655591/" target="_blank">华为中国企业业务部致信合作伙伴：将提供大量支持</a>
                                     <br>
-                                    ·              <a href="//news.cnblogs.com/n/655590/" target="_blank">人类又一太阳探测器出发，带我们换个角度看太阳</a>
+                                    · <a href="//news.cnblogs.com/n/655590/" target="_blank">人类又一太阳探测器出发，带我们换个角度看太阳</a>
                                     <br>
-                                    ·              <a href="//news.cnblogs.com/n/655589/" target="_blank">比特币价格破万的反面：普通民众似乎不感兴趣</a>
+                                    · <a href="//news.cnblogs.com/n/655589/" target="_blank">比特币价格破万的反面：普通民众似乎不感兴趣</a>
                                     <br>
-                                    ·              <a href="//news.cnblogs.com/n/655588/" target="_blank">约80.7亿元！LG变卖北京“双塔”总部大楼</a>
+                                    · <a href="//news.cnblogs.com/n/655588/" target="_blank">约80.7亿元！LG变卖北京“双塔”总部大楼</a>
                                     <br>
                                     » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
-                                </div></div>
+                                </div>
+                            </div>
                             <div id="HistoryToday" class="c_ad_block"></div>
-                            <script type="text/javascript">
-                                fixPostBody();
-                                setTimeout(function() { incrementViewCount(cb_entryId); }, 50);        deliverAdT2();
-                                deliverAdC1();
-                                deliverAdC2();
-                                loadNewsAndKb();
-                                loadBlogSignature();
-                                LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
-                                GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
-                                loadOptUnderPost();
-                                GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
-                            </script>
-                        </div>    </div>
+<!--                            <script type="text/javascript">-->
+<!--                                fixPostBody();-->
+<!--                                setTimeout(function () {-->
+<!--                                    incrementViewCount(cb_entryId);-->
+<!--                                }, 50);-->
+<!--                                deliverAdT2();-->
+<!--                                deliverAdC1();-->
+<!--                                deliverAdC2();-->
+<!--                                loadNewsAndKb();-->
+<!--                                loadBlogSignature();-->
+<!--                                LoadPostCategoriesTags(cb_blogId, cb_entryId);-->
+<!--                                LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);-->
+<!--                                GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);-->
+<!--                                loadOptUnderPost();-->
+<!--                                GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);-->
+<!--                            </script>-->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -277,13 +398,17 @@
                                 1
                             </a>
                             <div id="p_b_follow">
-                                <a href="javascript:void(0)" onclick="follow('199fa240-4742-4d05-1216-08d70e5dea1c')">+加关注</a></div>
-                            <script>getFollowStatus('199fa240-4742-4d05-1216-08d70e5dea1c');</script>
+                                <a href="javascript:void(0)" onclick="follow('199fa240-4742-4d05-1216-08d70e5dea1c')">+加关注</a>
+                            </div>
+<!--                            <script>getFollowStatus('199fa240-4742-4d05-1216-08d70e5dea1c');</script>-->
                         </div>
-                    </div></div>
+                    </div>
+                </div>
 
-                <div id="calendar"><div id="blog-calendar" style="display:none"></div></div>
-                <script>loadBlogDefaultCalendar();</script>
+                <div id="calendar">
+                    <div id="blog-calendar" style="display:none"></div>
+                </div>
+<!--                <script>loadBlogDefaultCalendar();</script>-->
                 <div id="leftcontentcontainer">
                     <!-- begin:SingleColumn -->
                     <div id="blog-sidecolumn">
@@ -294,7 +419,10 @@
                                 <div id="sidebar_search_box">
 
                                     <div id="widget_my_google" class="div_my_zzk">
-                                        <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+                                        <input type="text" name="google_q" id="google_q"
+                                               onkeydown="return google_go_enter(event);"
+                                               class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button"
+                                                                                 value="谷歌搜索" class="btn_my_zzk">
                                     </div>
                                 </div>
                             </div>
@@ -304,7 +432,6 @@
 
 
                         <!-- 最新随笔 -->
-
 
 
                         <!-- 我的标签 -->
@@ -381,7 +508,6 @@
                                     随笔档案
 
 
-
                                 </h3>
                                 <ul>
                                     <li>
@@ -389,7 +515,6 @@
                                         <a href="https://www.cnblogs.com/zxcoder/archive/2020/02.html" rel="" target="">
                                             2020年2月(11)
                                         </a>
-
 
 
                                     </li>
@@ -401,7 +526,6 @@
                                         </a>
 
 
-
                                     </li>
 
                                     <li>
@@ -409,7 +533,6 @@
                                         <a href="https://www.cnblogs.com/zxcoder/archive/2019/12.html" rel="" target="">
                                             2019年12月(6)
                                         </a>
-
 
 
                                     </li>
@@ -421,7 +544,6 @@
                                         </a>
 
 
-
                                     </li>
 
                                     <li>
@@ -429,7 +551,6 @@
                                         <a href="https://www.cnblogs.com/zxcoder/archive/2019/10.html" rel="" target="">
                                             2019年10月(6)
                                         </a>
-
 
 
                                     </li>
@@ -441,7 +562,6 @@
                                         </a>
 
 
-
                                     </li>
 
                                     <li>
@@ -451,7 +571,6 @@
                                         </a>
 
 
-
                                     </li>
 
                                     <li>
@@ -459,7 +578,6 @@
                                         <a href="https://www.cnblogs.com/zxcoder/archive/2019/07.html" rel="" target="">
                                             2019年7月(9)
                                         </a>
-
 
 
                                     </li>
@@ -475,13 +593,21 @@
                                 <h3 class="catListTitle">最新评论</h3>
                                 <div class="RecentCommentBlock">
                                     <ul>
-                                        <li class="recent_comment_title"><a href="https://www.cnblogs.com/zxcoder/p/12241784.html#4491338">1. Re:Java内部类总结</a></li>
-                                        <li class="recent_comment_body">我刚出版了一本《深入解析Java编译器：源码剖析与实例详解》，在书中语法糖去除章节详细介绍了内部类的实现机制，希望大家能共同研究，有兴趣留下微信或加我微信mazhimazh</li>
+                                        <li class="recent_comment_title"><a
+                                                href="https://www.cnblogs.com/zxcoder/p/12241784.html#4491338">1.
+                                            Re:Java内部类总结</a></li>
+                                        <li class="recent_comment_body">
+                                            我刚出版了一本《深入解析Java编译器：源码剖析与实例详解》，在书中语法糖去除章节详细介绍了内部类的实现机制，希望大家能共同研究，有兴趣留下微信或加我微信mazhimazh
+                                        </li>
                                         <li class="recent_comment_author">--HotSpot-Researcher</li>
-                                        <li class="recent_comment_title"><a href="https://www.cnblogs.com/zxcoder/p/12228757.html#4489847">2. Re:牛客在线编程_毕业旅行问题</a></li>
+                                        <li class="recent_comment_title"><a
+                                                href="https://www.cnblogs.com/zxcoder/p/12228757.html#4489847">2.
+                                            Re:牛客在线编程_毕业旅行问题</a></li>
                                         <li class="recent_comment_body">支持支持</li>
                                         <li class="recent_comment_author">--牛腩</li>
-                                        <li class="recent_comment_title"><a href="https://www.cnblogs.com/zxcoder/p/11829712.html#4438324">3. Re:使用Idea部署SSM项目后，访问路径为url:8080/项目名_war_exploded的解决方案</a></li>
+                                        <li class="recent_comment_title"><a
+                                                href="https://www.cnblogs.com/zxcoder/p/11829712.html#4438324">3.
+                                            Re:使用Idea部署SSM项目后，访问路径为url:8080/项目名_war_exploded的解决方案</a></li>
                                         <li class="recent_comment_body">也遇到同样的问题，截个图，方便找到位置<br></li>
                                         <li class="recent_comment_author">--千寻南国</li>
                                     </ul>
@@ -490,62 +616,16 @@
                         </div>
 
 
-
                         <!-- 阅读排行榜 -->
                         <div id="sidebar_topviewedposts" class="sidebar-block">
 
                             <div id="topview_posts_wrap">
                                 <h3 class="catListTitle">阅读排行榜</h3>
                                 <div id="TopViewPostsBlock">
-                                    <ul style="word-break:break-all">
-                                        <li>
-                                            <a href="https://www.cnblogs.com/zxcoder/p/11964433.html">
+                                    <ul style="word-break:break-all" id="top_view_list" th:fragment="top_view_list">
+                                        <li th:each="blog,blogStat:${topViewList}">
+                                            <a th:href="@{'/blog/goPageOneList.do?id='+${blog.id}}" th:text="${blogStat.index+1}+'. '+${blog.title}+'('+${blog.viewNum}+')'">
                                                 1. 【笔记】vue+springboot前后端分离实现token登录验证和状态保存的简单实现方案(889)
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.cnblogs.com/zxcoder/p/11604628.html">
-                                                2. gym102346题解(722)
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.cnblogs.com/zxcoder/p/11829712.html">
-                                                3. 使用Idea部署SSM项目后，访问路径为url:8080/项目名_war_exploded的解决方案(580)
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.cnblogs.com/zxcoder/p/11941812.html">
-                                                4. 关系型数据库几大范式的理解总结(449)
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.cnblogs.com/zxcoder/p/11958720.html">
-                                                5. ubuntu下npm全局安装包报错的解决方案(279)
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.cnblogs.com/zxcoder/p/11961069.html">
-                                                6. 【笔记】总结Springboot和Vue前后端分离的跨域问题(271)
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.cnblogs.com/zxcoder/p/11954949.html">
-                                                7. Ubuntu下安卓模拟器的选择(250)
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.cnblogs.com/zxcoder/p/11443593.html">
-                                                8. 2019icpc南京网络赛_F_Greedy Sequence(199)
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.cnblogs.com/zxcoder/p/11963759.html">
-                                                9. 数据库关系理论模式分解理解和总结(180)
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.cnblogs.com/zxcoder/p/11482308.html">
-                                                10. 2019icpc徐州网络赛(175)
                                             </a>
                                         </li>
                                     </ul>
@@ -558,7 +638,7 @@
 
                         <!-- 推荐排行榜 -->
                     </div>
-                    <script>loadBlogSideColumn();</script>
+<!--                    <script>loadBlogSideColumn();</script>-->
                     <!-- end:  SingleColumn -->
                 </div>
             </div>
@@ -573,36 +653,91 @@
 
     </div>
 </div>
+<script src="/third/layui/layui.js"></script>
 <script src="/third/jquery/jquery-3.4.1.js"></script>
-<script type="text/javascript">
-    var E = window.wangEditor
-    var editor = new E('#commentBox')
-    // 自定义菜单配置
-    editor.customConfig.menus = [
-        'bold',
-        'italic',
-        'quote',
-        'emoticon',
-        'underline'
-    ]
-    editor.create()
+<script th:inline="javascript">
 
-    $('#btn_comment_submit').click(function(){
-        var content = editor.txt.html();
-        $.ajax({
-            url: '/blog/saveOrUpdate.do',
-            type: 'POST',
-            data: {
-                content:content
-            },
-            dataType : "json",
-            success: function (result) {
-                alert(result.msg);
+    layui.use('laypage', function () {
+        var laypage = layui.laypage;
+        var $ = layui.$;
+
+        var pageSize = 10;
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+            ,count: [[${commentTotalNum}]] //数据总数，从服务端得到
+            ,limit: pageSize
+            ,jump : function(obj, first){
+                getCommentList(obj.curr);
             }
         });
+
+        getTopViewList();
+
+        var E = window.wangEditor
+        var editor = new E('#commentBox')
+        // 自定义菜单配置
+        editor.customConfig.menus = [
+            'bold',
+            'italic',
+            'quote',
+            'emoticon',
+            'underline'
+        ]
+        editor.create()
+
+        $('#btn_comment_submit').click(function () {
+            var content = editor.txt.html();
+            $.ajax({
+                url: '/comment/add.do',
+                type: 'POST',
+                data: {
+                    content: content,
+                    sender: [[${loginUser.id}]],
+                    senderName:[[${loginUser.name}]],
+                    receiver: [[${blog.author}]],
+                    receiverName:[[${blog.authorName}]],
+                    blogId: [[${blog.id}]]
+                },
+                dataType: "json",
+                success: function (result) {
+                    alert(result.msg);
+                    debugger
+                    getCommentList(1);
+                }
+            });
+        });
+
+        function getCommentList(currentPage) {
+            $.ajax({
+                url: '/comment/getPage.do',
+                type: 'POST',
+                data: {
+                    size: pageSize,
+                    current: currentPage,
+                    blogId: [[${blog.id}]]
+                },
+                success: function (result) {
+                    $(".commentList").html(result);
+                }
+            });
+        }
+
+        function getTopViewList() {
+            $.ajax({
+                url: '/blog/getTopViewList.do',
+                type: 'POST',
+                data: {
+                    size: pageSize,
+                    current: 1
+                },
+                success: function (result) {
+                    $("#top_view_list").html(result);
+                }
+            });
+        }
+
     });
-
-
 
 </script>
 </body>
