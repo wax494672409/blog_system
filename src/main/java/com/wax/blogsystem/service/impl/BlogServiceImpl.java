@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wax.blogsystem.common.JSONUtil;
 import com.wax.blogsystem.common.SysCode;
+import com.wax.blogsystem.domain.Activity;
 import com.wax.blogsystem.domain.Blog;
 import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.mapper.BlogMapper;
+import com.wax.blogsystem.service.ActivityService;
 import com.wax.blogsystem.service.BlogService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     public BlogMapper blogMapper;
+
+    @Autowired
+    public ActivityService activityService;
 
     @Override
     public List<Blog> selectAll() {
@@ -42,6 +47,7 @@ public class BlogServiceImpl implements BlogService {
                 blog.setReleaseTime(new Date());
             }
             blogMapper.insert(blog);
+            activityService.addActivity(addActivity(blog));
             return JSONUtil.success(SysCode.TIPMESSAGE.SAVESUCCESS);
         }
         else{
@@ -96,5 +102,16 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectPage(page,queryWrapper).getRecords();
     }
 
+
+    public Activity addActivity(Blog blog){
+        Activity activity = new Activity();
+        activity.setUserId(blog.getAuthor());
+        activity.setDelTag(SysCode.DELTAG.WSC);
+        activity.setCreateTime(new Date());
+        activity.setContent(blog.getSummary());
+        activity.setBlogTitle(blog.getTitle());
+        activity.setCategory(SysCode.ACTIVITY_CATEGORY.BLOG);
+        return activity;
+    }
 
 }

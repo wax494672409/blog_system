@@ -379,7 +379,7 @@
 
                         <div id="profile_block">
                             昵称：
-                            <a href="https://home.cnblogs.com/u/zxcoder/">
+                            <a th:href="@{'/user/goPersonalPage.do?id='+${blog.author}}" th:text="${blog.authorName}">
                                 Keane1998
                             </a>
                             <br>

@@ -106,7 +106,7 @@
                     <div id="blog-news">
                         <div id="profile_block">
                             昵称：
-                            <a href="https://home.cnblogs.com/u/bootyWind/" th:text="${user.name}">
+                            <a th:href="@{'/user/goPersonalPage.do?id='+${user.id}}" th:text="${user.name}">
                                 Violet丶
                             </a>
                             <br>

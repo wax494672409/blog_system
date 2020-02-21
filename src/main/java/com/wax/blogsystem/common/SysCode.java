@@ -55,4 +55,21 @@ public class SysCode {
 
     }
 
+
+    public static interface ACTIVITY_CATEGORY{
+
+        /**
+         * 发表博客
+         */
+        String BLOG = "发表博客";
+
+        /**
+         * 发表评论
+         */
+        String COMMENT = "评论博客";
+
+
+    }
+
+
 }

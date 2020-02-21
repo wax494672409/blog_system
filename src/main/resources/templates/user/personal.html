@@ -57,7 +57,7 @@
                         <img src="//common.cnblogs.com/images/ico_ing.gif" alt=""><a id="app_ing" href="https://ing.cnblogs.com/">闪存</a>
                     </li>
                     <li>
-                        <em><a href="https://i.cnblogs.com/" target="_blank">写博</a></em><img src="//common.cnblogs.com/images/ico_blog.gif" alt=""><a id="app_blog" href="/blog/">博客</a>
+                        <em><a href="/blog/goAdd.do" target="_blank">写博</a></em><img src="//common.cnblogs.com/images/ico_blog.gif" alt=""><a id="app_blog" href="/blog/">博客</a>
                     </li>
                     <li>
                         <em><a href="//group.cnblogs.com/newpost/">发言</a></em><img src="//common.cnblogs.com/images/ico_group.gif" alt=""><a id="app_group" href="//group.cnblogs.com/">小组</a>
@@ -94,7 +94,7 @@
                         <tr>
                             <td valign="top">
                                 <div class="user_avatar">
-                                    <img src="/upload/head/xinwang.png" alt="Violet丶的头像" class="img_avatar"><br>
+                                    <img th:src="${user.picUrl}" alt="Violet丶的头像" class="img_avatar"><br>
                                     <table class="user_profile_nav_block">
                                         <tbody>
                                         <tr>
@@ -113,7 +113,7 @@
                             </td>
                             <td valign="top">
                                 <div>
-                                    <h1 class="display_name">
+                                    <h1 class="display_name" th:text="${user.name}">
                                         Violet丶
                                     </h1>
                                     <div>
@@ -161,147 +161,19 @@
                 <div class="feed_block">
                     <div id="feed_list" style="display: block;">
 
-                        <ul>
-                            <li class="feed_item">
+                        <ul id="activity_list" th:fragment="activity_list">
+                            <li class="feed_item" th:each="activity:${activityList}">
                                 <div class="feed_avatar">
-                                    <a href="/u/bootyWind"><img src="/upload/head/xinwang.png"></a>
+                                    <a href="/u/bootyWind"><img th:src="''+${user.picUrl}"></a>
                                 </div>
                                 <div class="feed_body" id="feed_content_5d2ecbbb63abf8af028461bd">
                                     <div class="feed_title">
-                                        <a href="/u/bootyWind/" class="feed_author">Violet丶</a>
-                                        评论博客： <a href="https://www.cnblogs.com/babycomeon/p/11148821.html#4302360" target="_blank" class="feed_link">跟我学SpringCloud | 第十一篇：使用Spring Cloud Sleuth和Zipkin进行分布式链路跟踪</a>
-                                        <a class="recycle" onclick="return deleteFeed('8de832fd-8d53-4fa6-85a4-08d6df797148', '5d2ecbbb63abf8af028461bd')" href="javascript: void(0);" title="删除这个动态">
-                                            <img alt="删除" src="//common.cnblogs.com/images/icon_trash.gif"></a>
-                                        <span class="feed_date">2019-07-17 15:16</span>
+                                        <a href="/u/bootyWind/" class="feed_author" th:text="${user.name}">Violet丶</a>
+                                        <span th:text="${activity.category}+'：'">评论博客： </span><a th:href="@{'/blog/goBlogOnePage.do?id='+${activity.blogId}}" target="_blank" class="feed_link" th:text="${activity.blogTitle}">跟我学SpringCloud | 第十一篇：使用Spring Cloud Sleuth和Zipkin进行分布式链路跟踪</a>
+                                        <span class="feed_date" th:text="${#dates.format(activity.createTime, 'yyyy-MM-dd hh:mm:ss')}">2019-07-17 15:16</span>
                                     </div>
-                                    <div class="feed_desc">
+                                    <div class="feed_desc" th:utext="${activity.content}">
                                         全球最大同xing交友网站 哈哈哈
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </li>
-                            <li class="feed_item">
-                                <div class="feed_avatar">
-                                    <a href="/u/bootyWind"><img src="//pic.cnblogs.com/face/1696808/20190523221516.png"></a>
-                                </div>
-                                <div class="feed_body" id="feed_content_5d25346a63abf8af0259140c">
-                                    <div class="feed_title">
-                                        <a href="/u/bootyWind/" class="feed_author">Violet丶</a>
-                                        评论博客： <a href="https://www.cnblogs.com/babycomeon/p/11142923.html#4296878" target="_blank" class="feed_link">跟我学SpringCloud | 第九篇：服务网关Zuul初</a>
-                                        <a class="recycle" onclick="return deleteFeed('8de832fd-8d53-4fa6-85a4-08d6df797148', '5d25346a63abf8af0259140c')" href="javascript: void(0);" title="删除这个动态">
-                                            <img alt="删除" src="//common.cnblogs.com/images/icon_trash.gif"></a>
-                                        <span class="feed_date">2019-07-10 08:41</span>
-                                    </div>
-                                    <div class="feed_desc">
-                                        <a href="#4296642" title="查看所回复的评论">@</a>极客挖掘机 好的 学习了
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </li>
-                            <li class="feed_item">
-                                <div class="feed_avatar">
-                                    <a href="/u/bootyWind"><img src="//pic.cnblogs.com/face/1696808/20190523221516.png"></a>
-                                </div>
-                                <div class="feed_body" id="feed_content_5d245bdb63abf8af0255534c">
-                                    <div class="feed_title">
-                                        <a href="/u/bootyWind/" class="feed_author">Violet丶</a>
-                                        评论博客： <a href="https://www.cnblogs.com/babycomeon/p/11142923.html#4296554" target="_blank" class="feed_link">跟我学SpringCloud | 第九篇：服务网关Zuul初</a>
-                                        <a class="recycle" onclick="return deleteFeed('8de832fd-8d53-4fa6-85a4-08d6df797148', '5d245bdb63abf8af0255534c')" href="javascript: void(0);" title="删除这个动态">
-                                            <img alt="删除" src="//common.cnblogs.com/images/icon_trash.gif"></a>
-                                        <span class="feed_date">2019-07-09 17:16</span>
-                                    </div>
-                                    <div class="feed_desc">
-                                        <a href="#4296512" title="查看所回复的评论">@</a>极客挖掘机 嗯 下午试过  但没有很好的效果
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </li>
-                            <li class="feed_item">
-                                <div class="feed_avatar">
-                                    <a href="/u/bootyWind"><img src="//pic.cnblogs.com/face/1696808/20190523221516.png"></a>
-                                </div>
-                                <div class="feed_body" id="feed_content_5d2453e263abf8af02551d8c">
-                                    <div class="feed_title">
-                                        <a href="/u/bootyWind/" class="feed_author">Violet丶</a>
-                                        评论博客： <a href="https://www.cnblogs.com/babycomeon/p/11142923.html#4296499" target="_blank" class="feed_link">跟我学SpringCloud | 第九篇：服务网关Zuul初</a>
-                                        <a class="recycle" onclick="return deleteFeed('8de832fd-8d53-4fa6-85a4-08d6df797148', '5d2453e263abf8af02551d8c')" href="javascript: void(0);" title="删除这个动态">
-                                            <img alt="删除" src="//common.cnblogs.com/images/icon_trash.gif"></a>
-                                        <span class="feed_date">2019-07-09 16:43</span>
-                                    </div>
-                                    <div class="feed_desc">
-                                        <a href="#4296445" title="查看所回复的评论">@</a>极客挖掘机 麻烦了 我连续重启两次idea并且移除zuul引入再重新引入 莫名其妙就可以用了，感谢你的新思路。
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </li>
-                            <li class="feed_item">
-                                <div class="feed_avatar">
-                                    <a href="/u/bootyWind"><img src="//pic.cnblogs.com/face/1696808/20190523221516.png"></a>
-                                </div>
-                                <div class="feed_body" id="feed_content_5d2445d263abf8af0254c7aa">
-                                    <div class="feed_title">
-                                        <a href="/u/bootyWind/" class="feed_author">Violet丶</a>
-                                        评论博客： <a href="https://www.cnblogs.com/babycomeon/p/11142923.html#4296426" target="_blank" class="feed_link">跟我学SpringCloud | 第九篇：服务网关Zuul初</a>
-                                        <a class="recycle" onclick="return deleteFeed('8de832fd-8d53-4fa6-85a4-08d6df797148', '5d2445d263abf8af0254c7aa')" href="javascript: void(0);" title="删除这个动态">
-                                            <img alt="删除" src="//common.cnblogs.com/images/icon_trash.gif"></a>
-                                        <span class="feed_date">2019-07-09 15:42</span>
-                                    </div>
-                                    <div class="feed_desc">
-                                        @ 极客挖掘机 我这边也是只引入了zuul，但是冲突的是slf4j-api和com.geogle.guava，通过&lt;exclusion&gt;标签排除还是没有解决问题。纯小白555555 而且github链接404了，没法访问了
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </li>
-                            <li class="feed_item">
-                                <div class="feed_avatar">
-                                    <a href="/u/bootyWind"><img src="//pic.cnblogs.com/face/1696808/20190523221516.png"></a>
-                                </div>
-                                <div class="feed_body" id="feed_content_5d24365b63abf8af02546565">
-                                    <div class="feed_title">
-                                        <a href="/u/bootyWind/" class="feed_author">Violet丶</a>
-                                        评论博客： <a href="https://www.cnblogs.com/babycomeon/p/11142923.html#4296365" target="_blank" class="feed_link">跟我学SpringCloud | 第九篇：服务网关Zuul初</a>
-                                        <a class="recycle" onclick="return deleteFeed('8de832fd-8d53-4fa6-85a4-08d6df797148', '5d24365b63abf8af02546565')" href="javascript: void(0);" title="删除这个动态">
-                                            <img alt="删除" src="//common.cnblogs.com/images/icon_trash.gif"></a>
-                                        <span class="feed_date">2019-07-09 14:37</span>
-                                    </div>
-                                    <div class="feed_desc">
-                                        博主没有遇到spring-cloud-starter-netflix-zuul依赖冲突 导致无法import org.springframework.cloud.netflix.zuul.EnableZuulProxy的问题吗
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </li>
-                            <li class="feed_item">
-                                <div class="feed_avatar">
-                                    <a href="/u/bootyWind"><img src="//pic.cnblogs.com/face/1696808/20190523221516.png"></a>
-                                </div>
-                                <div class="feed_body" id="feed_content_5d1ee15a63abf8af023d0e4b">
-                                    <div class="feed_title">
-                                        <a href="/u/bootyWind/" class="feed_author">Violet丶</a>
-                                        评论博客： <a href="https://www.cnblogs.com/babycomeon/p/11130009.html#4294107" target="_blank" class="feed_link">跟我学SpringCloud | 第五篇：熔断监控Hystrix Dashboard和Turbine</a>
-                                        <a class="recycle" onclick="return deleteFeed('8de832fd-8d53-4fa6-85a4-08d6df797148', '5d1ee15a63abf8af023d0e4b')" href="javascript: void(0);" title="删除这个动态">
-                                            <img alt="删除" src="//common.cnblogs.com/images/icon_trash.gif"></a>
-                                        <span class="feed_date">2019-07-05 13:32</span>
-                                    </div>
-                                    <div class="feed_desc">
-                                        <a href="#4293956" title="查看所回复的评论">@</a>极客挖掘机 是我疏忽了 麻烦了麻烦了
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </li>
-                            <li class="feed_item">
-                                <div class="feed_avatar">
-                                    <a href="/u/bootyWind"><img src="//pic.cnblogs.com/face/1696808/20190523221516.png"></a>
-                                </div>
-                                <div class="feed_body" id="feed_content_5d1ead5363abf8af023c0057">
-                                    <div class="feed_title">
-                                        <a href="/u/bootyWind/" class="feed_author">Violet丶</a>
-                                        评论博客： <a href="https://www.cnblogs.com/babycomeon/p/11130009.html#4293892" target="_blank" class="feed_link">跟我学SpringCloud | 第五篇：熔断监控Hystrix Dashboard和Turbine</a>
-                                        <a class="recycle" onclick="return deleteFeed('8de832fd-8d53-4fa6-85a4-08d6df797148', '5d1ead5363abf8af023c0057')" href="javascript: void(0);" title="删除这个动态">
-                                            <img alt="删除" src="//common.cnblogs.com/images/icon_trash.gif"></a>
-                                        <span class="feed_date">2019-07-05 09:50</span>
-                                    </div>
-                                    <div class="feed_desc">
-                                        请问项目hystrix-dashboard 不用配置yml文件吗 端口和之前的 producer端口冲突，项目hystrix-dashboard端口改成8081不能访问<a href="http://localhost" target="_blank">http://localhost</a>:8081/hello/spring 这个请求不实在consumers里的吗
                                     </div>
                                 </div>
                                 <div class="clear"></div>
@@ -442,42 +314,27 @@
         <span id="profiler_footer">(执行耗时80毫秒)</span>
     </div>
 </div>
-<script src="//common.cnblogs.com/script/common.js?id=20160815"></script>
+<script src="/third/jquery/jquery-3.4.1.js"></script>
+<script th:inline="javascript">
 
+    var pageSize = 10;
 
-<script src="/js/home-mvc.min.js?v=GgISClYK5HxzoFY4Xlz38A-ou0NA7881Foir5AX9IxY"></script>
+    getTopViewList();
+    function getTopViewList() {
+        $.ajax({
+            url: '/activity/getActivityList.do',
+            type: 'POST',
+            data: {
+                size: pageSize,
+                current: 1,
+                id:[[${user.id}]]
+            },
+            success: function (result) {
+                $("#activity_list").html(result);
+            }
+        });
+    }
 
-<script>
-    loadCurrentUserInfo();
-</script>
-
-<script src="/js/artDialog.bundle.min.js?v=p7KUXVfJF-HqPRXNEvnjimaLABZ0_UsNlQ1HhpgOgh0"></script>
-
-
-<script src="/js/home-user.min.js?v=Rhe51WNKUKZepAVW4-tv74CWPFGqq3x59wqzwLhY30g"></script>
-
-<script>
-    $(document).ready(function () {
-        GetPagedFeed(0, 30);
-        $('.mini_nav_block').on('click', 'li>a', function () {
-            $('.mini_nav_block li a.current_nav').removeClass('current_nav');
-            var item$ = $(this);
-            item$.addClass('current_nav');
-            GetFeedsBySelect(item$.data('apptype'));
-        })
-    });
-</script>
-
-<script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', 'UA-476124-14', 'auto');
-    ga('send', 'pageview');
 </script>
 </body>
 </html>
