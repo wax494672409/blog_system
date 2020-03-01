@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BlogService {
 
-    public List<Blog> selectAll();
+    public IPage<Blog> selectAll(Page<Blog> page);
 
     String saveOrUpdate(Blog blog);
 
@@ -24,5 +24,7 @@ public interface BlogService {
     void addCommentNum(Blog blog);
 
     List<Blog> getTopViewList(Page<Blog> page);
+
+    int getAllNum();
 
 }

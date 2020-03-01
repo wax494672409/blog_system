@@ -1,6 +1,7 @@
 package com.wax.blogsystem.controller;
 
 import com.wax.blogsystem.domain.Role;
+import com.wax.blogsystem.service.BlogService;
 import com.wax.blogsystem.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ public class MainController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private BlogService blogService;
 
 
     @RequestMapping(value = "/goMainPage.do")
@@ -33,6 +37,12 @@ public class MainController {
     @RequestMapping(value = "/goLoginPage.do")
     public String goLoginPage(){
         return "login";
+    }
+
+    @RequestMapping(value = "/goFrontHomePage.do")
+    public String goFrontHomePage(Model model){
+        model.addAttribute("blogTotalNum",blogService.getAllNum());
+        return "front/home";
     }
 
 

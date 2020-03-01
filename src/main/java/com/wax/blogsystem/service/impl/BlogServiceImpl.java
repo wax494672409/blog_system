@@ -29,8 +29,8 @@ public class BlogServiceImpl implements BlogService {
     public ActivityService activityService;
 
     @Override
-    public List<Blog> selectAll() {
-        return blogMapper.selectList(null);
+    public IPage<Blog> selectAll(Page<Blog> page) {
+        return blogMapper.selectAll(page);
     }
 
     @Override
@@ -100,6 +100,14 @@ public class BlogServiceImpl implements BlogService {
         QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("view_num");
         return blogMapper.selectPage(page,queryWrapper).getRecords();
+    }
+
+    @Override
+    public int getAllNum() {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        return blogMapper.selectCount(queryWrapper);
     }
 
 

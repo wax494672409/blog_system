@@ -49,7 +49,7 @@ public class BlogController {
         Blog blog = blogService.selectById(id);
         blogService.addViewNum(blog);
         int totalNum = blogService.getTotalNum(blog.getAuthor());
-        int commentTotalNum = commentService.getTotalNum(blog.id);
+        int commentTotalNum = commentService.getTotalNum(blog.getId());
         model.addAttribute("totalNum",totalNum);
         model.addAttribute("commentTotalNum",commentTotalNum);
         model.addAttribute("blog",blog);
@@ -113,5 +113,12 @@ public class BlogController {
         return "blog/blog_one::top_view_list";
     }
 
+    @PostMapping(value = "/getAllBlogList.do")
+    public String getAllBlogList(Page<Blog> page, Model model){
+        IPage<Blog> blogPage = blogService.selectAll(page);
+        model.addAttribute("blogList",blogPage.getRecords());
+        model.addAttribute("blogTotalNum",blogPage.getTotal());
+        return "front/home::blog_list";
+    }
 
 }
