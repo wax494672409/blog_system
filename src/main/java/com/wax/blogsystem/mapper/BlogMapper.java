@@ -17,4 +17,14 @@ public interface BlogMapper extends BaseMapper<Blog> {
     IPage<Blog> selectAll(Page<Blog> page);
 
 
+    @Select("select * from sys_blog where id in (\n" +
+                "select tt.id from (\n" +
+                    "select blog_id \"id\" from sys_blog_view \n" +
+                    "WHERE (TIME_TO_SEC(TIMEDIFF(SYSDATE(),sys_blog_view.create_time)))/3600<=48 \n" +
+                    "GROUP BY blog_id order by count(sys_blog_view.id) desc LIMIT 10 ) tt\n" +
+                    "\n" +
+            ")")
+    IPage<Blog> get48HoursViewBlogList(Page<Blog> page);
+
+
 }

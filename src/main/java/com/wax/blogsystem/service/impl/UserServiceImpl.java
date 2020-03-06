@@ -76,4 +76,12 @@ public class UserServiceImpl implements UserService {
         queryWrapper.eq("id",id);
         return userMapper.selectOne(queryWrapper);
     }
+
+    @Override
+    public IPage<User> topBlogUserList(Page<User> page) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.orderByDesc("follow_num");
+        return userMapper.selectPage(page,queryWrapper);
+    }
 }

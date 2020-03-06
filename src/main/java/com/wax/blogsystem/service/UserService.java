@@ -19,4 +19,6 @@ public interface UserService {
 
     User selectById(String id);
 
+    IPage<User> topBlogUserList(Page<User> page);
+
 }

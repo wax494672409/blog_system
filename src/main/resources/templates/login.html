@@ -1,17 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/css/login.css" rel="stylesheet">
 </head>
 <body>
-        用户名<input type="text"  id = "username"/>
-        密码<input type="text" id = "password" />
-        <input type="button" id="btn" value="登录" >
+    <div class="lowin lowin-blue">
+        <div class="lowin-brand">
+            <img src="/img/kodinger.jpg" alt="logo">
+        </div>
+        <div class="lowin-wrapper">
+            <div class="lowin-box lowin-login">
+                <div class="lowin-box-inner">
+                    <form>
+                        <p>Sign in to continue</p>
+                        <div class="lowin-group">
+                            <label>Username <a href="#" class="login-back-link">Sign in?</a></label>
+                            <input id="username"  autocomplete="email" name="email" class="lowin-input">
+                        </div>
+                        <div class="lowin-group password-group">
+                            <label>Password <a href="#" class="forgot-link">Forgot Password?</a></label>
+                            <input id="password" type="password" name="password" autocomplete="current-password" class="lowin-input">
+                        </div>
+                        <button class="lowin-btn login-btn" id="btn">
+                            Sign In
+                        </button>
+
+                        <div class="text-foot">
+                            Don't have an account? <a href="" class="register-link">Register</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="lowin-box lowin-register">
+                <div class="lowin-box-inner">
+                    <form>
+                        <p>Let's create your account</p>
+                        <div class="lowin-group">
+                            <label>Name</label>
+                            <input type="text" name="name" autocomplete="name" class="lowin-input">
+                        </div>
+                        <div class="lowin-group">
+                            <label>Email</label>
+                            <input type="email" autocomplete="email" name="email" class="lowin-input">
+                        </div>
+                        <div class="lowin-group">
+                            <label>Password</label>
+                            <input type="password" name="password" autocomplete="current-password" class="lowin-input">
+                        </div>
+                        <button class="lowin-btn">
+                            Sign Up
+                        </button>
+
+                        <div class="text-foot">
+                            Already have an account? <a href="" class="login-link">Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="lowin-footer">
+            Design By <a href="http://fb.me/itskodinger">@itskodinger</a>
+        </footer>
+    </div>
+    <script src="/js/login.js"></script>
     <script src="/third/layui/layui.js"></script>
     <script>
         layui.use(['table','laypage','form','jquery'], function(){
             var $ = layui.$;
+
+
+            Auth.init({
+                login_url: '#login',
+                forgot_url: '#forgot'
+            });
+
+
             $("#btn").on('click',function () {
                 var username = $("#username").val();
                 var password = $("#password").val();

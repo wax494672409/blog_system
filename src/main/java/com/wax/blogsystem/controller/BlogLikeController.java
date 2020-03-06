@@ -20,8 +20,7 @@ public class BlogLikeController {
     @PostMapping(value = "/addBlogLike.do")
     @ResponseBody
     public String addBlogLike(BlogLike blogLike){
-        blogLikeService.addBlogLike(blogLike);
-        return JSONUtil.success("点赞成功");
+        return JSONUtil.success(blogLikeService.addBlogLike(blogLike));
     }
 
 

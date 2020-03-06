@@ -47,7 +47,6 @@ public class BlogController {
     public String goBlogOnePage(String id, Model model) {
         User user = (User)SecurityUtils.getSubject().getPrincipal();
         Blog blog = blogService.selectById(id);
-        blogService.addViewNum(blog);
         int totalNum = blogService.getTotalNum(blog.getAuthor());
         int commentTotalNum = commentService.getTotalNum(blog.getId());
         model.addAttribute("totalNum",totalNum);
@@ -120,5 +119,20 @@ public class BlogController {
         model.addAttribute("blogTotalNum",blogPage.getTotal());
         return "front/home::blog_list";
     }
+
+    @PostMapping(value = "/getTenDaysTopLikeBlog.do")
+    public String getTenDaysTopLikeBlog(Page<Blog> page,Model model){
+        IPage<Blog> blogPage = blogService.getTenDaysTopLikeBlog(page);
+        model.addAttribute("tenDaysLikeBlogList",blogPage.getRecords());
+        return "front/home::ten_days_like_blog";
+    }
+
+    @PostMapping(value = "/get48HoursViewBlogList.do")
+    public String get48HoursViewBlogList(Page<Blog> page, Model model){
+        IPage<Blog> iPage = blogService.get48HoursViewBlogList(page);
+        model.addAttribute("twoDaysViewBlogList",iPage.getRecords());
+        return "/front/home::two_days_view_blog";
+    }
+
 
 }

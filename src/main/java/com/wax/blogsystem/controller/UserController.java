@@ -13,10 +13,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -84,6 +81,14 @@ public class UserController {
     public String delete(String ids) {
         userService.deleteByPrimaryKeys(ids);
         return JSONUtil.success();
+    }
+
+
+    @PostMapping(value = "/topBlogUserList.do")
+    public String topBlogUserList(Page<User> page,Model model){
+        IPage<User> iPage = userService.topBlogUserList(page);
+        model.addAttribute("topBlogUserList",iPage.getRecords());
+        return "front/home::top_blog_user_list";
     }
 
 }

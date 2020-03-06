@@ -673,6 +673,7 @@
         });
 
         getTopViewList();
+        addViewNum();
 
         var E = window.wangEditor
         var editor = new E('#commentBox')
@@ -733,6 +734,20 @@
                 },
                 success: function (result) {
                     $("#top_view_list").html(result);
+                }
+            });
+        }
+
+        function addViewNum() {
+            $.ajax({
+                url: '/blogView/addBlogView.do',
+                type: 'POST',
+                data: {
+                    userId: [[${loginUser.id}]],
+                    blogId: [[${blog.id}]]
+                },
+                success: function (result) {
+
                 }
             });
         }

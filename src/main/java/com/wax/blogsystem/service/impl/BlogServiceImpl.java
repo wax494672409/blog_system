@@ -42,6 +42,7 @@ public class BlogServiceImpl implements BlogService {
             blog.setAuthorName(user.getName());
             blog.setCollectNum(SysCode.NUM.ZERO);
             blog.setCommentNum(SysCode.NUM.ZERO);
+            blog.setLikeNum(SysCode.NUM.ZERO);
             blog.setDelTag(SysCode.DELTAG.WSC);
             if(blog.getStatus().equals(SysCode.BLOG_STATUS.RELEASED)){
                 blog.setReleaseTime(new Date());
@@ -96,6 +97,12 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public void addLikeNum(Blog blog) {
+        blog.setLikeNum(blog.getLikeNum()+1);
+        blogMapper.updateById(blog);
+    }
+
+    @Override
     public List<Blog> getTopViewList(Page<Blog> page) {
         QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("view_num");
@@ -110,6 +117,15 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectCount(queryWrapper);
     }
 
+    @Override
+    public IPage<Blog> getTenDaysTopLikeBlog(Page<Blog> page) {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.apply(" (TIME_TO_SEC(TIMEDIFF(SYSDATE(),sys_blog.release_time)))/86400<=10 ");
+        queryWrapper.orderByDesc("like_num");
+        return blogMapper.selectPage(page,queryWrapper);
+    }
+
 
     public Activity addActivity(Blog blog){
         Activity activity = new Activity();
@@ -120,6 +136,11 @@ public class BlogServiceImpl implements BlogService {
         activity.setBlogTitle(blog.getTitle());
         activity.setCategory(SysCode.ACTIVITY_CATEGORY.BLOG);
         return activity;
+    }
+
+    @Override
+    public IPage<Blog> get48HoursViewBlogList(Page<Blog> page) {
+        return blogMapper.get48HoursViewBlogList(page);
     }
 
 }

@@ -23,8 +23,14 @@ public interface BlogService {
 
     void addCommentNum(Blog blog);
 
+    void addLikeNum(Blog blog);
+
     List<Blog> getTopViewList(Page<Blog> page);
 
     int getAllNum();
+
+    IPage<Blog> getTenDaysTopLikeBlog(Page<Blog> page);
+
+    IPage<Blog> get48HoursViewBlogList(Page<Blog> page);
 
 }

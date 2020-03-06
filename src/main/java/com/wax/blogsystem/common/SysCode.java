@@ -9,6 +9,10 @@ public class SysCode {
         String UPDATESUCCESS = "修改成功";
         //评论成功
         String COMMENTSUCCESS = "评论成功";
+        //点赞成功
+        String LIKESUCCESS = "点赞成功";
+        //已点赞
+        String LIKED = "您已经点赞过";
 
     }
 

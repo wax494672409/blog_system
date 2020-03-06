@@ -32,6 +32,9 @@ public class ShiroConfig {
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
         // 配置不会被拦截的链接 顺序判断，因为前端模板采用了thymeleaf，这里不能直接使用 ("/static/**", "anon")来配置匿名访问，必须配置到每个静态目录
         filterChainDefinitionMap.put("/third/**", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/img/**", "anon");
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/goLoginPage.do", "anon");
         filterChainDefinitionMap.put("/logout.do", "logout");
