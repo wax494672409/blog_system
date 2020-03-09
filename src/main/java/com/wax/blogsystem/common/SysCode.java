@@ -75,5 +75,15 @@ public class SysCode {
 
     }
 
+    public static interface USER_ACTIVITY_STATUS{
+
+        //未激活
+        String WJH = "0";
+
+        //已激活
+        String YJH = "1";
+
+    }
+
 
 }

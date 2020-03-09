@@ -1,6 +1,7 @@
 package com.wax.blogsystem.config.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.wax.blogsystem.common.RegexUtil;
 import com.wax.blogsystem.mapper.PermMapper;
 import com.wax.blogsystem.mapper.RoleMapper;
 import com.wax.blogsystem.domain.Perm;
@@ -63,7 +64,12 @@ public class MyShiroRealm extends AuthorizingRealm {
         //通过username从数据库中查找 User对象.
         //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username",userName);
+        if(RegexUtil.isEmail(userName)){
+            queryWrapper.eq("email",userName);
+        }
+        else {
+            queryWrapper.eq("username",userName);
+        }
         User user = userService.selectOne(queryWrapper);
         System.out.println("----->>user="+user);
         if(user == null){

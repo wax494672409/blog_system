@@ -36,11 +36,6 @@ public class MainController {
     }
 
 
-    @RequestMapping(value = "/goLoginPage.do")
-    public String goLoginPage(){
-        return "/login";
-    }
-
     @RequestMapping(value = "/goFrontHomePage.do")
     public String goFrontHomePage(Model model){
         User user = (User) SecurityUtils.getSubject().getPrincipal();

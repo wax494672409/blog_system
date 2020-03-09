@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="/css/login.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lowin</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
+
 <body>
     <div class="lowin lowin-blue">
         <div class="lowin-brand">
@@ -17,16 +18,16 @@
                     <form>
                         <p>Sign in to continue</p>
                         <div class="lowin-group">
-                            <label>Username <a href="#" class="login-back-link">Sign in?</a></label>
-                            <input id="username"  autocomplete="email" name="email" class="lowin-input">
+                            <label>Email or Username<a href="#" class="login-back-link">Sign in?</a></label>
+                            <input  id="username_in" autocomplete="email" name="email" class="lowin-input">
                         </div>
                         <div class="lowin-group password-group">
                             <label>Password <a href="#" class="forgot-link">Forgot Password?</a></label>
-                            <input id="password" type="password" name="password" autocomplete="current-password" class="lowin-input">
+                            <input id="password_in" type="password" name="password" autocomplete="current-password" class="lowin-input">
                         </div>
-                        <button class="lowin-btn login-btn" id="btn">
+                        <span id="login" class="lowin-btn login-btn">
                             Sign In
-                        </button>
+                        </span>
 
                         <div class="text-foot">
                             Don't have an account? <a href="" class="register-link">Register</a>
@@ -40,20 +41,20 @@
                     <form>
                         <p>Let's create your account</p>
                         <div class="lowin-group">
-                            <label>Name</label>
-                            <input type="text" name="name" autocomplete="name" class="lowin-input">
+                            <label>Username</label>
+                            <input id="username_up" type="text" name="name" autocomplete="name" class="lowin-input">
                         </div>
                         <div class="lowin-group">
                             <label>Email</label>
-                            <input type="email" autocomplete="email" name="email" class="lowin-input">
+                            <input id="email_up" type="email" autocomplete="email" name="email" class="lowin-input">
                         </div>
                         <div class="lowin-group">
                             <label>Password</label>
-                            <input type="password" name="password" autocomplete="current-password" class="lowin-input">
+                            <input id="password_up" type="password" name="password" autocomplete="current-password" class="lowin-input">
                         </div>
-                        <button class="lowin-btn">
+                        <span id="register" class="lowin-btn">
                             Sign Up
-                        </button>
+                        </span>
 
                         <div class="text-foot">
                             Already have an account? <a href="" class="login-link">Login</a>
@@ -67,12 +68,13 @@
             Design By <a href="http://fb.me/itskodinger">@itskodinger</a>
         </footer>
     </div>
+    <!-- Main File-->
     <script src="/js/login.js"></script>
     <script src="/third/layui/layui.js"></script>
     <script>
-        layui.use(['table','laypage','form','jquery'], function(){
+        layui.use(['table','laypage','form','jquery','layer'], function(){
             var $ = layui.$;
-
+            var layer = layui.layer
 
             Auth.init({
                 login_url: '#login',
@@ -80,16 +82,16 @@
             });
 
 
-            $("#btn").on('click',function () {
-                var username = $("#username").val();
-                var password = $("#password").val();
-                var user = {};
-                user.username = username;
-                user.password = password;
+            $("#login").on('click',function () {
+                var username = $("#username_in").val();
+                var password = $("#password_in").val();
                 $.ajax({
                     url: '/login.do',
                     type: 'GET',
-                    data: user,
+                    data: {
+                        username :username,
+                        password :password
+                    },
                     dataType : "json",
                     success: function (result) {
                         debugger
@@ -99,6 +101,26 @@
                         else{
                             window.open("/goMainPage.do","_self");
                         }
+                    }
+                });
+            })
+
+
+            $("#register").on('click',function () {
+                var username = $("#username_up").val();
+                var password = $("#password_up").val();
+                var email = $("#email_up").val();
+                $.ajax({
+                    url: '/register.do',
+                    type: 'POST',
+                    data: {
+                        username: username,
+                        password: password,
+                        email: email
+                    },
+                    dataType : "json",
+                    success: function (result) {
+                        layer.msg(result.msg)
                     }
                 });
             })

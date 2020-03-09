@@ -21,4 +21,8 @@ public interface UserService {
 
     IPage<User> topBlogUserList(Page<User> page);
 
+    void add(User user);
+
+    User selectByActivityCode(String activityCode);
+
 }

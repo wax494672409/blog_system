@@ -11,6 +11,7 @@ import com.wax.blogsystem.common.JSONUtil;
 import com.wax.blogsystem.common.SysCode;
 import com.wax.blogsystem.mapper.UserMapper;
 import com.wax.blogsystem.domain.User;
+import com.wax.blogsystem.service.MailService;
 import com.wax.blogsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private MailService mailService;
+
 
     @Override
     public String saveOrUpdate(User user) {
@@ -83,5 +88,29 @@ public class UserServiceImpl implements UserService {
         queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
         queryWrapper.orderByDesc("follow_num");
         return userMapper.selectPage(page,queryWrapper);
+    }
+
+    @Override
+    public void add(User user) {
+        String activeCode  = UUID.randomUUID().toString();
+        user.setActivityCode(activeCode);
+        user.setActivityStatus(SysCode.USER_ACTIVITY_STATUS.WJH);
+        user.setDelTag(SysCode.DELTAG.WSC);
+        user.setRoleCode(SysCode.ROLECODE.PTYH);
+        user.setCreateTime(new Date());
+        user.setPassword(Encript.md5(user.getPassword()));
+        userMapper.insert(user);
+        //主题
+        String subject = "来自博客网站的激活邮件";
+        //上面的激活码发送到用户注册邮箱
+        String context = "<a href=\"http://localhost:8080/checkCode.do?code="+activeCode+"\">激活请点击:"+activeCode+"</a>";
+        mailService.sendMimeMail(user.getEmail(),subject,context);
+    }
+
+    @Override
+    public User selectByActivityCode(String activityCode) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("activity_code",activityCode);
+        return userMapper.selectOne(queryWrapper);
     }
 }

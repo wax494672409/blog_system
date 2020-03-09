@@ -39,4 +39,13 @@ public class User {
     @TableField(value = "pic_url",exist = true)
     private String picUrl;
 
+    @TableField(value = "email",exist = true)
+    private String email;
+
+    @TableField(value = "activity_status",exist = true)
+    private String activityStatus;
+
+    @TableField(value = "activity_code",exist = true)
+    private String activityCode;
+
 }

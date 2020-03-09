@@ -2,6 +2,16 @@ server:
   port: 8080
 
 spring:
+  # 配置发送方信息
+  mail:
+    host: smtp.qq.com
+    username: 934558076@qq.com
+    password: fjmwycpduanqbedj
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
   #--------数据源------------
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -95,6 +105,9 @@ spring:
       enabled: true  #设置开启热部署
     freemarker:
       cache: false    #页面不加载缓存，修改即时生效
+
+
+
 
   #------------mybatis--------------
 #mybatis:

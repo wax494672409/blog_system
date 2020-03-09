@@ -3,7 +3,11 @@ package com.wax.blogsystem.service.impl;
 import com.alibaba.druid.util.StringUtils;
 import com.wax.blogsystem.common.Encript;
 import com.wax.blogsystem.common.JSONUtil;
+import com.wax.blogsystem.common.SysCode;
+import com.wax.blogsystem.domain.User;
+import com.wax.blogsystem.mapper.UserMapper;
 import com.wax.blogsystem.service.LoginService;
+import com.wax.blogsystem.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -11,16 +15,23 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginServiceImpl implements LoginService {
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    UserMapper userMapper;
+
     @Override
     public String login(String username, String password) {
         if(StringUtils.isEmpty(username))
         {
-            return JSONUtil.error("用户名为空");
+            return JSONUtil.error("请填写用户名/邮箱");
         }
         String msg="";
         // 1、获取Subject实例对象
@@ -38,6 +49,10 @@ public class LoginServiceImpl implements LoginService {
         // 4、认证
         try {
             currentUser.login(token);// 传到MyAuthorizingRealm类中的方法进行认证
+            User user = (User) currentUser.getPrincipal();
+            if(user.getActivityStatus().equals(SysCode.USER_ACTIVITY_STATUS.WJH)){
+                return JSONUtil.error("账号处于未激活状态，请前往邮箱激活");
+            }
             Session session = currentUser.getSession();
             session.setAttribute("username", username);
             return JSONUtil.success();
@@ -64,5 +79,23 @@ public class LoginServiceImpl implements LoginService {
     public void logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
+    }
+
+    @Override
+    public void register(User user) {
+        userService.add(user);
+    }
+
+    @Override
+    public boolean checkCode(String code) {
+        User user = userService.selectByActivityCode(code);
+        if(user !=null){
+            user.setActivityStatus(SysCode.USER_ACTIVITY_STATUS.YJH);
+            //把code验证码清空，已经不需要了
+            user.setActivityCode("");
+            userMapper.updateById(user);
+            return true;
+        }
+        return false;
     }
 }
