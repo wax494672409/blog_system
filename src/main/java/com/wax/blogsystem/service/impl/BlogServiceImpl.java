@@ -143,4 +143,18 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.get48HoursViewBlogList(page);
     }
 
+    @Override
+    public IPage<Blog> selectAll4Background(Page<Blog> page, Blog condition) {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        if(!StringUtils.isEmpty(condition.getAuthorName())){
+            queryWrapper.like("author_name",condition.getAuthorName());
+        }
+        if (!StringUtils.isEmpty(condition.getTitle())){
+            queryWrapper.like("title",condition.getTitle());
+        }
+        queryWrapper.orderByDesc("release_time");
+        return blogMapper.selectPage(page,queryWrapper);
+    }
+
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BlogService {
 
-    public IPage<Blog> selectAll(Page<Blog> page);
+    IPage<Blog> selectAll(Page<Blog> page);
 
     String saveOrUpdate(Blog blog);
 
@@ -32,5 +32,7 @@ public interface BlogService {
     IPage<Blog> getTenDaysTopLikeBlog(Page<Blog> page);
 
     IPage<Blog> get48HoursViewBlogList(Page<Blog> page);
+
+    IPage<Blog> selectAll4Background(Page<Blog> page,Blog condition);
 
 }

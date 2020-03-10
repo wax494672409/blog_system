@@ -3,6 +3,7 @@ package com.wax.blogsystem.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.wax.blogsystem.common.JSONUtil;
 import com.wax.blogsystem.common.WangEditor;
 import com.wax.blogsystem.domain.Blog;
 import com.wax.blogsystem.domain.User;
@@ -41,6 +42,11 @@ public class BlogController {
     @GetMapping(value = "/goAdd.do")
     public String goBlogAdd() {
         return "blog/add";
+    }
+
+    @GetMapping(value = "/goBlogListBackground.do")
+    public String goBlogListBackground() {
+        return "background/blog/list";
     }
 
     @GetMapping(value = "/goBlogOnePage.do")
@@ -132,6 +138,13 @@ public class BlogController {
         IPage<Blog> iPage = blogService.get48HoursViewBlogList(page);
         model.addAttribute("twoDaysViewBlogList",iPage.getRecords());
         return "/front/home::two_days_view_blog";
+    }
+
+    @GetMapping(value = "/getAllBlogList4Background.do")
+    @ResponseBody
+    public String getAllBlogList4Background(Page<Blog> page,Blog blog){
+        IPage<Blog> blogPage = blogService.selectAll4Background(page,blog);
+        return JSONUtil.layUITable(blogPage.getRecords(),blogPage.getTotal());
     }
 
 

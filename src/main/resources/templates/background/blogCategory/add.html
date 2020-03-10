@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>后台管理</title>
+    <link rel="stylesheet" th:href="@{/third/layui/css/layui.css}">
+</head>
+<body>
+
+<div class="layui-container">
+    <div th:if="${state} eq 'add'">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>用户新增</legend>
+        </fieldset>
+    </div>
+    <div th:if="${state} eq 'update'">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>用户修改</legend>
+        </fieldset>
+    </div>
+    <form class="layui-form" lay-filter="example">
+        <div class="layui-form-item">
+            <label class="layui-form-label">栏目名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" th:value="${blogCategory.name}"  lay-verify="required" lay-reqtext="栏目名是必填项，岂能为空？" autocomplete="off" placeholder="请输入栏目名" class="layui-input">
+            </div>
+        </div>
+        <input type="hidden" name="id" th:value="${blogCategory.id}" />
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id = "btn-submit" >立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="/third/layui/layui.js"></script>
+<script>
+    //Demo
+    layui.use(['form','jquery'], function(){
+        var form = layui.form;
+        var $ = layui.$;
+
+        $('#btn-submit').on('click', function(){
+            debugger
+            var data = form.val('example');
+            //alert(JSON.stringify(data));
+            $.ajax({
+                url: '/blogCategory/saveOrUpdate.do',
+                type: 'POST',
+                data: data,
+                dataType : "json",
+                success: function (result) {
+                    if(result.flag){
+                        var index = layer.alert(result.msg, function(){
+                            debugger
+                            layer.close(index);
+                            parent.layer.close(window.top.dialog_Add);
+                        })
+                    }
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>
