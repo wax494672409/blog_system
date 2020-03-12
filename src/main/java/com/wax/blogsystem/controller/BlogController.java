@@ -147,5 +147,35 @@ public class BlogController {
         return JSONUtil.layUITable(blogPage.getRecords(),blogPage.getTotal());
     }
 
+    @GetMapping(value = "/recommend.do")
+    @ResponseBody
+    public String recommend(String id){
+        blogService.recommend(id);
+        return JSONUtil.success("推荐成功");
+    }
+
+
+    @GetMapping(value = "/cancelRecommend.do")
+    @ResponseBody
+    public String cancelRecommend(String id){
+        blogService.cancelRecommend(id);
+        return JSONUtil.success("取消推荐成功");
+    }
+
+    @PostMapping(value = "/getEditorRecommendBlog.do")
+    public String getEditorRecommendBlog(Page<Blog> page,Model model){
+        IPage<Blog> blogPage = blogService.getEditorRecommendBlog(page);
+        model.addAttribute("recommendList",blogPage.getRecords());
+        return "front/home::recommend_list";
+    }
+
+    @PostMapping(value = "/getEditorRecommendBlogList.do")
+    public String getEditorRecommendBlogList(Page<Blog> page, Model model){
+        IPage<Blog> blogPage = blogService.getEditorRecommendBlog(page);
+        model.addAttribute("blogList",blogPage.getRecords());
+        model.addAttribute("blogTotalNum",blogPage.getTotal());
+        return "front/home::blog_list";
+    }
+
 
 }

@@ -105,6 +105,8 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<Blog> getTopViewList(Page<Blog> page) {
         QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
         queryWrapper.orderByDesc("view_num");
         return blogMapper.selectPage(page,queryWrapper).getRecords();
     }
@@ -121,6 +123,7 @@ public class BlogServiceImpl implements BlogService {
     public IPage<Blog> getTenDaysTopLikeBlog(Page<Blog> page) {
         QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
         queryWrapper.apply(" (TIME_TO_SEC(TIMEDIFF(SYSDATE(),sys_blog.release_time)))/86400<=10 ");
         queryWrapper.orderByDesc("like_num");
         return blogMapper.selectPage(page,queryWrapper);
@@ -147,12 +150,39 @@ public class BlogServiceImpl implements BlogService {
     public IPage<Blog> selectAll4Background(Page<Blog> page, Blog condition) {
         QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
         if(!StringUtils.isEmpty(condition.getAuthorName())){
             queryWrapper.like("author_name",condition.getAuthorName());
         }
         if (!StringUtils.isEmpty(condition.getTitle())){
             queryWrapper.like("title",condition.getTitle());
         }
+        queryWrapper.orderByDesc("release_time");
+        return blogMapper.selectPage(page,queryWrapper);
+    }
+
+    @Override
+    public void recommend(String id) {
+        Blog blog = new Blog();
+        blog.setId(id);
+        blog.setIsRecommend(SysCode.IS_RECOMMEND.YES);
+        blogMapper.updateById(blog);
+    }
+
+    @Override
+    public void cancelRecommend(String id) {
+        Blog blog = new Blog();
+        blog.setId(id);
+        blog.setIsRecommend(SysCode.IS_RECOMMEND.NO);
+        blogMapper.updateById(blog);
+    }
+
+    @Override
+    public IPage<Blog> getEditorRecommendBlog(Page<Blog> page) {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
+        queryWrapper.eq("is_recommend",SysCode.IS_RECOMMEND.YES);
         queryWrapper.orderByDesc("release_time");
         return blogMapper.selectPage(page,queryWrapper);
     }

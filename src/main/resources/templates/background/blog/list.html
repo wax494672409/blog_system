@@ -31,9 +31,12 @@
 <script src="/third/layui/layui.js"></script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="goBlogPage">前往</a>
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="changeRoleCode">推荐</a>
-    <!--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
-    <!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+    {{#  if(d.isRecommend == '0' ){ }}
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="recommend">推荐</a>
+    {{#  } }}
+    {{#  if(d.isRecommend == '1' ){ }}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="cancelRecommend">取消推荐</a>
+    {{#  } }}
 </script>
 <script th:inline="none">
     window.top.dialog_Add = "";
@@ -136,24 +139,27 @@
         table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
                 ,layEvent = obj.event; //获得 lay-event 对应的值
-            if(layEvent === 'changeRoleCode'){
+            if(layEvent === 'recommend'){
                 $.ajax({
-                    url: '/user/goUserChangeRole.do'+'?userId='+data.id ,
+                    url: '/blog/recommend.do'+'?id='+data.id ,
                     type: 'GET',
                     //data: {qrCode:qrCode},
-                    dataType : "html",
+                    dataType : "json",
                     success: function (result) {
-                        var tk_index =parent.layer.open({
-                            type: 1,
-                            anim: 0,
-                            title: "更改角色",
-                            area: ['50%', '51%'],
-                            end: function(){
-                                refreshTable();
-                            },
-                            content: result
-                        });
-                        window.top.dialog_Add = tk_index;
+                        parent.layer.msg(result.msg);
+                        refreshTable();
+                    }
+                });
+            }
+            if(layEvent === 'cancelRecommend'){
+                $.ajax({
+                    url: '/blog/cancelRecommend.do'+'?id='+data.id ,
+                    type: 'GET',
+                    //data: {qrCode:qrCode},
+                    dataType : "json",
+                    success: function (result) {
+                        parent.layer.msg(result.msg);
+                        refreshTable();
                     }
                 });
             }

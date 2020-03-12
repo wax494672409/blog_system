@@ -85,5 +85,13 @@ public class SysCode {
 
     }
 
+    public static interface IS_RECOMMEND{
+
+        String YES = "1";
+
+        String NO = "0";
+
+    }
+
 
 }

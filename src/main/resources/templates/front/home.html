@@ -46,14 +46,12 @@
             href="http://zzk.cnblogs.com/">找找看</a></div>
     <div id="main">
         <div class="post_nav_block_wrapper">
-            <ul class="post_nav_block">
-                <li><a href="/" class="current_nav" title="">首页</a></li>
-                <li><a href="/pick/" class="" title="编辑精选博文">精华</a></li>
-                <li><a href="/candidate/" class="" title="候选区的博文">候选</a></li>
-                <li><a href="/news/" class="" title="新闻频道最新新闻">新闻</a></li>
-                <li><a href="/following" class="" title="我关注博客的最新博文">关注</a></li>
-                <li><a href="/aggsite/mycommented" class="" title="我评论过的博文">我评</a></li>
-                <li><a href="/aggsite/mydigged" class="" title="我推荐过的博文">我赞</a></li>
+            <ul class="post_nav_block" id="listType">
+                <li><a href="/goFrontHomePage.do" class="current_nav" title="">首页</a></li>
+                <li><a href="javascript:;" class="" title="编辑精选博文">推荐</a></li>
+                <li><a href="javascript:;" class="" title="我关注博客的最新博文">关注</a></li>
+                <li><a href="javascript:;" class="" title="我评论过的博文">我评</a></li>
+                <li><a href="javascript:;" class="" title="我推荐过的博文">我赞</a></li>
             </ul>
             <div class="clear"></div>
         </div>
@@ -84,6 +82,7 @@
         <div id="post_list_tips" class="hide"></div>
 
         <div id="post_list" class="blog_list" th:fragment="blog_list">
+            <span id="blogTotalNum" style="display: none" th:text="${blogTotalNum}"></span>
             <div class="post_item" th:each="blog,blogStat:${blogList}">
                 <div class="digg">
                     <div class="diggit" th:attr="blogId=${blog.id}">
@@ -144,186 +143,6 @@
                         <a href="/cate/108698/" th:text="${category.name}">.NET技术(5)</a>
                     </li>
                 </ul>
-                <div class="cate_bottom"></div>
-                <div id="cate_sub_block">
-                    <div id="cate_content_block_108698" onmouseover="cateShow(108698)" onmouseout="cateHidden(108698)"
-                         class="cate_content_block_wrapper" style="top:30px">
-                        <div class="cate_content_top"></div>
-                        <div class="cate_content_block">
-                            <ul>
-                                <li><a href="/cate/beginner/">.NET新手区(0)</a></li>
-                                <li><a href="/cate/aspnet/">ASP.NET(0)</a></li>
-                                <li><a href="/cate/csharp/">C#(2)</a></li>
-                                <li><a href="/cate/dotnetcore/">.NET Core(1)</a></li>
-                                <li><a href="/cate/winform/">WinForm(0)</a></li>
-                                <li><a href="/cate/silverlight/">Silverlight(0)</a></li>
-                                <li><a href="/cate/wcf/">WCF(0)</a></li>
-                                <li><a href="/cate/clr/">CLR(0)</a></li>
-                                <li><a href="/cate/wpf/">WPF(2)</a></li>
-                                <li><a href="/cate/xna/">XNA(0)</a></li>
-                                <li><a href="/cate/vs2010/">Visual Studio(0)</a></li>
-                                <li><a href="/cate/mvc/">ASP.NET MVC(0)</a></li>
-                                <li><a href="/cate/control/">控件开发(0)</a></li>
-                                <li><a href="/cate/ef/">Entity Framework(0)</a></li>
-                                <li><a href="/cate/nhibernate/">NHibernate(0)</a></li>
-                                <li><a href="/cate/winrt_metro/">WinRT/Metro(0)</a></li>
-                                <li><a href="/cate/uwp/">UWP(0)</a></li>
-                            </ul>
-                        </div>
-                        <div class="cate_content_bottom"></div>
-                    </div>
-                    <div id="cate_content_block_2" onmouseover="cateShow(2)" onmouseout="cateHidden(2)"
-                         class="cate_content_block_wrapper" style="top:58px">
-                        <div class="cate_content_top"></div>
-                        <div class="cate_content_block">
-                            <ul>
-                                <li><a href="/cate/java/">Java(10)</a></li>
-                                <li><a href="/cate/cpp/">C++(1)</a></li>
-                                <li><a href="/cate/php/">PHP(3)</a></li>
-                                <li><a href="/cate/delphi/">Delphi(1)</a></li>
-                                <li><a href="/cate/python/">Python(92)</a></li>
-                                <li><a href="/cate/ruby/">Ruby(0)</a></li>
-                                <li><a href="/cate/c/">C语言(3)</a></li>
-                                <li><a href="/cate/erlang/">Erlang(0)</a></li>
-                                <li><a href="/cate/go/">Go(0)</a></li>
-                                <li><a href="/cate/swift/">Swift(0)</a></li>
-                                <li><a href="/cate/scala/">Scala(0)</a></li>
-                                <li><a href="/cate/r/">R语言(2)</a></li>
-                                <li><a href="/cate/verilog/">Verilog(0)</a></li>
-                                <li><a href="/cate/dart/">Dart(1)</a></li>
-                                <li><a href="/cate/otherlang/">其它语言(0)</a></li>
-                            </ul>
-                        </div>
-                        <div class="cate_content_bottom"></div>
-                    </div>
-                    <div id="cate_content_block_108701" onmouseover="cateShow(108701)" onmouseout="cateHidden(108701)"
-                         class="cate_content_block_wrapper" style="top:86px">
-                        <div class="cate_content_top"></div>
-                        <div class="cate_content_block">
-                            <ul>
-                                <li><a href="/cate/design/">架构设计(0)</a></li>
-                                <li><a href="/cate/108702/">面向对象(0)</a></li>
-                                <li><a href="/cate/dp/">设计模式(0)</a></li>
-                                <li><a href="/cate/ddd/">领域驱动设计(0)</a></li>
-                            </ul>
-                        </div>
-                        <div class="cate_content_bottom"></div>
-                    </div>
-                    <div id="cate_content_block_108703" onmouseover="cateShow(108703)" onmouseout="cateHidden(108703)"
-                         class="cate_content_block_wrapper" style="top:114px">
-                        <div class="cate_content_top"></div>
-                        <div class="cate_content_block">
-                            <ul>
-                                <li><a href="/cate/web/">Html/Css(3)</a></li>
-                                <li><a href="/cate/javascript/">JavaScript(4)</a></li>
-                                <li><a href="/cate/jquery/">jQuery(3)</a></li>
-                                <li><a href="/cate/html5/">HTML5(0)</a></li>
-                            </ul>
-                        </div>
-                        <div class="cate_content_bottom"></div>
-                    </div>
-                    <div id="cate_content_block_108704" onmouseover="cateShow(108704)" onmouseout="cateHidden(108704)"
-                         class="cate_content_block_wrapper" style="top:142px">
-                        <div class="cate_content_top"></div>
-                        <div class="cate_content_block">
-                            <ul>
-                                <li><a href="/cate/bpm/">BPM(0)</a></li>
-                                <li><a href="/cate/sharepoint/">SharePoint(1)</a></li>
-                                <li><a href="/cate/gis/">GIS技术(0)</a></li>
-                                <li><a href="/cate/sap/">SAP(28)</a></li>
-                                <li><a href="/cate/OracleERP/">Oracle ERP(0)</a></li>
-                                <li><a href="/cate/dynamics/">Dynamics(0)</a></li>
-                                <li><a href="/cate/infosec/">信息安全(0)</a></li>
-                                <li><a href="/cate/3/">企业信息化其他(0)</a></li>
-                            </ul>
-                        </div>
-                        <div class="cate_content_bottom"></div>
-                    </div>
-                    <div id="cate_content_block_108705" onmouseover="cateShow(108705)" onmouseout="cateHidden(108705)"
-                         class="cate_content_block_wrapper" style="top:170px">
-                        <div class="cate_content_top"></div>
-                        <div class="cate_content_block">
-                            <ul>
-                                <li><a href="/cate/android/">Android开发(2)</a></li>
-                                <li><a href="/cate/ios/">iOS开发(0)</a></li>
-                                <li><a href="/cate/wp/">Windows Phone(0)</a></li>
-                                <li><a href="/cate/wm/">Windows Mobile(0)</a></li>
-                                <li><a href="/cate/mobile/">其他手机开发(0)</a></li>
-                            </ul>
-                        </div>
-                        <div class="cate_content_bottom"></div>
-                    </div>
-                    <div id="cate_content_block_108709" onmouseover="cateShow(108709)" onmouseout="cateHidden(108709)"
-                         class="cate_content_block_wrapper" style="top:198px">
-                        <div class="cate_content_top"></div>
-                        <div class="cate_content_block">
-                            <ul>
-                                <li><a href="/cate/agile/">敏捷开发(0)</a></li>
-                                <li><a href="/cate/pm/">项目与团队管理(0)</a></li>
-                                <li><a href="/cate/Engineering/">软件工程其他(0)</a></li>
-                            </ul>
-                        </div>
-                        <div class="cate_content_bottom"></div>
-                    </div>
-                    <div id="cate_content_block_108712" onmouseover="cateShow(108712)" onmouseout="cateHidden(108712)"
-                         class="cate_content_block_wrapper" style="top:226px">
-                        <div class="cate_content_top"></div>
-                        <div class="cate_content_block">
-                            <ul>
-                                <li><a href="/cate/sqlserver/">SQL Server(0)</a></li>
-                                <li><a href="/cate/oracle/">Oracle(0)</a></li>
-                                <li><a href="/cate/mysql/">MySQL(16)</a></li>
-                                <li><a href="/cate/postgresql/">PostgreSQL(0)</a></li>
-                                <li><a href="/cate/nosql/">NoSQL(1)</a></li>
-                                <li><a href="/cate/bigdata/">大数据(1)</a></li>
-                                <li><a href="/cate/database/">其它数据库(0)</a></li>
-                            </ul>
-                        </div>
-                        <div class="cate_content_bottom"></div>
-                    </div>
-                    <div id="cate_content_block_108724" onmouseover="cateShow(108724)" onmouseout="cateHidden(108724)"
-                         class="cate_content_block_wrapper" style="top:254px">
-                        <div class="cate_content_top"></div>
-                        <div class="cate_content_block">
-                            <ul>
-                                <li><a href="/cate/win7/">Windows(1)</a></li>
-                                <li><a href="/cate/winserver/">Windows Server(0)</a></li>
-                                <li><a href="/cate/linux/">Linux(6)</a></li>
-                                <li><a href="/cate/osx/">OS X(0)</a></li>
-                                <li><a href="/cate/eos/">嵌入式(0)</a></li>
-                            </ul>
-                        </div>
-                        <div class="cate_content_bottom"></div>
-                    </div>
-                    <div id="cate_content_block_4" onmouseover="cateShow(4)" onmouseout="cateHidden(4)"
-                         class="cate_content_block_wrapper" style="top:282px">
-                        <div class="cate_content_top"></div>
-                        <div class="cate_content_block">
-                            <ul>
-                                <li><a href="/cate/life/">非技术区(0)</a></li>
-                                <li><a href="/cate/testing/">软件测试(0)</a></li>
-                                <li><a href="/cate/software/">代码与软件发布(0)</a></li>
-                                <li><a href="/cate/cg/">计算机图形学(0)</a></li>
-                                <li><a href="/cate/gamedev/">游戏开发(0)</a></li>
-                                <li><a href="/cate/codelife/">程序人生(2)</a></li>
-                                <li><a href="/cate/job/">求职面试(1)</a></li>
-                                <li><a href="/cate/book/">读书区(1)</a></li>
-                                <li><a href="/cate/quoted/">转载区(0)</a></li>
-                                <li><a href="/cate/wince/">Windows CE(0)</a></li>
-                                <li><a href="/cate/translate/">翻译区(1)</a></li>
-                                <li><a href="/cate/opensource/">开源研究(0)</a></li>
-                                <li><a href="/cate/flex/">Flex(0)</a></li>
-                                <li><a href="/cate/cloud/">云计算(0)</a></li>
-                                <li><a href="/cate/algorithm/">算法与数据结构(1)</a></li>
-                                <li><a href="/cate/ai/">人工智能(0)</a></li>
-                                <li><a href="/cate/blockchain/">区块链(0)</a></li>
-                                <li><a href="/cate/networksecurity/">网络安全(0)</a></li>
-                                <li><a href="/cate/misc/">其他技术区(1)</a></li>
-                            </ul>
-                        </div>
-                        <div class="cate_content_bottom"></div>
-                    </div>
-                </div>
             </div>
             <div class="l_s"></div>
             <!--            <p class="r_l_3"></p><p class="r_l_2"></p><p class="r_l_1"></p>-->
@@ -474,23 +293,9 @@
                 <div class="w_r">
                     <h4><a href="/aggsite/headline">编辑推荐</a><span class="more"><a href="/aggsite/headline"
                                                                                   class="right_more">»</a></span></h4>
-                    <ul>
-                        <li><a href="https://www.cnblogs.com/uoyo/p/12377645.html" target="_blank"
-                               onmouseover="set_a_title(this);">后台任务的积木：.Net Core 中的 IHostedService</a></li>
-                        <li><a href="https://www.cnblogs.com/jionsoft/p/12343400.html" target="_blank"
-                               onmouseover="set_a_title(this);">asp.net core 3.x 授权默认流程</a></li>
-                        <li><a href="https://www.cnblogs.com/xuanyuan/p/12361461.html" target="_blank"
-                               onmouseover="set_a_title(this);">一个故事看懂 Linux 文件权限管理</a></li>
-                        <li><a href="https://www.cnblogs.com/uoyo/p/12357999.html" target="_blank"
-                               onmouseover="set_a_title(this);">设计模式的迷惑？Provider vs Factory</a></li>
-                        <li><a href="https://www.cnblogs.com/youzhibing/p/12318543.html" target="_blank"
-                               onmouseover="set_a_title(this);">神奇的 SQL 之 WHERE 条件的提取与应用</a></li>
-                        <li><a href="https://www.cnblogs.com/sdflysha/p/20200222-machingkey-in-dotnetcore.html"
-                               target="_blank" onmouseover="set_a_title(this);">在 .NET Core 中使用 MachineKey</a></li>
-                        <li><a href="https://www.cnblogs.com/uoyo/p/12342290.html" target="_blank"
-                               onmouseover="set_a_title(this);">对象映射只有AutoMapper？试试Mapster</a></li>
-                        <li><a href="https://www.cnblogs.com/ms27946/p/DLR-In-CSharp.html" target="_blank"
-                               onmouseover="set_a_title(this);">一文带你了解 C# DLR 的世界</a></li>
+                    <ul id="recommend_list" th:fragment="recommend_list">
+                        <li th:each="blog:${recommendList}"><a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" target="_blank"
+                             th:text="${blog.title}"  >后台任务的积木：.Net Core 中的 IHostedService</a></li>
                     </ul>
                 </div>
 <!--                <div id="cnblogs_b3" class="sidebar-image">-->
@@ -602,17 +407,45 @@
         var $ = layui.$;
         var layer = layui.layer;
 
+
+        var pageType = "首页";
+        var totalNum = 0;
         var pageSize = 10;
+
+        renderAllPage(pageSize,pageType);
         //执行一个laypage实例
-        laypage.render({
-            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
-            , count: [[${blogTotalNum}]] //数据总数，从服务端得到
-            , limit: pageSize
-            , jump: function (obj, first) {
-                getAllBlogList(obj.curr);
-                $('html,body').animate({scrollTop: '0px'}, 800);
+        function renderAllPage(pageSize,pageType){
+            switch (pageType) {
+                case '首页':
+                    getAllBlogList(1);
+                    break;
+                case '推荐':
+                    getEditorRecommendBlogList(1);
+                    break;
             }
-        });
+            setTimeout(function () {
+                totalNum = Number($("#blogTotalNum").text());
+                laypage.render({
+                    elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                    , count: totalNum //数据总数，从服务端得到
+                    , limit: pageSize
+                    , jump: function (obj, first) {
+                        if(!first){
+                            switch (pageType) {
+                                case '首页':
+                                    getAllBlogList(obj.curr);
+                                    break;
+                                case '推荐':
+                                    getEditorRecommendBlogList(obj.curr);
+                                    break;
+                            }
+                            $('html,body').animate({scrollTop: '0px'}, 800);
+                        }
+                    }
+                });
+            },500)
+
+        }
 
         function getAllBlogList(currentPage) {
             $.ajax({
@@ -632,6 +465,7 @@
         getTwoDaysTopViewBlog(1);
         getTenDaysTopLikeBlog(1);
         getCategoryList(1);
+        getEditorRecommendBlog(1);
 
         function getTopUserList(currentPage) {
             $.ajax({
@@ -689,6 +523,20 @@
             });
         }
 
+        function getEditorRecommendBlog(currentPage) {
+            $.ajax({
+                url: '/blog/getEditorRecommendBlog.do',
+                type: 'POST',
+                data: {
+                    size: 10,
+                    current: currentPage
+                },
+                success: function (result) {
+                    $("#recommend_list").html(result);
+                }
+            });
+        }
+
         $("#post_list").on("click", "div.diggit", function (e) {
             var div = $(this)
             $.ajax({
@@ -701,7 +549,7 @@
                 dataType: "json",
                 success: function (result) {
                     if (result.msg == "点赞成功") {
-                        div.children("span").eq(0).text(Number(div.children("span").eq(0).text() + 1));
+                        div.children("span").eq(0).text(Number(div.children("span").eq(0).text()) + 1);
                         layer.msg(result.msg)
                     } else {
                         layer.msg(result.msg)
@@ -709,6 +557,30 @@
                 }
             });
         })
+
+
+        $("#listType").on("click", "li", function (e) {
+            $(".current_nav").removeClass("current_nav");
+            var li = $(this)
+            li.children("a").addClass("current_nav");
+            var type = li.text();
+            renderAllPage(pageSize,type);
+        })
+
+
+        function getEditorRecommendBlogList(currentPage) {
+            $.ajax({
+                url: '/blog/getEditorRecommendBlogList.do',
+                type: 'POST',
+                data: {
+                    size: pageSize,
+                    current: currentPage
+                },
+                success: function (result) {
+                    $(".blog_list").html(result);
+                }
+            });
+        }
 
     });
 

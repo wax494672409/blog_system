@@ -40,7 +40,6 @@ public class MainController {
     public String goFrontHomePage(Model model){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("loginUser",user);
-        model.addAttribute("blogTotalNum",blogService.getAllNum());
         return "front/home";
     }
 

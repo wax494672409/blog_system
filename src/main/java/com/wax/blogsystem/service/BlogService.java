@@ -35,4 +35,10 @@ public interface BlogService {
 
     IPage<Blog> selectAll4Background(Page<Blog> page,Blog condition);
 
+    void recommend(String id);
+
+    void cancelRecommend(String id);
+
+    IPage<Blog> getEditorRecommendBlog(Page<Blog> page);
+
 }
