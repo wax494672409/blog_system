@@ -123,4 +123,10 @@ public class Blog {
     @TableField(value = "is_recommend")
     private String isRecommend;
 
+    /**
+     * 栏目
+     */
+    @TableField(value = "category")
+    private String category;
+
 }

@@ -177,5 +177,31 @@ public class BlogController {
         return "front/home::blog_list";
     }
 
+    @PostMapping(value = "/getMyCommentList.do")
+    public String getMyCommentList(Page<Blog> page, Model model){
+        User user = (User)SecurityUtils.getSubject().getPrincipal();
+        IPage<Blog> blogPage = blogService.getMyCommentList(page,user.getId());
+        model.addAttribute("blogList",blogPage.getRecords());
+        model.addAttribute("blogTotalNum",blogPage.getTotal());
+        return "front/home::blog_list";
+    }
+
+    @PostMapping(value = "/getILikeList.do")
+    public String getILikeList(Page<Blog> page, Model model){
+        User user = (User)SecurityUtils.getSubject().getPrincipal();
+        IPage<Blog> blogPage = blogService.getILikeList(page,user.getId());
+        model.addAttribute("blogList",blogPage.getRecords());
+        model.addAttribute("blogTotalNum",blogPage.getTotal());
+        return "front/home::blog_list";
+    }
+
+    @PostMapping(value = "/getBlogByCategory.do")
+    public String getBlogByCategory(Page<Blog> page,String category, Model model){
+        IPage<Blog> blogPage = blogService.getBlogByCategory(page,category);
+        model.addAttribute("blogList",blogPage.getRecords());
+        model.addAttribute("blogTotalNum",blogPage.getTotal());
+        return "front/home::blog_list";
+    }
+
 
 }

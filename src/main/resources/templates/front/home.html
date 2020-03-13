@@ -139,8 +139,8 @@
                     <div class="cate_title">网站分类</div>
                 </div>
                 <ul id="cate_item" class="category_list" th:fragment="category_list">
-                    <li id="cate_item_108698" th:each="category:${categoryList}">
-                        <a href="/cate/108698/" th:text="${category.name}">.NET技术(5)</a>
+                    <li th:id="${category.id}" th:each="category:${categoryList}">
+                        <a href="javascript:;" th:text="${category.name}">.NET技术(5)</a>
                     </li>
                 </ul>
             </div>
@@ -422,6 +422,12 @@
                 case '推荐':
                     getEditorRecommendBlogList(1);
                     break;
+                case '我评':
+                    getMyCommentList(1);
+                    break;
+                case '我赞':
+                    getILikeList(1);
+                    break;
             }
             setTimeout(function () {
                 totalNum = Number($("#blogTotalNum").text());
@@ -438,12 +444,18 @@
                                 case '推荐':
                                     getEditorRecommendBlogList(obj.curr);
                                     break;
+                                case '我评':
+                                    getMyCommentList(obj.curr);
+                                    break;
+                                case '我赞':
+                                    getILikeList(obj.curr);
+                                    break;
                             }
                             $('html,body').animate({scrollTop: '0px'}, 800);
                         }
                     }
                 });
-            },500)
+            },800)
 
         }
 
@@ -580,6 +592,79 @@
                     $(".blog_list").html(result);
                 }
             });
+        }
+
+        function getMyCommentList(currentPage) {
+            $.ajax({
+                url: '/blog/getMyCommentList.do',
+                type: 'POST',
+                data: {
+                    size: pageSize,
+                    current: currentPage
+                },
+                success: function (result) {
+                    $(".blog_list").html(result);
+                }
+            });
+        }
+
+        function getILikeList(currentPage) {
+            $.ajax({
+                url: '/blog/getILikeList.do',
+                type: 'POST',
+                data: {
+                    size: pageSize,
+                    current: currentPage
+                },
+                success: function (result) {
+                    $(".blog_list").html(result);
+                }
+            });
+        }
+
+        function getBlogByCategory(currentPage,category) {
+            $.ajax({
+                url: '/blog/getBlogByCategory.do',
+                type: 'POST',
+                data: {
+                    size: pageSize,
+                    current: currentPage,
+                    category: category
+                },
+                success: function (result) {
+                    $(".blog_list").html(result);
+                }
+            });
+        }
+
+        $(".category_list").on("click", "li", function (e) {
+            var li = $(this)
+            var category_id = li.attr("id")
+            var category_name = li.text().replace(/^\s+|\s+$/g,"");
+            var html = "<li><a href=\"/goFrontHomePage.do\" title=\"\">首页</a></li>\n" +
+                "                <li><a href=\"javascript:;\" class=\"current_nav\" title=\"编辑精选博文\">"+category_name+"</a></li>";
+            $("#listType").html(html);
+            renderCategoryPage(pageSize,category_id)
+        })
+
+
+        function renderCategoryPage(pageSize,category){
+            getBlogByCategory(1,category)
+            setTimeout(function () {
+                totalNum = Number($("#blogTotalNum").text());
+                laypage.render({
+                    elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                    , count: totalNum //数据总数，从服务端得到
+                    , limit: pageSize
+                    , jump: function (obj, first) {
+                        if(!first){
+                            getBlogByCategory(obj.curr,category);
+                            $('html,body').animate({scrollTop: '0px'}, 800);
+                        }
+                    }
+                });
+            },800)
+
         }
 
     });

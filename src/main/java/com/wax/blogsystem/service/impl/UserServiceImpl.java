@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wax.blogsystem.common.Encript;
 import com.wax.blogsystem.common.JSONUtil;
+import com.wax.blogsystem.common.ShiroUtils;
 import com.wax.blogsystem.common.SysCode;
 import com.wax.blogsystem.mapper.UserMapper;
 import com.wax.blogsystem.domain.User;
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService {
         }
         else {
             userMapper.updateById(user);
+            ShiroUtils.setUser(selectById(user.getId()));
             return JSONUtil.success(SysCode.TIPMESSAGE.UPDATESUCCESS);
         }
     }

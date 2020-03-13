@@ -39,11 +39,11 @@
             欢迎你，Violet丶
         </h1>
             <div id="header_user_right">
-                <a href="/u/bootyWind/"><img class="pfs" src="//pic.cnblogs.com/face/1696808/20190523221516.png" alt=""></a>
-                <a href="/u/bootyWind/">Violet丶</a>
-                · <a href="//www.cnblogs.com/bootyWind/">我的博客</a>
+                <a href="/u/bootyWind/"><img class="pfs" th:src="${loginUser.picUrl}" alt=""></a>
+                <a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}" th:text="${loginUser.username}">Violet丶</a>
+                · <a th:href="@{'/blog/goBlogListPage.do?id='+${loginUser.id}}">我的博客</a>
                 · <a href="//home.cnblogs.com/set/account/">设置</a>
-                · <a href="javascript:void(0);" onclick="return logout();">退出</a>
+                · <a href="javascript:void(0);">退出</a>
             </div>
         </div>
         <div class="clear"></div>
@@ -99,11 +99,9 @@
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <ul class="avatar_nav_block" id="avatar_opt_nav">
-                                                    <li><a href="/set/avatar/" class="link_modify_info">修改头像</a></li>
+                                                <ul th:if="${loginUser.id} eq ${user.id}" class="avatar_nav_block" id="avatar_opt_nav">
+                                                    <li><a th:href="@{'/user/goHeadPicPage.do?id='+${loginUser.id}}" class="link_modify_info">修改头像</a></li>
                                                     <li><a href="/u/bootyWind/detail/" class="link_account">个人资料</a></li>
-                                                    <li><a href="//ing.cnblogs.com/u/bootyWind/" class="link_mying">闪存主页</a></li>
-                                                    <li><a href="//q.cnblogs.com/u/bootyWind/" class="link_question">博问主页</a></li>
                                                 </ul>
                                             </td>
                                         </tr>

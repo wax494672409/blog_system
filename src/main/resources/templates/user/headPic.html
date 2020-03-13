@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <title>修改头像</title>
+    <link href="/css/user/head.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div style="margin-left:30px;margin-bottom:10px"><a th:href="@{'goPersonalPage.do?id='+${user.id}}">返回</a></div>
+<div id="jquery-wrapped-fine-uploader">
+    <div class="qq-uploader span12">
+        <div class="qq-upload-button btn btn-success" style=" margin-left:10px;width: auto; position: relative; overflow: hidden; direction: ltr;">
+            上传头像图片<input id="uploadHead" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+        </div>
+        <span class="qq-drop-processing"><span>（支持文件拖放上传，只能上传单张10M以下png、jpg图片）</span><span class="qq-drop-processing-spinner"></span></span><ul class="qq-upload-list" style="margin-top: 10px;overflow:hidden;"></ul>
+    </div>
+</div>
+<div style="clear:both"></div>
+<div id="message"></div>
+<div id="crop_wrap">
+    <div id="crop_holder">
+        <div id="crop_area" class="border">
+            <img id="crop_image" alt="" src="" class="preview-image">
+        </div>
+        <div id="preview_area">
+            <div id="preview_title">当前头像</div>
+            <div id="preview_small_text" class="preview-text">48px × 48px</div>
+            <div id="preview_small_wrap" class="border"><img id="preview_small" alt="" th:src="${user.picUrl}" class="preview-image" style=""></div>
+            <div id="preview_large_text" class="preview-text">180px × 180px</div>
+            <div id="preview_large_wrap" class="border"><img id="preview_large" alt="" th:src="${user.picUrl}" class="preview-image" style=""></div>
+        </div>
+    </div>
+</div>
+<button id="confirmBtn" class="btn-success" style="border-radius: 5px;margin-left: 30px;display: none">确认修改</button>
+<script src="/third/layui/layui.js"></script>
+<script th:inline="javascript">
+    layui.use(['jquery', 'layer'], function () {
+        var $ = layui.$;
+        var layer = layui.layer;
+
+        var version = Math.random();
+        $("#uploadHead").change(function(event) {
+            var files = event.target.files, file;
+            if (files && files.length > 0) {
+                // 获取目前上传的文件
+                file = files[0];
+                // Judge file type
+                var fileName = file.name;
+                var fileType;
+                var index = fileName.indexOf(".");
+                var username = [[${user.username}]]
+                fileType = fileName.substring(index);
+                if (fileType != ".BMP" && fileType != ".PNG" && fileType != ".JPG" && fileType != ".JPEG"
+                    && fileType != ".bmp"&& fileType != ".png"&& fileType != ".jpg"&& fileType != ".jpeg"){
+                    layer.msg("请选择图片类型上传")
+                    return;
+                }
+                var formData = new FormData();
+                formData.append("myFile",file);
+                formData.append("username", username);
+                debugger
+                $.ajax({
+                    url: '/user/uploadHead.do',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,   // jQuery不要去处理发送的数据
+                    contentType: false,   // jQuery不要去设置Content-Type请求头
+                    success: function (result) {
+                        $("#crop_image").attr("src",result);
+                        version = Math.random();
+                        $("#preview_small").attr("src",result);
+                        version = Math.random();
+                        $("#preview_large").attr("src",result);
+                        $("#confirmBtn").css("display",'block')
+                    }
+                });
+            }
+        })
+
+
+        $("#confirmBtn").click(function () {
+            var picUrl = $("#preview_large").attr("src");
+            $.ajax({
+                url: '/user/saveOrUpdate.do',
+                type: 'POST',
+                data: {
+                    id: [[${user.id}]],
+                    picUrl: picUrl
+                },
+                dataType:"json",
+                success: function (result) {
+                    debugger
+                    layer.msg(result.msg)
+                }
+            });
+        })
+    })
+</script>
+</body>
+</html>

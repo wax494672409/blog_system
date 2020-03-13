@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wax.blogsystem.domain.Blog;
 import javafx.scene.control.Pagination;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -26,5 +27,34 @@ public interface BlogMapper extends BaseMapper<Blog> {
             ")")
     IPage<Blog> get48HoursViewBlogList(Page<Blog> page);
 
+
+    @Select("select sys_blog.*,user.pic_url `authorPicUrl` from sys_blog,user where sys_blog.author=user.id and sys_blog.del_tag='1' and sys_blog.status = 'released'" +
+            "and sys_blog.id in (" +
+                        "select tt.blog_id from" +
+                        "(" +
+                            "select DISTINCT(blog_id) from sys_comment where sender = #{userId} " +
+                        ") tt"+
+            ")")
+    IPage<Blog> getMyCommentList(Page<Blog> page,@Param("userId")String userId);
+
+    @Select("select sys_blog.*,user.pic_url `authorPicUrl` from sys_blog,user where sys_blog.author=user.id and sys_blog.del_tag='1' and sys_blog.status = 'released'" +
+            "and sys_blog.id in (" +
+            "select tt.blog_id from" +
+            "(" +
+            "select blog_id from sys_blog_like where user_id = #{userId} " +
+            ") tt"+
+            ")")
+    IPage<Blog> getILikeList(Page<Blog> page,@Param("userId")String userId);
+
+
+    @Select("SELECT sys_blog.*,user.pic_url `authorPicUrl` FROM sys_blog,user " +
+            "WHERE sys_blog.author=user.id and sys_blog.del_tag='1' and sys_blog.status = 'released'" +
+            "and sys_blog.category = #{category} order by sys_blog.release_time desc")
+    IPage<Blog> getBlogByCategory(Page<Blog> page,@Param("category")String category);
+
+    @Select("SELECT sys_blog.*,user.pic_url `authorPicUrl` FROM sys_blog,user " +
+            "WHERE sys_blog.author=user.id and sys_blog.del_tag='1' and sys_blog.status = 'released'" +
+            "and sys_blog.is_recommend = '1' order by sys_blog.release_time desc")
+    IPage<Blog> getEditorRecommendBlog(Page<Blog> page);
 
 }

@@ -179,12 +179,22 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public IPage<Blog> getEditorRecommendBlog(Page<Blog> page) {
-        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
-        queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
-        queryWrapper.eq("is_recommend",SysCode.IS_RECOMMEND.YES);
-        queryWrapper.orderByDesc("release_time");
-        return blogMapper.selectPage(page,queryWrapper);
+        return blogMapper.getEditorRecommendBlog(page);
+    }
+
+    @Override
+    public IPage<Blog> getMyCommentList(Page<Blog> page,String userId) {
+        return blogMapper.getMyCommentList(page,userId);
+    }
+
+    @Override
+    public IPage<Blog> getILikeList(Page<Blog> page,String userId) {
+        return blogMapper.getILikeList(page,userId);
+    }
+
+    @Override
+    public IPage<Blog> getBlogByCategory(Page<Blog> page, String category) {
+        return blogMapper.getBlogByCategory(page,category);
     }
 
 }

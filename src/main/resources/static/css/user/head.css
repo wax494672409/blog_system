@@ -1,0 +1,21 @@
+body {
+    font-size: 12px;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    margin: 0;
+    padding: 10px;
+    background: none repeat scroll 0 0 #F0F0EE;
+}
+/*#region fine upload*/
+li.alert-success {
+    background-color: #DFF0D8 !important;
+}
+
+li.alert-error {
+    background-color: #F2DEDE !important;
+}
+/*.qq-uploader,.span12{
+    width:auto !important;
+}*/
+/*#endregion*/
+
+body{padding-top:20px;background-color:#fff}.border{border:solid 1px #ccc;background-color:#f0f0ee}#crop_wrap{margin:10px 20px 10px 30px}#crop_holder{margin-bottom:10px}#crop_area{display:table-cell;height:400px;width:400px;vertical-align:bottom}#preview_area{display:table-cell;width:200px;padding-left:10px;vertical-align:bottom}#preview_title{font-weight:bold}img{border-style:none;max-width:none}#preview_small_wrap{position:relative;overflow:hidden;height:48px;width:48px;margin-bottom:10px}#preview_small{width:48px;height:48px}#preview_large_wrap{position:relative;overflow:hidden;height:180px;width:180px}#preview_large{width:180px;height:180px}#crop_operation_msg{margin-left:5px}.green{color:#468847}
