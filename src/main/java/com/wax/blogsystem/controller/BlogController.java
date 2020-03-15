@@ -5,11 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.wax.blogsystem.common.JSONUtil;
 import com.wax.blogsystem.common.WangEditor;
-import com.wax.blogsystem.domain.Blog;
-import com.wax.blogsystem.domain.User;
-import com.wax.blogsystem.service.BlogService;
-import com.wax.blogsystem.service.CommentService;
-import com.wax.blogsystem.service.UserService;
+import com.wax.blogsystem.domain.*;
+import com.wax.blogsystem.service.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +35,26 @@ public class BlogController {
     @Autowired
     public CommentService commentService;
 
+    @Autowired
+    public BlogFavoriteService blogFavoriteService;
+
+    @Autowired
+    public BlogLikeService blogLikeService;
+
+    @Autowired
+    public FollowService followService;
+
+    @Autowired
+    public BlogCategoryService blogCategoryService;
+
 
     @GetMapping(value = "/goAdd.do")
-    public String goBlogAdd() {
+    public String goBlogAdd(Model model) {
+        Page<BlogCategory> page = new Page<>(1,10);
+        IPage<BlogCategory> iPage = blogCategoryService.selectAll(page);
+        User user = (User)SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("loginUser",user);
+        model.addAttribute("categoryList",iPage.getRecords());
         return "blog/add";
     }
 
@@ -55,10 +69,20 @@ public class BlogController {
         Blog blog = blogService.selectById(id);
         int totalNum = blogService.getTotalNum(blog.getAuthor());
         int commentTotalNum = commentService.getTotalNum(blog.getId());
+        boolean isLike = false,isFavorite = false,isFollow=false;
+        Follow follow = followService.selectByFollowerAndBeFollower(user.getId(),blog.getAuthor());
+        BlogLike blogLike = blogLikeService.selectByUserAndBlog(user.getId(),blog.getId());
+        BlogFavorite blogFavorite = blogFavoriteService.selectByUserAndBlog(user.getId(),blog.getId());
+        isFollow = follow != null ? true:false;
+        isFavorite = blogFavorite!=null? true:false;
+        isLike = blogLike!=null? true:false;
         model.addAttribute("totalNum",totalNum);
         model.addAttribute("commentTotalNum",commentTotalNum);
         model.addAttribute("blog",blog);
         model.addAttribute("loginUser",user);
+        model.addAttribute("isLike",isLike);
+        model.addAttribute("isFavorite",isFavorite);
+        model.addAttribute("isFollow",isFollow);
         return "blog/blog_one";
     }
 
@@ -80,28 +104,6 @@ public class BlogController {
         return "blog/blogList::blog_list";
     }
 
-
-    @RequestMapping(value = "/uploadImg.do")
-    @ResponseBody
-    public WangEditor uploadImg(@RequestParam("myFile") MultipartFile multipartFile,
-                                HttpServletRequest request) throws IOException {
-        InputStream inputStream = multipartFile.getInputStream();
-        // 根目录下新建文件夹upload，存放上传图片
-        String uploadPath = "src/main/resources/static/upload";
-        // 获取文件名称
-        String filename = multipartFile.getOriginalFilename();
-        // 将文件上传的服务器根目录下的upload文件夹
-        File file = new File(uploadPath, filename);
-        FileUtils.copyInputStreamToFile(inputStream, file);
-        // 返回图片访问路径
-        String url =
-//                request.getScheme() + "://" + request.getServerName()
-//                + ":" + request.getServerPort() +
-                "/upload/" + filename;
-        String[] str = {url};
-        WangEditor we = new WangEditor(str);
-        return we;
-    }
 
 
     @PostMapping(value = "saveOrUpdate.do")

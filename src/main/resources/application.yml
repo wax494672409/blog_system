@@ -1,8 +1,10 @@
 server:
   port: 8080
 uploadFile:
-  resourceHandler: /uploadFiles/**   #请求 url 中的资源映射
-  location: E:/IDEA_WORKSPACE/blogsystem/src/main/resources/static/upload/head/ #自定义上传文件本地保存路径
+  headHandler: /uploadHead/**   #请求 url 中的资源映射
+  headLocation: E:/IDEA_WORKSPACE/blogsystem/src/main/resources/static/upload/head/ #自定义上传文件本地保存路径
+  blogHandler: /uploadBlogImg/**
+  blogLocation: E:/IDEA_WORKSPACE/blogsystem/src/main/resources/static/upload/blog/
 spring:
   # 配置发送方信息
   mail:

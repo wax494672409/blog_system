@@ -12,7 +12,7 @@
     <div id="header">
         <div id="blogTitle">
             <div class="title"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle"
-                                  href="https://www.cnblogs.com/bootyWind/" th:text="${user.name}">Violet丶</a>
+                                  th:href="@{'/blog/goBlogListPage.do?id='+${user.id}}" th:text="${user.username}">Violet丶</a>
             </div>
             <div class="subtitle">
 
@@ -106,7 +106,7 @@
                     <div id="blog-news">
                         <div id="profile_block">
                             昵称：
-                            <a th:href="@{'/user/goPersonalPage.do?id='+${user.id}}" th:text="${user.name}">
+                            <a th:href="@{'/user/goPersonalPage.do?id='+${user.id}}" th:text="${user.username}">
                                 Violet丶
                             </a>
                             <br>
@@ -395,7 +395,7 @@
     <div class="clear"></div>
     <div id="footer">
         <!--done-->
-        <span th:text="'Copyright © 2020 '+${user.name}"></span>
+        <span th:text="'Copyright © 2020 '+${user.username}"></span>
         <br><span id="poweredby">Powered by JAVA on windows</span>
 
     </div>

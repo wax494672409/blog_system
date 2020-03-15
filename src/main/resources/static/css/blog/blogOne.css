@@ -345,3 +345,15 @@ div#sideBar div#side_ing_block ul li {
         position: static !important
     }
 }
+
+#green_channel #green_channel_digged {
+    background-color: #AAAAAA
+}
+
+#green_channel #green_channel_followed {
+    background-color: #AAAAAA
+}
+
+#green_channel #green_channel_favorited {
+    background-color: #AAAAAA
+}

@@ -49,5 +49,14 @@ public class BlogLikeServiceImpl implements BlogLikeService {
         return blogLikeMapper.selectOne(queryWrapper);
     }
 
+    @Override
+    @Transactional
+    public void cancelLike(BlogLike blogLike) {
+        blogLike = selectByUserAndBlog(blogLike.getUserId(),blogLike.getBlogId());
+        blogLike.setDelTag(SysCode.DELTAG.YSC);
+        blogLikeMapper.updateById(blogLike);
+        blogService.subtractLikeNum(blogService.selectById(blogLike.getBlogId()));
+    }
+
 
 }

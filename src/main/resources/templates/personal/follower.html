@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/user/home.css" rel="stylesheet">
+    <link href="/css/user/profile.css" rel="stylesheet">
+    <link href="/css/personal/follow.css" rel="stylesheet">
+</head>
+<body>
+<div id="top">
+    <div id="top_left">
+        <a href="//www.cnblogs.com">首页</a>
+        <a href="//news.cnblogs.com/">新闻</a>
+        <a href="//zzk.cnblogs.com/">找找看</a>
+        <a href="//academy.cnblogs.com/">学习计划</a>
+    </div>
+</div>
+<div class="clear"></div>
+<div id="wrapper">
+    <div id="header">
+        <div id="logo">
+            <a href="//www.cnblogs.com" title="返回博客园首页">
+                <img src="//common.cnblogs.com/images/logo/logo20170227.png" alt="logo" style="width:165px;height:55px;">
+            </a>
+        </div>
+        <div id="nav_block">
+            <a href="/">园子</a> ·
+            <a href="/followees/">关注</a> ·
+            <a href="/followers/">粉丝</a> ·
+            <a href="/feed/all/">随便看看</a> ·
+            <a href="//msg.cnblogs.com/msg/inbox" target="_blank">
+                消息
+                <span id="msg_count"></span>
+            </a>
+        </div>
+        <div class="clear"></div>
+        <div id="header_user"><h1 id="header_user_left">
+            欢迎你，Violet丶
+        </h1>
+            <div id="header_user_right">
+                <a href="/u/bootyWind/"><img class="pfs" src="//pic.cnblogs.com/face/1696808/20190523221516.png" alt=""></a>
+                <a href="/u/bootyWind/">Violet丶</a>
+                · <a href="//www.cnblogs.com/bootyWind/">我的博客</a>
+                · <a href="//home.cnblogs.com/set/account/">设置</a>
+                · <a href="javascript:void(0);" onclick="return logout();">退出</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="container">
+        <div id="app_bar">
+            <p class="app_r_3"></p><p class="app_r_2"></p><p class="app_r_1"></p>
+            <div id="app_list_wrapper">
+                <ul class="app_list">
+                    <li>
+                        <img src="//common.cnblogs.com/images/ico_ing.gif" alt=""><a id="app_ing" href="https://ing.cnblogs.com/">闪存</a>
+                    </li>
+                    <li>
+                        <em><a href="https://i.cnblogs.com/" target="_blank">写博</a></em><img src="//common.cnblogs.com/images/ico_blog.gif" alt=""><a id="app_blog" href="/blog/">博客</a>
+                    </li>
+                    <li>
+                        <em><a href="//group.cnblogs.com/newpost/">发言</a></em><img src="//common.cnblogs.com/images/ico_group.gif" alt=""><a id="app_group" href="//group.cnblogs.com/">小组</a>
+                    </li>
+                    <li>
+                        <em><a href="//news.cnblogs.com/n/publish" target="_blank">投递</a></em><img src="//common.cnblogs.com/images/ico_news.gif" alt=""><a id="app_news" href="/news/">新闻</a>
+                    </li>
+                    <li>
+                        <em><a href="https://q.cnblogs.com/q/new" target="_self">提问</a></em><img src="//common.cnblogs.com/images/ico_question.gif" alt=""><a id="app_q" href="https://q.cnblogs.com/">博问</a>
+                    </li>
+                    <li>
+                        <em><a href="#" target="_blank" onclick="AddToWz();return false;">添加</a></em><img src="//common.cnblogs.com/images/ico_bookmark.gif" alt=""><a id="app_wz" href="//wz.cnblogs.com/">收藏</a>
+                    </li>
+                    <li>
+                        <em><a href="//job.cnblogs.com/admin/" target="_blank">发布</a></em><img src="//common.cnblogs.com/images/ico_job.gif" alt=""><a id="app_job" href="/jobs/">招聘</a>
+                    </li>
+                    <li>
+                        <img src="//common.cnblogs.com/images/ico_kb.gif" alt=""><a id="app_kb" href="/kb/">文库</a>
+                    </li>
+                </ul>
+                <div class="app_setting">
+                    <a href="//group.cnblogs.com/forum/public/" class="flag_edit" target="_blank">问题反馈</a>
+                </div>
+            </div>
+            <p class="app_r_1"></p><p class="app_r_2"></p><p class="app_r_3"></p>
+        </div>
+        <div id="container_content">
+
+            <div id="main" onclick="javascript:void(0)">
+
+
+                <link rel="stylesheet" href="/css/follower.min.css?v=BfQv2jbdUh5fe8G1YwMt_JqXsAv7z5TWIqsqTFHW7C0">
+                <link rel="stylesheet" href="/css/ui-dialog.min.css?v=VJeWkb0L8a4rI3yRQSP_7MXcSk2qtOQPyHPVhCPlnD0">
+                <div class="main_nav">
+                    <ul id="nav_followees_followers">
+                        <li>
+                            <a href="/u/bootyWind/relation/following" class="current_nav">
+                                我关注的人(20)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/u/bootyWind/relation/followers">
+                                我的粉丝(0)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/u/bootyWind/relation/schoolclasses">
+                                我所在的班级
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                    <a id="a-edit" class="" href="javascript:void(0)" onclick="enterEdit()">编辑</a>
+                </div>
+                <div>
+                    <div class="group_list">
+                        <ul>
+                            <li class="active">
+                                <a href="/u/bootyWind/relation/following">全部</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="avatar_list">
+                        <ul>
+                            <li id="30b76108-9f60-e411-b908-9dcfd8948a71">
+                                <a href="/u/itsoku123" title="路人甲Java">
+                                    <div class="avatar_pic">
+                                        <img src="//pic.cnblogs.com/face/687624/20190421105428.png">
+                                    </div>
+                                    <div class="avatar_name">
+                                        路人甲Java
+                                    </div>
+                                </a><div class="remark_name"><a href="/u/itsoku123" title="路人甲Java">
+                            </a><a title=""></a>
+                            </div>
+                            <a class="edit hide" href="javascript:void(0)">取消关注</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="pager">
+                    <a href="/user/search.aspx?key=wax&amp;page=1" class="p_1 current">1</a><a href="/user/search.aspx?key=wax&amp;page=2" class="p_2 last">2</a><a href="/user/search.aspx?key=wax&amp;page=2">Next &gt;</a>
+                </div>
+
+
+
+            </div>
+            <div id="right_sidebar">
+
+
+                <div class="user_avatar">
+                    <a href="/u/bootyWind/" title="Violet丶的主页">
+                        <img th:src="${user.picUrl}" class="img_avatar">
+                    </a>
+                </div>
+                <div class="right_user_info">
+                    <a href="/u/bootyWind" th:text="${user.username}+'的主页'">Violet丶的主页</a><br>
+                    <div class="search_user">
+                        <div class="search_user_title">园友搜索</div>
+                        <div class="search_user_text">
+                            <input id="txt_user_name" class="txt_user_name" onkeydown="return SearchUserEnter(event);">
+                        </div>
+                        <input type="button" id="btn_blue" class="btn_blue" value="搜索" onclick="SearchUser();">
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="goTop">
+            <a href="javascript:void(0)" onclick="return gotoTop()">
+                <img src="//common.cnblogs.com/images/ico_top.gif" alt="Top" title="回到页首">
+            </a>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="footer">
+        <a href="//www.cnblogs.com/AboutUS.aspx">关于博客园</a>
+        <a href="//www.cnblogs.com/ContactUs.aspx">联系我们</a>
+        <a href="//www.cnblogs.com/ad.aspx">广告服务</a>
+        © 2004-2020
+        <a href="//www.cnblogs.com">博客园</a>
+        <span id="powered_by">Powered by .NET Core on Kubernetes</span>
+        <span id="profiler_footer"></span>
+    </div>
+</div>
+</body>
+</html>

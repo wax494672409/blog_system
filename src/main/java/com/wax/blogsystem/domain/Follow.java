@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.Date;
+
 @TableName(value = "sys_follow")
 @Data
 public class Follow {
@@ -30,5 +32,11 @@ public class Follow {
 
     @TableField(value = "be_follower_pic_url",exist = true)
     private String beFollowerPicUrl;
+
+    @TableField(value = "del_tag",exist = true)
+    private String delTag;
+
+    @TableField(value = "create_time",exist = true)
+    private Date createTime;
 
 }

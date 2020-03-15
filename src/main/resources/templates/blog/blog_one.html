@@ -87,61 +87,22 @@
 
                                     <div id="blog_post_info">
                                         <div id="green_channel">
-                                            <a href="javascript:void(0);" id="green_channel_digg"
-                                               onclick="DiggIt(12287410,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
-                                            <a id="green_channel_follow"
-                                               onclick="follow('199fa240-4742-4d05-1216-08d70e5dea1c');"
-                                               href="javascript:void(0);">关注我</a>
-                                            <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;"
-                                               href="javascript:void(0);">收藏该文</a>
-                                            <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博"
-                                               onclick="ShareToTsina()"><img
-                                                    src="https://common.cnblogs.com/images/icon_weibo_24.png"
-                                                    alt=""></a>
-                                            <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信"
-                                               onclick="shareOnWechat()"><img
-                                                    src="https://common.cnblogs.com/images/wechat.png" alt=""></a>
+                                            <a style="display: none" href="javascript:void(0);" id="green_channel_digg">好文要顶</a>
+                                            <a style="display: none" href="javascript:void(0);" id="green_channel_digged">已点赞</a>
+                                            <a style="display: none" id="green_channel_follow" href="javascript:void(0);">关注我</a>
+                                            <a style="display: none" id="green_channel_followed" href="javascript:void(0);">已关注</a>
+                                            <a style="display: none" id="green_channel_favorite" href="javascript:void(0);">收藏该文</a>
+                                            <a style="display: none" id="green_channel_favorited" href="javascript:void(0);">已收藏</a>
+<!--                                            <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博"-->
+<!--                                               onclick="ShareToTsina()"><img-->
+<!--                                                    src="https://common.cnblogs.com/images/icon_weibo_24.png"-->
+<!--                                                    alt=""></a>-->
+<!--                                            <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信"-->
+<!--                                               onclick="shareOnWechat()"><img-->
+<!--                                                    src="https://common.cnblogs.com/images/wechat.png" alt=""></a>-->
                                         </div>
-                                        <!--                                        <div id="author_profile">-->
-                                        <!--                                            <div id="author_profile_info" class="author_profile_info">-->
-                                        <!--                                                <a href="https://home.cnblogs.com/u/zxcoder/" target="_blank"><img src="https://pic.cnblogs.com/face/1751607/20190728230136.png" class="author_avatar" alt=""></a>-->
-                                        <!--                                                <div id="author_profile_detail" class="author_profile_info">-->
-                                        <!--                                                    <a href="https://home.cnblogs.com/u/zxcoder/">Keane1998</a><br>-->
-                                        <!--                                                    <a href="https://home.cnblogs.com/u/zxcoder/followees/">关注 - 1</a><br>-->
-                                        <!--                                                    <a href="https://home.cnblogs.com/u/zxcoder/followers/">粉丝 - 8</a>-->
-                                        <!--                                                </div>-->
-                                        <!--                                            </div>-->
-                                        <!--                                            <div class="clear"></div>-->
-                                        <!--                                            <div id="author_profile_honor"></div>-->
-                                        <!--                                            <div id="author_profile_follow">-->
-                                        <!--                                                <a href="javascript:void(0);" onclick="follow('199fa240-4742-4d05-1216-08d70e5dea1c');return false;">+加关注</a>-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-                                        <div id="div_digg">
-                                            <div class="diggit" onclick="votePost(12287410,'Digg')">
-                                                <span class="diggnum" id="digg_count">0</span>
-                                            </div>
-                                            <div class="buryit" onclick="votePost(12287410,'Bury')">
-                                                <span class="burynum" id="bury_count">0</span>
-                                            </div>
-                                            <div class="clear"></div>
-                                            <div class="diggword" id="digg_tips">
-                                            </div>
-                                        </div>
-
-                                        <script type="text/javascript">
-                                            currentDiggType = 0;
-                                        </script>
                                     </div>
                                     <div class="clear"></div>
-                                    <div id="post_next_prev">
-
-                                        <a href="https://www.cnblogs.com/zxcoder/p/12274776.html"
-                                           class="p_n_p_prefix">« </a> 上一篇： <a
-                                            href="https://www.cnblogs.com/zxcoder/p/12274776.html"
-                                            title="发布于 2020-02-07 21:53">Leetcode837_新21点</a>
-
-                                    </div>
                                 </div>
                             </div>
                             <div class="postDesc">posted @
@@ -222,7 +183,7 @@
                                 <span id="tip_comment" style="color:Red"></span>
                                 <p>
                                     昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled"
-                                              size="50" th:value="${loginUser.name}">
+                                              size="50" th:value="${loginUser.username}">
                                 </p>
                                 <br>
                                 <div class="commentbox_main">
@@ -657,9 +618,10 @@
 <script src="/third/jquery/jquery-3.4.1.js"></script>
 <script th:inline="javascript">
 
-    layui.use('laypage', function () {
+    layui.use(['laypage','layer'], function () {
         var laypage = layui.laypage;
         var $ = layui.$;
+        var layer = layui.layer
 
         var pageSize = 10;
         //执行一个laypage实例
@@ -674,6 +636,7 @@
 
         getTopViewList();
         addViewNum();
+        renderLikeFollowFavoriteBar();
 
         var E = window.wangEditor
         var editor = new E('#commentBox')
@@ -695,7 +658,7 @@
                 data: {
                     content: content,
                     sender: [[${loginUser.id}]],
-                    senderName:[[${loginUser.name}]],
+                    senderName:[[${loginUser.username}]],
                     receiver: [[${blog.author}]],
                     receiverName:[[${blog.authorName}]],
                     blogId: [[${blog.id}]]
@@ -703,7 +666,6 @@
                 dataType: "json",
                 success: function (result) {
                     alert(result.msg);
-                    debugger
                     getCommentList(1);
                 }
             });
@@ -738,6 +700,27 @@
             });
         }
 
+        function renderLikeFollowFavoriteBar(){
+            if([[${isLike}]]){
+                $("#green_channel_digged").css("display","inline-block")
+            }
+            else {
+                $("#green_channel_digg").css("display","inline-block")
+            }
+            if([[${isFavorite}]]){
+                $("#green_channel_favorited").css("display","inline-block")
+            }
+            else {
+                $("#green_channel_favorite").css("display","inline-block")
+            }
+            if([[${isFollow}]]){
+                $("#green_channel_followed").css("display","inline-block")
+            }
+            else {
+                $("#green_channel_follow").css("display","inline-block")
+            }
+        }
+
         function addViewNum() {
             $.ajax({
                 url: '/blogView/addBlogView.do',
@@ -747,10 +730,120 @@
                     blogId: [[${blog.id}]]
                 },
                 success: function (result) {
-
                 }
             });
         }
+
+        $("#green_channel_digg").click(function () {
+            $.ajax({
+                url: '/blogLike/addBlogLike.do',
+                type: 'POST',
+                data: {
+                    userId: [[${loginUser.id}]],
+                    blogId: [[${blog.id}]]
+                },
+                dataType:"json",
+                success: function (result) {
+                    layer.msg(result.msg)
+                }
+            });
+            $(this).css("display","none");
+            $("#green_channel_digged").css("display","inline-block")
+            
+        });
+
+        $("#green_channel_digged").click(function () {
+            $.ajax({
+                url: '/blogLike/cancelLike.do',
+                type: 'POST',
+                data: {
+                    userId: [[${loginUser.id}]],
+                    blogId: [[${blog.id}]]
+                },
+                dataType:"json",
+                success: function (result) {
+                    layer.msg(result.msg)
+                }
+            });
+            $(this).css("display","none");
+            $("#green_channel_digg").css("display","inline-block")
+        });
+
+        $("#green_channel_follow").click(function () {
+            $.ajax({
+                url: '/follow/follow.do',
+                type: 'POST',
+                data: {
+                    follower: [[${loginUser.id}]],
+                    followerName:[[${loginUser.username}]],
+                    followerPicUrl:[[${loginUser.picUrl}]],
+                    beFollower: [[${blog.author}]],
+                    beFollowerName:[[${blog.authorName}]],
+                    beFollowerPicUrl:[[${blog.authorPicUrl}]]
+                },
+                dataType:"json",
+                success: function (result) {
+                    layer.msg(result.msg)
+                }
+            });
+            $(this).css("display","none");
+            $("#green_channel_followed").css("display","inline-block")
+        });
+
+        $("#green_channel_followed").click(function () {
+            $.ajax({
+                url: '/follow/cancelFollow.do',
+                type: 'POST',
+                data: {
+                    follower: [[${loginUser.id}]],
+                    followerName:[[${loginUser.username}]],
+                    followerPicUrl:[[${loginUser.username}]],
+                    beFollower: [[${blog.author}]],
+                    beFollowerName:[[${blog.authorName}]],
+                    beFollowerPicUrl:[[${loginUser.username}]]
+                },
+                dataType:"json",
+                success: function (result) {
+                    layer.msg(result.msg)
+                }
+            });
+            $(this).css("display","none");
+            $("#green_channel_follow").css("display","inline-block")
+        });
+
+        $("#green_channel_favorite").click(function () {
+            $.ajax({
+                url: '/favorite/favorite.do',
+                type: 'POST',
+                data: {
+                    userId: [[${loginUser.id}]],
+                    blogId: [[${blog.id}]]
+                },
+                dataType:"json",
+                success: function (result) {
+                    layer.msg(result.msg)
+                }
+            });
+            $(this).css("display","none");
+            $("#green_channel_favorited").css("display","inline-block")
+        });
+
+        $("#green_channel_favorited").click(function () {
+            $.ajax({
+                url: '/favorite/cancelFavorite.do',
+                type: 'POST',
+                data: {
+                    userId: [[${loginUser.id}]],
+                    blogId: [[${blog.id}]]
+                },
+                dataType:"json",
+                success: function (result) {
+                    layer.msg(result.msg)
+                }
+            });
+            $(this).css("display","none");
+            $("#green_channel_favorite").css("display","inline-block")
+        });
 
     });
 

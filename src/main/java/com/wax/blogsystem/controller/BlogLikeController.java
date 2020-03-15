@@ -24,4 +24,11 @@ public class BlogLikeController {
     }
 
 
+    @PostMapping(value = "/cancelLike.do")
+    @ResponseBody
+    public String cancelLike(BlogLike blogLike){
+        blogLikeService.cancelLike(blogLike);
+        return JSONUtil.success("已取消点赞");
+    }
+
 }

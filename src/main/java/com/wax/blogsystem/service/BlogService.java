@@ -23,7 +23,11 @@ public interface BlogService {
 
     void addCommentNum(Blog blog);
 
+    void subtractCommentNum(Blog blog);
+
     void addLikeNum(Blog blog);
+
+    void subtractLikeNum(Blog blog);
 
     List<Blog> getTopViewList(Page<Blog> page);
 

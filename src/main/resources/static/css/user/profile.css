@@ -209,3 +209,27 @@ b {
 .right_content_wrapper2 h2 {
     margin-top: 0
 }
+
+.follow_button {
+    text-align: center;
+    cursor: pointer;
+    padding: 4px 15px;
+    color: #222;
+    background-color: #f2fddb;
+    border: 1px solid #aecd3d;
+    border-radius: 2em;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.cancel_follow_button {
+    text-align: center;
+    cursor: pointer;
+    padding: 4px 15px;
+    color: #222;
+    background-color: #AAAAAA;
+    border: 1px solid #aecd3d;
+    border-radius: 2em;
+    font-size: 12px;
+    letter-spacing: 2px;
+}

@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wax.blogsystem.common.JSONUtil;
+import com.wax.blogsystem.domain.Follow;
 import com.wax.blogsystem.domain.Role;
 import com.wax.blogsystem.domain.User;
+import com.wax.blogsystem.service.FollowService;
 import com.wax.blogsystem.service.RoleService;
 import com.wax.blogsystem.service.UserService;
 import org.apache.commons.io.FileUtils;
@@ -30,11 +32,6 @@ import java.util.Random;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    @Value("${uploadFile.resourceHandler}")
-    private String resourceHandler;//请求 url 中的资源映射，不推荐写死在代码中，最好提供可配置，如 /uploadFiles/**
-
-    @Value("${uploadFile.location}")
-    private String uploadFileLocation;//上传文件保存的本地目录，使用@Value获取全局配置文件中配置的属性值，如 E:/wmx/uploadFiles/
 
     @Autowired
     private UserService userService;
@@ -42,12 +39,19 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private FollowService followService;
+
     @GetMapping(value = "/goPersonalPage.do")
     public String goPersonPage(String id,Model model){
         User user = userService.selectById(id);
         User loginUser = (User) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("user",user);
         model.addAttribute("loginUser",loginUser);
+        boolean isFollow=false;
+        Follow follow = followService.selectByFollowerAndBeFollower(loginUser.getId(),user.getId());
+        isFollow = follow != null ? true:false;
+        model.addAttribute("isFollow",isFollow);
         return "user/personal";
     }
 
@@ -83,6 +87,13 @@ public class UserController {
         return "/user/userChangeRole";
     }
 
+    @GetMapping(value = "/goPersonalFollow.do")
+    public String goPersonalFollow(String id,Model model){
+        User user = userService.selectById(id);
+        model.addAttribute("user",user);
+        return "personal/follower";
+    }
+
 
     @RequestMapping(value = "/saveOrUpdate.do",method = RequestMethod.POST)
     @ResponseBody
@@ -114,29 +125,6 @@ public class UserController {
         return "front/home::top_blog_user_list";
     }
 
-    @RequestMapping(value = "/uploadHead.do")
-    @ResponseBody
-    public String uploadImg(@RequestParam("myFile") MultipartFile multipartFile,
-                                HttpServletRequest request,String username) throws IOException {
-        InputStream inputStream = multipartFile.getInputStream();
-        // 根目录下新建文件夹upload，存放上传图片
-        String uploadPath = "target/classes/static/upload/head/";
-        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-        Random random = new Random();
-        int number = random.nextInt(1000000000);
-        // 获取文件名称
-        String fileName = multipartFile.getOriginalFilename();
-        int index = fileName.indexOf(".");
-        fileName = username + number + fileName.substring(index);
-        String fileServerPath = basePath + resourceHandler.substring(0, resourceHandler.lastIndexOf("/") + 1) + fileName;
-        // 将文件上传的服务器根目录下的upload文件夹
-        System.out.println("文件访问路径：" + fileServerPath);
-        File file = new File(uploadFileLocation, fileName);
-        multipartFile.transferTo(file);//文件保存
-        System.out.println("文件保存路径：" + file.getPath());
-        // 返回图片访问路径
-        return fileServerPath;
-    }
 
 
 }

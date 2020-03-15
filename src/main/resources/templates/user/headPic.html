@@ -41,7 +41,6 @@
         var $ = layui.$;
         var layer = layui.layer;
 
-        var version = Math.random();
         $("#uploadHead").change(function(event) {
             var files = event.target.files, file;
             if (files && files.length > 0) {
@@ -63,16 +62,14 @@
                 formData.append("username", username);
                 debugger
                 $.ajax({
-                    url: '/user/uploadHead.do',
+                    url: '/upload/uploadHead.do',
                     type: 'POST',
                     data: formData,
                     processData: false,   // jQuery不要去处理发送的数据
                     contentType: false,   // jQuery不要去设置Content-Type请求头
                     success: function (result) {
                         $("#crop_image").attr("src",result);
-                        version = Math.random();
                         $("#preview_small").attr("src",result);
-                        version = Math.random();
                         $("#preview_large").attr("src",result);
                         $("#confirmBtn").css("display",'block')
                     }

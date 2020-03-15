@@ -3,14 +3,14 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${user.name}+'的主页'">个人中心</title>
+    <title th:text="${user.username}+'的主页'">个人中心</title>
     <link href="/css/user/home.css" rel="stylesheet">
     <link href="/css/user/profile.css" rel="stylesheet">
 </head>
 <body>
 <div id="top">
     <div id="top_left">
-        <a href="//www.cnblogs.com">首页</a>
+        <a href="/goFrontHomePage.do">首页</a>
         <a href="//news.cnblogs.com/">新闻</a>
         <a href="//zzk.cnblogs.com/">找找看</a>
         <a href="//academy.cnblogs.com/">学习计划</a>
@@ -35,7 +35,7 @@
             </a>
         </div>
         <div class="clear"></div>
-        <div id="header_user"><h1 id="header_user_left">
+        <div id="header_user"><h1 id="header_user_left" th:text="'欢迎你，'+${loginUser.username}">
             欢迎你，Violet丶
         </h1>
             <div id="header_user_right">
@@ -111,13 +111,13 @@
                             </td>
                             <td valign="top">
                                 <div>
-                                    <h1 class="display_name" th:text="${user.name}">
+                                    <h1 class="display_name" th:text="${user.username}">
                                         Violet丶
                                     </h1>
                                     <div>
                                         <ul id="user_profile" class="user_profile">
                                             <li id="li_remark" style="display:none"><span class="text_gray">备注名称：</span><span id="remarkId"></span></li>
-                                            <li><span class="text_gray">园龄：</span><span title="入园时间：2019-5-23">8个月</span></li><li><span class="text_gray">博客：</span><a href="https://www.cnblogs.com/bootyWind/" class="gray" target="_blank">https://www.cnblogs.com/bootyWind/</a></li>
+                                            <li><span class="text_gray">园龄：</span><span title="入园时间：2019-5-23">8个月</span></li><li><span class="text_gray">博客：</span><a th:href="@{'/blog/goBlogListPage.do?id='+${user.id}}" class="gray" target="_blank">前往</a></li>
                                         </ul>
                                     </div>
                                     <div class="text_gray" style="padding-top: 10px;">
@@ -132,6 +132,10 @@
                                             </div>
                                             <div class="clear">
                                             </div>
+                                        </div>
+                                        <div th:if="${loginUser.id != user.id}">
+                                            <button class="follow_button" style="display:none">+关注</button>
+                                            <button class="cancel_follow_button" style="display:none">已关注</button>
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +170,7 @@
                                 </div>
                                 <div class="feed_body" id="feed_content_5d2ecbbb63abf8af028461bd">
                                     <div class="feed_title">
-                                        <a href="/u/bootyWind/" class="feed_author" th:text="${user.name}">Violet丶</a>
+                                        <a href="/u/bootyWind/" class="feed_author" th:text="${user.username}">Violet丶</a>
                                         <span th:text="${activity.category}+'：'">评论博客： </span><a th:href="@{'/blog/goBlogOnePage.do?id='+${activity.blogId}}" target="_blank" class="feed_link" th:text="${activity.blogTitle}">跟我学SpringCloud | 第十一篇：使用Spring Cloud Sleuth和Zipkin进行分布式链路跟踪</a>
                                         <span class="feed_date" th:text="${#dates.format(activity.createTime, 'yyyy-MM-dd hh:mm:ss')}">2019-07-17 15:16</span>
                                     </div>
@@ -190,103 +194,38 @@
             <div id="right_sidebar">
 
                 <div id="relation" data-alias="bootyWind"><div class="avatar_list">
-                    <h3><a href="/u/bootyWind/relation/following/">我关注的人(20)</a></h3>
-                    <ul>
-                        <li>
-                            <a href="/u/itsoku123/" title="路人甲Java">
+                    <h3 th:switch="${loginUser.id == user.id}">
+                        <a th:case="true" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}}">我关注的人(20)</a>
+                        <a th:case="false" href="/u/bootyWind/relation/following/">Ta关注的人(20)</a>
+                    </h3>
+                    <ul id="be_follower_list_side" th:fragment="be_follower_list_side">
+                        <li th:each="beFollower:${beFollowerSideList}">
+                            <a th:href="@{'/user/goPersonalPage.do?id='+${beFollower.beFollower}}" th:title="${beFollower.beFollowerName}">
                                 <div class="avatar_pic">
-                                    <img src="//pic.cnblogs.com/face/687624/20190421105428.png">
+                                    <img th:src="${beFollower.beFollowerPicUrl}">
                                 </div>
-                                <div class="avatar_name">
+                                <div class="avatar_name" th:text="${beFollower.beFollowerName}">
                                     路人甲Java
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/u/java-chen-hao/" title="chen_hao">
-                                <div class="avatar_pic">
-                                    <img src="//pic.cnblogs.com/face/1168971/20180903150907.png">
-                                </div>
-                                <div class="avatar_name">
-                                    chen_hao
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/u/aobing/" title="敖丙">
-                                <div class="avatar_pic">
-                                    <img src="//pic.cnblogs.com/face/1853509/20191207205350.png">
-                                </div>
-                                <div class="avatar_name">
-                                    敖丙
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/u/asker009/" title="我是属车的">
-                                <div class="avatar_pic">
-                                    <img src="//pic.cnblogs.com/face/1410220/20180530161248.png">
-                                </div>
-                                <div class="avatar_name">
-                                    我是属车的
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/u/ZhuChangwu/" title="赐我白日梦">
-                                <div class="avatar_pic">
-                                    <img src="//pic.cnblogs.com/face/1496926/20190627210356.png">
-                                </div>
-                                <div class="avatar_name">
-                                    赐我白日梦
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/u/cmt/" title="博客园团队">
-                                <div class="avatar_pic">
-                                    <img src="//pic.cnblogs.com/face/35695/20140318223943.png">
-                                </div>
-                                <div class="avatar_name">
-                                    博客园团队
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/u/xiaoyangjia/" title="编码砖家">
-                                <div class="avatar_pic">
-                                    <img src="//pic.cnblogs.com/face/31085/20190906112512.png">
-                                </div>
-                                <div class="avatar_name">
-                                    编码砖家
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/u/JavaArchitect/" title="hsm_computer">
-                                <div class="avatar_pic">
-                                    <img src="//pic.cnblogs.com/face/sample_face.gif">
-                                </div>
-                                <div class="avatar_name">
-                                    hsm_computer
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/u/fangshixiang/" title="_YourBatman">
-                                <div class="avatar_pic">
-                                    <img src="//pic.cnblogs.com/face/682076/20190715164240.png">
-                                </div>
-                                <div class="avatar_name">
-                                    _YourBatman
                                 </div>
                             </a>
                         </li>
                     </ul>
                     <div class="clear"></div>
-
-                    <h3><a href="/u/bootyWind/relation/followers/">我的粉丝(0)</a></h3>
-                    <ul>
+                    <h3 th:switch="${loginUser.id == user.id}">
+                        <a th:case="true" href="/u/bootyWind/relation/following/">我的粉丝(0)</a>
+                        <a th:case="false" href="/u/bootyWind/relation/following/">Ta的粉丝(0)</a>
+                    </h3>
+                    <ul id="follower_list_side" th:fragment="follower_list_side">
+                        <li th:each="follower:${followerSideList}">
+                            <a th:href="@{'/user/goPersonalPage.do?id='+${follower.follower}}" th:title="${follower.followerName}">
+                                <div class="avatar_pic">
+                                    <img th:src="${follower.followerPicUrl}">
+                                </div>
+                                <div class="avatar_name" th:text="${follower.followerName}">
+                                    路人甲Java
+                                </div>
+                            </a>
+                        </li>
                     </ul>
                     <div class="clear"></div>
                 </div>
@@ -312,27 +251,121 @@
         <span id="profiler_footer">(执行耗时80毫秒)</span>
     </div>
 </div>
+<script src="/third/layui/layui.js"></script>
 <script src="/third/jquery/jquery-3.4.1.js"></script>
 <script th:inline="javascript">
 
-    var pageSize = 10;
+    layui.use(['laypage','layer'], function () {
 
-    getTopViewList();
-    function getTopViewList() {
-        $.ajax({
-            url: '/activity/getActivityList.do',
-            type: 'POST',
-            data: {
-                size: pageSize,
-                current: 1,
-                id:[[${user.id}]]
-            },
-            success: function (result) {
-                $("#activity_list").html(result);
+        var pageSize = 10;
+
+        getActivityList();
+        getBeFollowerList4Side();
+        getFollowerList4Side();
+        renderFollowerBtn();
+
+        function getActivityList() {
+            $.ajax({
+                url: '/activity/getActivityList.do',
+                type: 'POST',
+                data: {
+                    size: pageSize,
+                    current: 1,
+                    id: [[${user.id}]]
+                },
+                success: function (result) {
+                    $("#activity_list").html(result);
+                }
+            });
+        }
+
+        function getBeFollowerList4Side() {
+            $.ajax({
+                url: '/follow/getBeFollowerList4Side.do',
+                type: 'POST',
+                data: {
+                    size: 9,
+                    current: 1,
+                    id: [[${user.id}]]
+                },
+                success: function (result) {
+                    $("#be_follower_list_side").html(result);
+                }
+            });
+        }
+
+        function getFollowerList4Side() {
+            $.ajax({
+                url: '/follow/getFollowerList4Side.do',
+                type: 'POST',
+                data: {
+                    size: 9,
+                    current: 1,
+                    id: [[${user.id}]]
+                },
+                success: function (result) {
+                    $("#follower_list_side").html(result);
+                }
+            });
+        }
+
+        function renderFollowerBtn() {
+            if ([[loginUser.id]] != [[user.id]]) {
+                if ([[${isFollow}]]) {
+                    $(".cancel_follow_button").css("display", "block");
+                } else {
+                    $(".follow_button").css("display", "block");
+                }
             }
-        });
-    }
+        }
 
+        $(".follow_button").click(function () {
+            $.ajax({
+                url: '/follow/follow.do',
+                type: 'POST',
+                data: {
+                    follower: [[${loginUser.id}]],
+                    followerName: [[${loginUser.username}]],
+                    followerPicUrl: [[${loginUser.picUrl}]],
+                    beFollower: [[${user.id}]],
+                    beFollowerName: [[${user.username}]],
+                    beFollowerPicUrl: [[${user.picUrl}]]
+                },
+                dataType: "json",
+                success: function (result) {
+                    layer.msg(result.msg)
+                }
+            });
+            $(this).css("display", "none");
+            $(".cancel_follow_button").css("display", "block")
+            getBeFollowerList4Side()
+            getFollowerList4Side();
+        });
+
+        $(".cancel_follow_button").click(function () {
+            $.ajax({
+                url: '/follow/cancelFollow.do',
+                type: 'POST',
+                data: {
+                    follower: [[${loginUser.id}]],
+                    followerName: [[${loginUser.username}]],
+                    followerPicUrl: [[${loginUser.picUrl}]],
+                    beFollower: [[${user.id}]],
+                    beFollowerName: [[${user.username}]],
+                    beFollowerPicUrl: [[${user.picUrl}]]
+                },
+                dataType: "json",
+                success: function (result) {
+                    layer.msg(result.msg)
+                }
+            });
+            $(this).css("display", "none");
+            $(".follow_button").css("display", "block")
+            getFollowerList4Side();
+            getBeFollowerList4Side();
+        });
+
+    })
 </script>
 </body>
 </html>

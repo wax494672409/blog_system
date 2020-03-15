@@ -39,7 +39,7 @@ public class BlogServiceImpl implements BlogService {
         if(StringUtils.isEmpty(blog.getId())){
             blog.setCreateTime(new Date());
             blog.setAuthor(user.getId());
-            blog.setAuthorName(user.getName());
+            blog.setAuthorName(user.getUsername());
             blog.setCollectNum(SysCode.NUM.ZERO);
             blog.setCommentNum(SysCode.NUM.ZERO);
             blog.setLikeNum(SysCode.NUM.ZERO);
@@ -60,9 +60,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog selectById(String id) {
-        QueryWrapper<Blog> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("id",id);
-        return blogMapper.selectOne(queryWrapper);
+        return blogMapper.selectById(id);
     }
 
     @Override
@@ -81,6 +79,7 @@ public class BlogServiceImpl implements BlogService {
         blogMapper.updateById(blog);
     }
 
+
     @Override
     public int getTotalNum(String id) {
         QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
@@ -97,8 +96,20 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public void subtractCommentNum(Blog blog) {
+        blog.setCommentNum(blog.getCommentNum()-1);
+        blogMapper.updateById(blog);
+    }
+
+    @Override
     public void addLikeNum(Blog blog) {
         blog.setLikeNum(blog.getLikeNum()+1);
+        blogMapper.updateById(blog);
+    }
+
+    @Override
+    public void subtractLikeNum(Blog blog) {
+        blog.setLikeNum(blog.getLikeNum()-1);
         blogMapper.updateById(blog);
     }
 

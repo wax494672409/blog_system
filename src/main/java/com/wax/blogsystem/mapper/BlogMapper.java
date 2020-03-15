@@ -14,6 +14,12 @@ public interface BlogMapper extends BaseMapper<Blog> {
 
     @Select("SELECT sys_blog.*,user.pic_url `authorPicUrl` FROM sys_blog,user " +
             "WHERE sys_blog.author=user.id and sys_blog.del_tag='1' and sys_blog.status = 'released'" +
+            " and sys_blog.id = #{id} "+
+            "order by sys_blog.release_time desc")
+    Blog selectById(@Param("id") String id);
+
+    @Select("SELECT sys_blog.*,user.pic_url `authorPicUrl` FROM sys_blog,user " +
+            "WHERE sys_blog.author=user.id and sys_blog.del_tag='1' and sys_blog.status = 'released'" +
             "order by sys_blog.release_time desc")
     IPage<Blog> selectAll(Page<Blog> page);
 

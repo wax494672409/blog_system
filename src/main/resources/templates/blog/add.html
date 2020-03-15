@@ -1,125 +1,176 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.js"></script>
     <link href="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.css" rel="stylesheet">
+    <link href="/css/front/home.css" rel="stylesheet">
     <link href="/third/layui/css/layui.css" rel="stylesheet">
 </head>
+<style>
+    .toolbar {
+        border: 1px solid #ccc;
+    }
+    .text {
+        border: 1px solid #ccc;
+        height: 430px;
+    }
+</style>
 <body>
-<div class="layui-container">
-    <div class="layui-form-item">
-        <label class="layui-form-label">标题</label>
-        <div class="layui-input-block">
-            <input type="text" name="title" id="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+<div id="hd_info">
+    <div id="cnts">
+        <div id="site_nav_top">博客平台</div>
+        <div id="login_area">
+            <span id="span_userinfo">
+                <a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}" th:text="${loginUser.username}">xin wang</a>
+                ·<a id="user_nav_blog_link" th:href="@{'/blog/goBlogListPage.do?id='+${loginUser.id}}">我的博客</a>
+                <span id="user_nav_blog_split">·</span>
+                <a href="https://msg.cnblogs.com/">短消息
+                    <span id="msg_count"></span>
+                </a>
+                ·<a href="https://home.cnblogs.com/set/">设置</a>
+                ·<a href="#" onclick="logout();return false">退出</a>
+            </span>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div id="nav_menu">
+    <a href="/goFrontHomePage.do">首页</a>
+</div>
+    <div class="layui-row" style="margin-top: 10px">
+        <div class="layui-col-lg3" style="margin-left: 10px">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <input type="text" name="title" id="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-item" >
+                    <select id="category" name="cateogy">
+                        <option value="">请选择一个栏目</option>
+                        <option th:each="category:${categoryList}" th:value="${category.id}" th:text="${category.name}">张先生</option>
+                    </select>
+                </div>
+                <div class="layui-form-item">
+                    <input type="text" name="title" id="label" required  lay-verify="required" placeholder="输入标签" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-lg8" style="margin-left: 10px;width: 72.8%">
+            <div id="div1" class="toolbar">
+            </div>
+<!--            <div style="padding: 5px 0; color: #ccc">中间隔离带</div>-->
+            <div id="div2" class="text"> <!--可使用 min-height 实现编辑区域自动增加高度-->
+                <p></p>
+            </div>
+            <div style="margin-top: 5px">
+                <button id="btn1" type="button" class="layui-btn">发布</button>
+                <button id="btn2" type="button" class="layui-btn layui-btn-primary">存为草稿</button>
+            </div>
         </div>
     </div>
-    <div id="wangEditor">
-        <p>欢迎使用 wangEditor 富文本编辑器</p>
-    </div>
-    <button id="btn1">发布</button>
-    <button id="btn2">存为草稿</button>
-    <button id="btn3">获取text</button>
-</div>
+<script src="/third/layui/layui.js"></script>
 <script src="/third/jquery/jquery-3.4.1.js"></script>
 <script type="text/javascript">
-    var E = window.wangEditor
-    var editor = new E('#wangEditor')
-    //开启debug模式
-    editor.customConfig.debug = true;
-    // 关闭粘贴内容中的样式
-    editor.customConfig.pasteFilterStyle = false
-    // 使用 base64 保存图片
-    editor.customConfig.uploadImgShowBase64 = true
-    // 忽略粘贴内容中的图片
-    editor.customConfig.pasteIgnoreImg = true
-    // 上传图片到服务器
-    editor.customConfig.uploadFileName = 'myFile'; //设置文件上传的参数名称
-    editor.customConfig.uploadImgServer = '/blog/uploadImg.do'; //设置上传文件的服务器路径
-    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
-    //自定义上传图片事件
-    editor.customConfig.uploadImgHooks = {
-        before: function(xhr, editor, files) {
+    layui.use(['form','jquery'], function() {
+        var form = layui.form;
+        var $ = layui.$;
 
-        },
-        success: function(xhr, editor, result) {
-            console.log("上传成功");
-        },
-        fail: function(xhr, editor, result) {
-            console.log("上传失败,原因是" + result);
-        },
-        error: function(xhr, editor) {debugger
+        var E = window.wangEditor
+        var editor = new E('#div1','#div2')
+        //开启debug模式
+        editor.customConfig.debug = true;
+        // 关闭粘贴内容中的样式
+        editor.customConfig.pasteFilterStyle = false
+        // 使用 base64 保存图片
+        editor.customConfig.uploadImgShowBase64 = true
+        // 忽略粘贴内容中的图片
+        editor.customConfig.pasteIgnoreImg = true
+        // 上传图片到服务器
+        editor.customConfig.uploadFileName = 'myFile'; //设置文件上传的参数名称
+        editor.customConfig.uploadImgServer = '/upload/uploadBlogImg.do'; //设置上传文件的服务器路径
+        editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
+        //自定义上传图片事件
+        editor.customConfig.uploadImgHooks = {
+            before: function (xhr, editor, files) {
 
-            console.log("上传出错");
-        },
-        timeout: function(xhr, editor) {
-            console.log("上传超时");
-        }
-    }
-    editor.create()
-
-    //发布
-    $("#btn1").click(function () {
-        var title = $("#title").val();
-        var content = editor.txt.html();
-        var status = "released";
-        $.ajax({
-            url: '/blog/saveOrUpdate.do',
-            type: 'POST',
-            data: {
-                title :title,
-                content:content,
-                status: status,
-                summary: getSummary()
             },
-            dataType : "json",
-            success: function (result) {
-                alert(result.msg);
-            }
-        });
-    })
-
-    //草稿
-    $("#btn2").click(function () {
-        var title = $("#title").val();
-        var content = editor.txt.html();
-        var status = "draft";
-        var summary = editor.txt.text().substring(0,79);
-        $.ajax({
-            url: '/blog/saveOrUpdate.do',
-            type: 'POST',
-            data: {
-                title :title,
-                content:content,
-                status: status,
-                summary: getSummary()
+            success: function (xhr, editor, result) {
+                console.log("上传成功");
             },
-            dataType : "json",
-            success: function (result) {
-                alert(result.msg);
+            fail: function (xhr, editor, result) {
+                console.log("上传失败,原因是" + result);
+            },
+            error: function (xhr, editor) {
+                debugger
+
+                console.log("上传出错");
+            },
+            timeout: function (xhr, editor) {
+                console.log("上传超时");
             }
-        });
-    })
-
-    //获取text
-    $("#btn3").click(function () {
-        console.log(editor.txt.text());
-    })
-
-    //获取摘要
-    function getSummary() {
-        var summary = '';
-        var text = editor.txt.text().substring(0,79);
-        if (text.length>100){
-            summary = text.substring(0,99);
         }
-        else {
-            summary = text.substring(0,text.length-1);
-        }
-        return summary;
-    }
+        editor.create()
 
+        //发布
+        $("#btn1").click(function () {
+            var title = $("#title").val();
+            var content = editor.txt.html();
+            var status = "released";
+            var category = $("#category").val();
+            $.ajax({
+                url: '/blog/saveOrUpdate.do',
+                type: 'POST',
+                data: {
+                    title: title,
+                    content: content,
+                    status: status,
+                    summary: getSummary(),
+                    category:category
+                },
+                dataType: "json",
+                success: function (result) {
+                    alert(result.msg);
+                }
+            });
+        })
+
+        //草稿
+        $("#btn2").click(function () {
+            var title = $("#title").val();
+            var content = editor.txt.html();
+            var category = $("#category").val();
+            var status = "draft";
+            $.ajax({
+                url: '/blog/saveOrUpdate.do',
+                type: 'POST',
+                data: {
+                    title: title,
+                    content: content,
+                    status: status,
+                    summary: getSummary(),
+                    category: category
+                },
+                dataType: "json",
+                success: function (result) {
+                    alert(result.msg);
+                }
+            });
+        })
+
+        //获取摘要
+        function getSummary() {
+            var summary = '';
+            var text = editor.txt.text().substring(0, 79);
+            if (text.length > 100) {
+                summary = text.substring(0, 99);
+            } else {
+                summary = text.substring(0, text.length - 1);
+            }
+            return summary;
+        }
+    })
 </script>
 </body>
 </html>

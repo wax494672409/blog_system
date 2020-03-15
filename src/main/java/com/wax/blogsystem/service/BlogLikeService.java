@@ -14,4 +14,6 @@ public interface BlogLikeService {
      */
     BlogLike selectByUserAndBlog(String userId,String blogId);
 
+
+    void cancelLike(BlogLike blogLike);
 }
