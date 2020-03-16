@@ -195,8 +195,8 @@
 
                 <div id="relation" data-alias="bootyWind"><div class="avatar_list">
                     <h3 th:switch="${loginUser.id == user.id}">
-                        <a th:case="true" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}}">我关注的人(20)</a>
-                        <a th:case="false" href="/u/bootyWind/relation/following/">Ta关注的人(20)</a>
+                        <a th:case="true" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=follow'}">我关注的人(20)</a>
+                        <a th:case="false" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=follow'}">Ta关注的人(20)</a>
                     </h3>
                     <ul id="be_follower_list_side" th:fragment="be_follower_list_side">
                         <li th:each="beFollower:${beFollowerSideList}">
@@ -212,8 +212,8 @@
                     </ul>
                     <div class="clear"></div>
                     <h3 th:switch="${loginUser.id == user.id}">
-                        <a th:case="true" href="/u/bootyWind/relation/following/">我的粉丝(0)</a>
-                        <a th:case="false" href="/u/bootyWind/relation/following/">Ta的粉丝(0)</a>
+                        <a th:case="true" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=beFollow'}">我的粉丝(0)</a>
+                        <a th:case="false" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=beFollow'}">Ta的粉丝(0)</a>
                     </h3>
                     <ul id="follower_list_side" th:fragment="follower_list_side">
                         <li th:each="follower:${followerSideList}">

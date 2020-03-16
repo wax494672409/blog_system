@@ -36,15 +36,15 @@
             </a>
         </div>
         <div class="clear"></div>
-        <div id="header_user"><h1 id="header_user_left">
+        <div id="header_user"><h1 id="header_user_left" th:text="'欢迎你，'+${loginUser.username}">
             欢迎你，Violet丶
         </h1>
             <div id="header_user_right">
-                <a href="/u/bootyWind/"><img class="pfs" src="//pic.cnblogs.com/face/1696808/20190523221516.png" alt=""></a>
-                <a href="/u/bootyWind/">Violet丶</a>
-                · <a href="//www.cnblogs.com/bootyWind/">我的博客</a>
+                <a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}"><img class="pfs" th:src="${loginUser.picUrl}" alt=""></a>
+                <a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}" th:text="${loginUser.username}">Violet丶</a>
+                · <a th:href="@{'/blog/goBlogListPage.do?id='+${loginUser.id}}">我的博客</a>
                 · <a href="//home.cnblogs.com/set/account/">设置</a>
-                · <a href="javascript:void(0);" onclick="return logout();">退出</a>
+                · <a href="javascript:void(0);">退出</a>
             </div>
         </div>
         <div class="clear"></div>
@@ -88,25 +88,22 @@
         <div id="container_content">
 
             <div id="main" onclick="javascript:void(0)">
-
-
-                <link rel="stylesheet" href="/css/follower.min.css?v=BfQv2jbdUh5fe8G1YwMt_JqXsAv7z5TWIqsqTFHW7C0">
-                <link rel="stylesheet" href="/css/ui-dialog.min.css?v=VJeWkb0L8a4rI3yRQSP_7MXcSk2qtOQPyHPVhCPlnD0">
                 <div class="main_nav">
                     <ul id="nav_followees_followers">
                         <li>
-                            <a href="/u/bootyWind/relation/following" class="current_nav">
+                            <a th:if="${loginUser.id == user.id}" href="javascript:;" class="my_follow">
                                 我关注的人(20)
                             </a>
-                        </li>
-                        <li>
-                            <a href="/u/bootyWind/relation/followers">
-                                我的粉丝(0)
+                            <a th:if="${loginUser.id != user.id}" href="javascript:;" class="my_follow">
+                                Ta关注的人(20)
                             </a>
                         </li>
                         <li>
-                            <a href="/u/bootyWind/relation/schoolclasses">
-                                我所在的班级
+                            <a th:if="${loginUser.id == user.id}" href="javascript:;" class="be_follow">
+                                我的粉丝(20)
+                            </a>
+                            <a th:if="${loginUser.id != user.id}" href="javascript:;" class="be_follow">
+                                Ta的粉丝(20)
                             </a>
                         </li>
                     </ul>
@@ -122,41 +119,59 @@
                         </ul>
                     </div>
                     <div class="avatar_list">
-                        <ul>
-                            <li id="30b76108-9f60-e411-b908-9dcfd8948a71">
-                                <a href="/u/itsoku123" title="路人甲Java">
+                        <ul th:fragment="follower_list" id="follower_list">
+                            <span class="followerTotalNum hide" th:text="${followerTotalNum}"></span>
+                            <li th:each="follow:${followerList}">
+                                <a th:href="@{'/user/goPersonalPage.do?id='+${follow.follower}}" th:title="${follow.followerName}">
                                     <div class="avatar_pic">
-                                        <img src="//pic.cnblogs.com/face/687624/20190421105428.png">
+                                        <img th:src="${follow.followerPicUrl}">
                                     </div>
-                                    <div class="avatar_name">
+                                    <div class="avatar_name" th:text="${follow.followerName}">
                                         路人甲Java
                                     </div>
-                                </a><div class="remark_name"><a href="/u/itsoku123" title="路人甲Java">
-                            </a><a title=""></a>
-                            </div>
+                                </a>
+<!--                                <div class="remark_name">-->
+<!--                                    <a href="/u/itsoku123" title="路人甲Java"></a>-->
+<!--                                    <a title=""></a>-->
+<!--                                </div>-->
                             <a class="edit hide" href="javascript:void(0)">取消关注</a>
+                            </li>
+                        </ul>
+                        <ul th:fragment="be_follower_list" id="be_follower_list">
+                            <span class="followerTotalNum hide" th:text="${followerTotalNum}"></span>
+                            <li th:each="follow:${beFollowerList}">
+                                <a th:href="@{'/user/goPersonalPage.do?id='+${follow.beFollower}}" th:title="${follow.beFollowerName}">
+                                    <div class="avatar_pic">
+                                        <img th:src="${follow.beFollowerPicUrl}">
+                                    </div>
+                                    <div class="avatar_name" th:text="${follow.beFollowerName}">
+                                        路人甲Java
+                                    </div>
+                                </a>
+                                <!--                                <div class="remark_name">-->
+                                <!--                                    <a href="/u/itsoku123" title="路人甲Java"></a>-->
+                                <!--                                    <a title=""></a>-->
+                                <!--                                </div>-->
+                                <a class="edit hide" href="javascript:void(0)">取消关注</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="clear"></div>
-                <div class="pager">
-                    <a href="/user/search.aspx?key=wax&amp;page=1" class="p_1 current">1</a><a href="/user/search.aspx?key=wax&amp;page=2" class="p_2 last">2</a><a href="/user/search.aspx?key=wax&amp;page=2">Next &gt;</a>
+                <div id="test1" class="pager">
+
                 </div>
-
-
-
             </div>
             <div id="right_sidebar">
 
 
                 <div class="user_avatar">
-                    <a href="/u/bootyWind/" title="Violet丶的主页">
+                    <a th:href="@{'/user/goPersonalPage.do?id='+${user.id}}" th:title="${user.username}+'的主页'">
                         <img th:src="${user.picUrl}" class="img_avatar">
                     </a>
                 </div>
                 <div class="right_user_info">
-                    <a href="/u/bootyWind" th:text="${user.username}+'的主页'">Violet丶的主页</a><br>
+                    <a th:href="@{'/user/goPersonalPage.do?id='+${user.id}}" th:text="${user.username}+'的主页'">Violet丶的主页</a><br>
                     <div class="search_user">
                         <div class="search_user_title">园友搜索</div>
                         <div class="search_user_text">
@@ -187,5 +202,103 @@
         <span id="profiler_footer"></span>
     </div>
 </div>
+<script src="/third/layui/layui.js"></script>
+<script th:inline="javascript">
+    layui.use(['laypage','jquery','layer'], function () {
+        var laypage = layui.laypage;
+        var $ = layui.$;
+        var layer = layui.layer;
+
+        render();
+        function render(){
+            renderAllPage(45,[[${follow}]])
+        }
+
+        function renderAllPage(pageSize,pageType) {
+            switch (pageType) {
+                case 'follow':
+                    $(".my_follow").addClass("current_nav");
+                    getMyFollowList(1);
+                    $("#follower_list").html("")
+                    break;
+                case 'beFollow':
+                    $(".be_follow").addClass("current_nav");
+                    getBeFollowList(1);
+                    $("#be_follower_list").html("")
+                    break;
+            }
+            setTimeout(function () {
+                var totalNum = Number($(".followerTotalNum").text());
+                if(totalNum == 0){
+                    return
+                }
+                laypage.render({
+                    elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                    , count: totalNum //数据总数，从服务端得到
+                    , limit: pageSize
+                    , jump: function (obj, first) {
+                        if (!first) {
+                            switch (pageType) {
+                                case 'follow':
+                                    getMyFollowList(obj.curr);
+                                    break;
+                                case 'beFollow':
+                                    getBeFollowList(obj.curr);
+                                    break;
+                            }
+                        }
+                    }
+                });
+            }, 100)
+        }
+
+        function getMyFollowList(current){
+            $.ajax({
+                url: '/follow/getBeFollowerList.do',
+                type: 'POST',
+                data: {
+                    current:current,
+                    size:45,
+                    id:[[${user.id}]]
+                },
+                dataType : "html",
+                success: function (result) {
+                    $("#be_follower_list").html(result)
+                }
+            });
+        }
+
+        function getBeFollowList(current){
+            $.ajax({
+                url: '/follow/getFollowerList.do',
+                type: 'POST',
+                data: {
+                    current:current,
+                    size:45,
+                    id:[[${user.id}]]
+                },
+                dataType : "html",
+                success: function (result) {
+                    $("#follower_list").html(result)
+                }
+            });
+        }
+
+
+        $(".my_follow").click(function () {
+            $('.current_nav').removeClass("current_nav");
+            $(this).addClass("current_nav");
+            renderAllPage(45,'follow');
+        })
+
+        $(".be_follow").click(function () {
+            $('.current_nav').removeClass("current_nav");
+            $(this).addClass("current_nav");
+            renderAllPage(45,'beFollow');
+        })
+        
+
+    })
+</script>
 </body>
 </html>

@@ -36,7 +36,7 @@ public class FollowController {
 
 
     @PostMapping("/getBeFollowerList4Side.do")
-    public String getBeFollowerList(Page<Follow> page,String id,Model model){
+    public String getBeFollowerList4Side(Page<Follow> page,String id,Model model){
         IPage<Follow> iPage = followService.getBeFollowerList4Side(page,id);
         model.addAttribute("beFollowerSideList",iPage.getRecords());
         return "/user/personal::be_follower_list_side";
@@ -48,6 +48,23 @@ public class FollowController {
         IPage<Follow> iPage = followService.getFollowerList4Side(page,id);
         model.addAttribute("followerSideList",iPage.getRecords());
         return "/user/personal::follower_list_side";
+    }
+
+
+    @PostMapping("/getBeFollowerList.do")
+    public String getBeFollowerList(Page<Follow> page,String id,Model model){
+        IPage<Follow> iPage = followService.getBeFollowerList4Side(page,id);
+        model.addAttribute("beFollowerList",iPage.getRecords());
+        model.addAttribute("followerTotalNum",iPage.getTotal());
+        return "/personal/follower::be_follower_list";
+    }
+
+    @PostMapping("/getFollowerList.do")
+    public String getFollowerList(Page<Follow> page,String id,Model model){
+        IPage<Follow> iPage = followService.getFollowerList4Side(page,id);
+        model.addAttribute("followerList",iPage.getRecords());
+        model.addAttribute("followerTotalNum",iPage.getTotal());
+        return "/personal/follower::follower_list";
     }
 
 }

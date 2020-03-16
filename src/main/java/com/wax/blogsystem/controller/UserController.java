@@ -88,9 +88,12 @@ public class UserController {
     }
 
     @GetMapping(value = "/goPersonalFollow.do")
-    public String goPersonalFollow(String id,Model model){
+    public String goPersonalFollow(String id,Model model,String follow){
+        User loginUser = (User) SecurityUtils.getSubject().getPrincipal();
         User user = userService.selectById(id);
+        model.addAttribute("loginUser",loginUser);
         model.addAttribute("user",user);
+        model.addAttribute("follow",follow);
         return "personal/follower";
     }
 
