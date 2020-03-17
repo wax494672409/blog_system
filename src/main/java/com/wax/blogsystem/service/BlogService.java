@@ -49,6 +49,8 @@ public interface BlogService {
 
     IPage<Blog> getILikeList(Page<Blog> page,String userId);
 
+    IPage<Blog> getMyFavoriteList(Page<Blog> page,String userId);
+
     IPage<Blog> getBlogByCategory(Page<Blog> page,String category);
 
 }

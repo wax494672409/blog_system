@@ -205,5 +205,31 @@ public class BlogController {
         return "front/home::blog_list";
     }
 
+    @PostMapping(value = "/getMyCommentList4Personal.do")
+    public String getMyCommentList4Personal(Page<Blog> page, Model model){
+        User user = (User)SecurityUtils.getSubject().getPrincipal();
+        IPage<Blog> blogPage = blogService.getMyCommentList(page,user.getId());
+        model.addAttribute("commentList",blogPage.getRecords());
+        model.addAttribute("blogTotal",blogPage.getTotal());
+        return "personal/blog::comment_list";
+    }
+
+    @PostMapping(value = "/getILikeList4Personal.do")
+    public String getILikeList4Personal(Page<Blog> page, Model model){
+        User user = (User)SecurityUtils.getSubject().getPrincipal();
+        IPage<Blog> blogPage = blogService.getILikeList(page,user.getId());
+        model.addAttribute("likeList",blogPage.getRecords());
+        model.addAttribute("blogTotal",blogPage.getTotal());
+        return "personal/blog::like_list";
+    }
+
+    @PostMapping(value = "/getMyFavoriteList4Personal.do")
+    public String getMyFavoriteList4Personal(Page<Blog> page, Model model){
+        User user = (User)SecurityUtils.getSubject().getPrincipal();
+        IPage<Blog> blogPage = blogService.getMyFavoriteList(page,user.getId());
+        model.addAttribute("favoriteList",blogPage.getRecords());
+        model.addAttribute("blogTotal",blogPage.getTotal());
+        return "personal/blog::favorite_list";
+    }
 
 }

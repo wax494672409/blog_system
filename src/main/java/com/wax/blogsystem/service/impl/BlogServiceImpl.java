@@ -204,6 +204,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public IPage<Blog> getMyFavoriteList(Page<Blog> page, String userId) {
+        return blogMapper.getMyFavoriteList(page,userId);
+    }
+
+    @Override
     public IPage<Blog> getBlogByCategory(Page<Blog> page, String category) {
         return blogMapper.getBlogByCategory(page,category);
     }

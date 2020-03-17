@@ -52,6 +52,15 @@ public interface BlogMapper extends BaseMapper<Blog> {
             ")")
     IPage<Blog> getILikeList(Page<Blog> page,@Param("userId")String userId);
 
+    @Select("select sys_blog.*,user.pic_url `authorPicUrl` from sys_blog,user where sys_blog.author=user.id and sys_blog.del_tag='1' and sys_blog.status = 'released'" +
+            "and sys_blog.id in (" +
+            "select tt.blog_id from" +
+            "(" +
+            "select blog_id from sys_blog_favorite where user_id = #{userId} " +
+            ") tt"+
+            ")")
+    IPage<Blog> getMyFavoriteList(Page<Blog> page,@Param("userId")String userId);
+
 
     @Select("SELECT sys_blog.*,user.pic_url `authorPicUrl` FROM sys_blog,user " +
             "WHERE sys_blog.author=user.id and sys_blog.del_tag='1' and sys_blog.status = 'released'" +

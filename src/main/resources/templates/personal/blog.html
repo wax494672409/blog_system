@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/user/home.css" rel="stylesheet">
+    <link href="/css/user/profile.css" rel="stylesheet">
+    <link href="/css/personal/blog.css" rel="stylesheet">
+</head>
+<body>
+<div id="top">
+    <div id="top_left">
+        <a href="/goFrontHomePage.do">首页</a>
+        <a href="//zzk.cnblogs.com/">找找看</a>
+<!--        <a href="//academy.cnblogs.com/">学习计划</a>-->
+    </div>
+</div>
+<div class="clear"></div>
+<div id="wrapper">
+    <div id="header">
+        <div id="logo">
+            <a href="//www.cnblogs.com" title="返回博客园首页">
+                <img src="//common.cnblogs.com/images/logo/logo20170227.png" alt="logo" style="width:165px;height:55px;">
+            </a>
+        </div>
+        <div id="nav_block">
+            <a href="/">园子</a> ·
+            <a href="/followees/">关注</a> ·
+            <a href="/followers/">粉丝</a> ·
+            <a href="/feed/all/">随便看看</a> ·
+            <a href="//msg.cnblogs.com/msg/inbox" target="_blank">
+                消息
+                <span id="msg_count"></span>
+            </a>
+        </div>
+        <div class="clear"></div>
+        <div id="header_user"><h1 id="header_user_left" th:text="'欢迎你，'+${loginUser.username}">
+            欢迎你，Violet丶
+        </h1>
+            <div id="header_user_right">
+                <a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}"><img class="pfs" th:src="${loginUser.picUrl}" alt=""></a>
+                <a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}" th:text="${loginUser.username}">Violet丶</a>
+                · <a th:href="@{'/blog/goBlogListPage.do?id='+${loginUser.id}}">我的博客</a>
+                · <a href="//home.cnblogs.com/set/account/">设置</a>
+                · <a href="javascript:void(0);">退出</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="container">
+        <div id="app_bar">
+            <p class="app_r_3"></p><p class="app_r_2"></p><p class="app_r_1"></p>
+            <div id="app_list_wrapper">
+                <ul class="app_list">
+                    <li>
+                        <img src="//common.cnblogs.com/images/ico_ing.gif" alt=""><a id="app_ing" href="https://ing.cnblogs.com/">闪存</a>
+                    </li>
+                    <li>
+                        <em><a href="https://i.cnblogs.com/" target="_blank">写博</a></em><img src="//common.cnblogs.com/images/ico_blog.gif" alt=""><a id="app_blog" href="/blog/">博客</a>
+                    </li>
+                    <li>
+                        <em><a href="//group.cnblogs.com/newpost/">发言</a></em><img src="//common.cnblogs.com/images/ico_group.gif" alt=""><a id="app_group" href="//group.cnblogs.com/">小组</a>
+                    </li>
+                    <li>
+                        <em><a href="//news.cnblogs.com/n/publish" target="_blank">投递</a></em><img src="//common.cnblogs.com/images/ico_news.gif" alt=""><a id="app_news" href="/news/">新闻</a>
+                    </li>
+                    <li>
+                        <em><a href="https://q.cnblogs.com/q/new" target="_self">提问</a></em><img src="//common.cnblogs.com/images/ico_question.gif" alt=""><a id="app_q" href="https://q.cnblogs.com/">博问</a>
+                    </li>
+                    <li>
+                        <em><a href="#" target="_blank" onclick="AddToWz();return false;">添加</a></em><img src="//common.cnblogs.com/images/ico_bookmark.gif" alt=""><a id="app_wz" href="//wz.cnblogs.com/">收藏</a>
+                    </li>
+                    <li>
+                        <em><a href="//job.cnblogs.com/admin/" target="_blank">发布</a></em><img src="//common.cnblogs.com/images/ico_job.gif" alt=""><a id="app_job" href="/jobs/">招聘</a>
+                    </li>
+                    <li>
+                        <img src="//common.cnblogs.com/images/ico_kb.gif" alt=""><a id="app_kb" href="/kb/">文库</a>
+                    </li>
+                </ul>
+                <div class="app_setting">
+                    <a href="//group.cnblogs.com/forum/public/" class="flag_edit" target="_blank">问题反馈</a>
+                </div>
+            </div>
+            <p class="app_r_1"></p><p class="app_r_2"></p><p class="app_r_3"></p>
+        </div>
+        <div id="container_content">
+
+            <div>
+                <ul class="post_nav_block">
+                    <li><a class="current_nav favorite_btn" href="javascript:;">我收藏的</a> </li>
+                    <li><a class="follow_btn" href="javascript:;">我关注的</a></li>
+                    <li><a class="like_btn" href="javascript:;">我推荐的</a></li>
+                    <li><a class="comment_btn" href="javascript:;">我评论的</a></li>
+                </ul>
+                <div class="main">
+                    <div class="post_list favorite" id="favorite_list" th:fragment="favorite_list">
+                        <span class="hide totalBlog" th:text="${blogTotal}"></span>
+                        <div class="post_block" th:each="blog:${favoriteList}">
+                            <div class="content">
+                                <h2 class="entry_title">
+                                    <a th:href="@{'/blog/goBlogListPage.do?id='+${blog.author}}" class="title_author" target="_blank" th:text="'['+${blog.authorName}+']'">[东北小狐狸]</a>
+                                    <a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" target="_blank" th:text="${blog.title}">Docker极简部署Kafka+Zookeeper+ElasticStack</a>
+                                </h2>
+                                <div class="entry_summary" th:text="${blog.summary}">之前写ELK部分时有朋友问有没有能一</div>
+                                <div class="clear"></div>
+                                <div class="entry_footer">
+                                    <span class="post_comment">
+                                        <a class="grayline" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:text="'评论('+${blog.commentNum}+')'"> 评论(0)</a>
+                                    </span>
+                                    <span class="post_view">
+                                        <a class="grayline" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:text="'阅读('+${blog.viewNum}+')'">阅读(0)</a>
+                                    </span>
+                                    <span th:text="'推荐('+${blog.likeNum}+') 发布于'">推荐(0) 发布于</span>
+                                    <span class="postdate" th:text="${#dates.format(blog.releaseTime, 'yyyy-MM-dd hh:mm:ss')}">2020-03-17 15:03</span>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="post_list like" id="like_list" th:fragment="like_list">
+                        <span class="hide totalBlog" th:text="${blogTotal}"></span>
+                        <div class="post_block" th:each="blog:${likeList}">
+                            <div class="content">
+                                <h2 class="entry_title">
+                                    <a th:href="@{'/blog/goBlogListPage.do?id='+${blog.author}}" class="title_author" target="_blank" th:text="'['+${blog.authorName}+']'">[东北小狐狸]</a>
+                                    <a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" target="_blank" th:text="${blog.title}">Docker极简部署Kafka+Zookeeper+ElasticStack</a>
+                                </h2>
+                                <div class="entry_summary" th:text="${blog.summary}">之前写ELK部分时有朋友问有没有能一</div>
+                                <div class="clear"></div>
+                                <div class="entry_footer">
+                                    <span class="post_comment">
+                                        <a class="grayline" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:text="'评论('+${blog.commentNum}+')'"> 评论(0)</a>
+                                    </span>
+                                    <span class="post_view">
+                                        <a class="grayline" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:text="'阅读('+${blog.viewNum}+')'">阅读(0)</a>
+                                    </span>
+                                    <span th:text="'推荐('+${blog.likeNum}+') 发布于'">推荐(0) 发布于</span>
+                                    <span class="postdate" th:text="${#dates.format(blog.releaseTime, 'yyyy-MM-dd hh:mm:ss')}">2020-03-17 15:03</span>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="post_list comment" id="comment_list" th:fragment="comment_list">
+                        <span class="hide totalBlog" th:text="${blogTotal}"></span>
+                        <div class="post_block" th:each="blog:${commentList}">
+                            <div class="content">
+                                <h2 class="entry_title">
+                                    <a th:href="@{'/blog/goBlogListPage.do?id='+${blog.author}}" class="title_author" target="_blank" th:text="'['+${blog.authorName}+']'">[东北小狐狸]</a>
+                                    <a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" target="_blank" th:text="${blog.title}">Docker极简部署Kafka+Zookeeper+ElasticStack</a>
+                                </h2>
+                                <div class="entry_summary" th:text="${blog.summary}">之前写ELK部分时有朋友问有没有能一</div>
+                                <div class="clear"></div>
+                                <div class="entry_footer">
+                                    <span class="post_comment">
+                                        <a class="grayline" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:text="'评论('+${blog.commentNum}+')'"> 评论(0)</a>
+                                    </span>
+                                    <span class="post_view">
+                                        <a class="grayline" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:text="'阅读('+${blog.viewNum}+')'">阅读(0)</a>
+                                    </span>
+                                    <span th:text="'推荐('+${blog.likeNum}+') 发布于'">推荐(0) 发布于</span>
+                                    <span class="postdate" th:text="${#dates.format(blog.releaseTime, 'yyyy-MM-dd hh:mm:ss')}">2020-03-17 15:03</span>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block_arrow">
+                    <div id="test1" class="pager">
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="goTop">
+            <a href="javascript:void(0)">
+                <img src="//common.cnblogs.com/images/ico_top.gif" alt="Top" title="回到页首">
+            </a>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="footer">
+        <a href="//www.cnblogs.com/AboutUS.aspx">关于博客园</a>
+        <a href="//www.cnblogs.com/ContactUs.aspx">联系我们</a>
+        <a href="//www.cnblogs.com/ad.aspx">广告服务</a>
+        © 2004-2020
+        <a href="//www.cnblogs.com">博客园</a>
+        <span id="powered_by">Powered by .NET Core on Kubernetes</span>
+        <span id="profiler_footer"></span>
+    </div>
+</div>
+<script src="/third/layui/layui.js"></script>
+<script th:inline="javascript">
+    layui.use(['laypage','jquery','layer'], function () {
+        var laypage = layui.laypage;
+        var $ = layui.$;
+        var layer = layui.layer;
+
+        var type = 'favorite';
+
+        render();
+        function render(){
+            renderAllPage(10,type)
+        }
+
+        function renderAllPage(pageSize,pageType) {
+            switch (pageType) {
+                case 'favorite':
+                    getMyFavoriteList(1);
+                    $(".like").html("")
+                    $(".comment").html("")
+                    break;
+                case 'like':
+                    getILikeList(1);
+                    $(".favorite").html("")
+                    $(".comment").html("")
+                    break;
+                case 'comment':
+                    getMyCommentList(1);
+                    $(".like").html("")
+                    $(".favorite").html("")
+                    break;
+            }
+            setTimeout(function () {
+                var totalNum = Number($(".totalBlog").text());
+                if(totalNum == 0){
+                    return
+                }
+                laypage.render({
+                    elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                    , count: totalNum //数据总数，从服务端得到
+                    , limit: pageSize
+                    , jump: function (obj, first) {
+                        if (!first) {
+                            switch (pageType) {
+                                case 'favorite':
+                                    getMyFavoriteList(obj.curr);
+                                    break;
+                                case 'like':
+                                    getILikeList(obj.curr);
+                                    break;
+                                case 'comment':
+                                    getMyCommentList(obj.curr);
+                                    break;
+                            }
+                        }
+                    }
+                });
+            }, 100)
+        }
+
+        function getMyFavoriteList(current){
+            $.ajax({
+                url: '/blog/getMyFavoriteList4Personal.do',
+                type: 'POST',
+                data: {
+                    current:current,
+                    size:10
+                },
+                dataType : "html",
+                success: function (result) {
+                    $("#favorite_list").html(result)
+                }
+            });
+        }
+
+        function getILikeList(current){
+            $.ajax({
+                url: '/blog/getILikeList4Personal.do',
+                type: 'POST',
+                data: {
+                    current:current,
+                    size:10
+                },
+                dataType : "html",
+                success: function (result) {
+                    $("#like_list").html(result)
+                }
+            });
+        }
+
+        function getMyCommentList(current){
+            $.ajax({
+                url: '/blog/getMyCommentList4Personal.do',
+                type: 'POST',
+                data: {
+                    current:current,
+                    size:10
+                },
+                dataType : "html",
+                success: function (result) {
+                    $("#comment_list").html(result)
+                }
+            });
+        }
+
+
+        $(".favorite_btn").click(function () {
+            $('.current_nav').removeClass("current_nav");
+            $('.favorite').removeClass("hide")
+            $('.like').addClass("hide")
+            $('.comment').addClass("hide")
+            $(this).addClass("current_nav");
+            renderAllPage(10,'favorite');
+        })
+
+        $(".like_btn").click(function () {
+            $('.current_nav').removeClass("current_nav");
+            $('.like').removeClass("hide")
+            $('.favorite').addClass("hide")
+            $('.comment').addClass("hide")
+            $(this).addClass("current_nav");
+            renderAllPage(10,'like');
+        })
+
+        $(".comment_btn").click(function () {
+            $('.current_nav').removeClass("current_nav");
+            $('.comment').removeClass("hide")
+            $('.like').addClass("hide")
+            $('.favorite').addClass("hide")
+            $(this).addClass("current_nav");
+            renderAllPage(10,'comment');
+        })
+        
+        $("#goTop").click(function () {
+            $('html,body').animate({scrollTop: '0px'}, 800);
+        })
+
+    })
+</script>
+</body>
+</html>

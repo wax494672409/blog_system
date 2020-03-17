@@ -97,6 +97,15 @@ public class UserController {
         return "personal/follower";
     }
 
+    @GetMapping(value = "/goPersonalBlog.do")
+    public String goPersonalBlog(String id,Model model,String follow){
+        User loginUser = (User) SecurityUtils.getSubject().getPrincipal();
+        User user = userService.selectById(id);
+        model.addAttribute("loginUser",loginUser);
+        model.addAttribute("user",user);
+        return "personal/blog";
+    }
+
 
     @RequestMapping(value = "/saveOrUpdate.do",method = RequestMethod.POST)
     @ResponseBody
