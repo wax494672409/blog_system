@@ -6,6 +6,19 @@ uploadFile:
   blogHandler: /uploadBlogImg/**
   blogLocation: E:/IDEA_WORKSPACE/blogsystem/src/main/resources/static/upload/blog/
 spring:
+#  elasticsearch:
+#    rest:
+#      uris: http://localhost:9200
+  data:
+    elasticsearch:
+      #集群名称
+      cluster-name: my-application
+      #节点地址
+      cluster-nodes: 127.0.0.1:9300
+      #是否开启本地存储
+      repositories:
+        enabled: true
+
   # 配置发送方信息
   mail:
     host: smtp.qq.com
@@ -110,7 +123,11 @@ spring:
     freemarker:
       cache: false    #页面不加载缓存，修改即时生效
 
-
+#---------------es---------------
+es:
+  host: 127.0.0.1
+  port: 9200
+  scheme: http
 
 
   #------------mybatis--------------
