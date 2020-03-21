@@ -5,6 +5,7 @@ import com.wax.blogsystem.domain.BlogEs;
 import com.wax.blogsystem.service.BlogEsService;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,7 +29,7 @@ public class BlogEsServiceImpl implements BlogEsService {
 
     @Override
     public Page<BlogEs> allSearch(String str, Pageable pageable) {
-        QueryBuilder queryBuilder = QueryBuilders.matchAllQuery();
+        QueryBuilder queryBuilder = QueryBuilders.multiMatchQuery(str,"title","summary");
         return blogRepository.search(queryBuilder, pageable);
     }
 
@@ -36,6 +37,16 @@ public class BlogEsServiceImpl implements BlogEsService {
     public Page<BlogEs> searchByContent(String str) {
         QueryBuilder queryBuilder = QueryBuilders.multiMatchQuery(str,"summary","title");
         return blogRepository.search(queryBuilder, Pageable.unpaged());
+    }
+
+    @Override
+    public void addBlogEs(BlogEs blogEs) {
+        blogRepository.save(blogEs);
+    }
+
+    @Override
+    public void updateBlogEs(BlogEs blogEs) {
+        blogRepository.save(blogEs);
     }
 
 }

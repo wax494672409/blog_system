@@ -8,11 +8,14 @@ import com.wax.blogsystem.common.JSONUtil;
 import com.wax.blogsystem.common.SysCode;
 import com.wax.blogsystem.domain.Activity;
 import com.wax.blogsystem.domain.Blog;
+import com.wax.blogsystem.domain.BlogEs;
 import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.mapper.BlogMapper;
 import com.wax.blogsystem.service.ActivityService;
+import com.wax.blogsystem.service.BlogEsService;
 import com.wax.blogsystem.service.BlogService;
 import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     public ActivityService activityService;
+
+    @Autowired
+    private BlogEsService blogEsService;
 
     @Override
     public IPage<Blog> selectAll(Page<Blog> page) {
@@ -44,11 +50,15 @@ public class BlogServiceImpl implements BlogService {
             blog.setCommentNum(SysCode.NUM.ZERO);
             blog.setLikeNum(SysCode.NUM.ZERO);
             blog.setDelTag(SysCode.DELTAG.WSC);
+            blog.setIsRecommend(SysCode.IS_RECOMMEND.NO);
             if(blog.getStatus().equals(SysCode.BLOG_STATUS.RELEASED)){
                 blog.setReleaseTime(new Date());
             }
             blogMapper.insert(blog);
             activityService.addActivity(addActivity(blog));
+            BlogEs blogEs = new BlogEs();
+            BeanUtils.copyProperties(blog,blogEs);
+            blogEsService.addBlogEs(blogEs);
             return JSONUtil.success(SysCode.TIPMESSAGE.SAVESUCCESS);
         }
         else{
@@ -77,6 +87,9 @@ public class BlogServiceImpl implements BlogService {
     public void addViewNum(Blog blog) {
         blog.setViewNum(blog.getViewNum()+1);
         blogMapper.updateById(blog);
+        BlogEs blogEs = new BlogEs();
+        BeanUtils.copyProperties(blog,blogEs);
+        blogEsService.updateBlogEs(blogEs);
     }
 
 
@@ -93,24 +106,36 @@ public class BlogServiceImpl implements BlogService {
     public void addCommentNum(Blog blog) {
         blog.setCommentNum(blog.getCommentNum()+1);
         blogMapper.updateById(blog);
+        BlogEs blogEs = new BlogEs();
+        BeanUtils.copyProperties(blog,blogEs);
+        blogEsService.updateBlogEs(blogEs);
     }
 
     @Override
     public void subtractCommentNum(Blog blog) {
         blog.setCommentNum(blog.getCommentNum()-1);
         blogMapper.updateById(blog);
+        BlogEs blogEs = new BlogEs();
+        BeanUtils.copyProperties(blog,blogEs);
+        blogEsService.updateBlogEs(blogEs);
     }
 
     @Override
     public void addLikeNum(Blog blog) {
         blog.setLikeNum(blog.getLikeNum()+1);
         blogMapper.updateById(blog);
+        BlogEs blogEs = new BlogEs();
+        BeanUtils.copyProperties(blog,blogEs);
+        blogEsService.updateBlogEs(blogEs);
     }
 
     @Override
     public void subtractLikeNum(Blog blog) {
         blog.setLikeNum(blog.getLikeNum()-1);
         blogMapper.updateById(blog);
+        BlogEs blogEs = new BlogEs();
+        BeanUtils.copyProperties(blog,blogEs);
+        blogEsService.updateBlogEs(blogEs);
     }
 
     @Override

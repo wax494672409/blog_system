@@ -24,4 +24,12 @@ public class BlogEsController {
         return JSONUtil.result(true,page.getContent(),"");
     }
 
+    @RequestMapping(value = "/addOne.do")
+    @ResponseBody
+    public String addOne(){
+        BlogEs blogEs = new BlogEs();
+        blogEsService.addBlogEs(blogEs);
+        return JSONUtil.success();
+    }
+
 }

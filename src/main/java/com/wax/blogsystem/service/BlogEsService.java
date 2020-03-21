@@ -12,4 +12,8 @@ public interface BlogEsService {
 
     Page<BlogEs> searchByContent(String str);
 
+    void addBlogEs(BlogEs blogEs);
+
+    void updateBlogEs(BlogEs blogEs);
+
 }
