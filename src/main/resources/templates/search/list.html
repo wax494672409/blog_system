@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/search/list.css" rel="stylesheet">
+</head>
+<body>
+<div class="top">
+    <div class="top_tabs">
+        <a href="//www.cnblogs.com">« 博客园首页 </a>
+    </div>
+    <div id="span_userinfo">
+        <a href="https://home.cnblogs.com/u/bootyWind">Violet丶</a>
+        ·
+        <!--
+        -->
+        <a id="user_nav_blog_link" href="https://www.cnblogs.com/bootyWind/">我的博客</a>
+        ·
+        <!--
+        -->
+        <a href="https://msg.cnblogs.com/">短消息<span id="msg_count"></span></a>
+        ·
+        <!--
+        -->
+        <a href="https://home.cnblogs.com/set/">设置</a>
+        ·
+        <!--
+        -->
+        <a href="#" onclick="logout();return false;">退出</a>
+        <!--
+        -->
+        <span id="current_spaceId" style="display: none">1696808</span>
+    </div>
+</div>
+<div id="header">
+    <a id="logo" href="/"><img style="        width: 100%" alt="找找看logo" src="/upload/logo/logo.gif"></a>
+    <div class="index_sozone">
+        <div class="index_tab">
+            <a class="" href="/s/news?Keywords=asdf">新闻</a><a class="tab_selected " href="/s/blogpost?Keywords=asdf">博客</a><a class="" href="/s/question?Keywords=asdf">博问</a><a class="" href="/s/kb?Keywords=asdf">知识库</a><a class="" href="/s/ing?Keywords=asdf">闪存</a><a href="/my/s/blogpost?Keywords=asdf">个人搜</a></div>
+        <form>
+            <input class="input_index" id="w" name="Keywords" type="search" th:value="${searchStr}">
+            <input type="button" id="search_btn" class="btn_so_index" value="找一下" />
+        </form>
+    </div>
+    <div style="        clear: both"></div>
+    <div id="searchInfo">
+                    <span style="        float: left;
+        margin-left: 15px;"></span><span>找找看，找到相关内容<b id="CountOfResults">4329</b>篇，用时977毫秒</span>
+    </div>
+    <!--end: searchInfo -->
+</div>
+<!--end: header -->
+<div id="main">
+    <div id="searchResult">
+        <div style="clear: both">
+        </div>
+        <div class="forflow" id="search_list" th:fragment="search_list">
+            <span style="display:none" id="searchTotalNum" th:text="${searchTotalNum}"></span>
+            <div class="searchItem" th:each="blog:${searchList}">
+                <h3 class="searchItemTitle">
+                    <a target="_blank" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:text="${blog.title}"></a>
+                </h3>
+                <!--end: searchItemTitle -->
+                <span class="searchCon" th:text="${blog.summary}"></span>
+                <!--end: searchCon -->
+                <div class="searchItemInfo">
+                    <span class="searchItemInfo-userName">
+                        <a th:href="@{'/blog/goBlogListPage.do?id='+${blog.author}}" target="_blank" th:text="${blog.authorName}">linuxws</a>
+                    </span>
+                    <span class="searchItemInfo-publishDate" th:text="${#dates.format(blog.releaseTime, 'yyyy-MM-dd hh:mm:ss')}">2019-05-07</span>
+                    <span class="searchItemInfo-views" th:text="'浏览('+${blog.viewNum}+')'">浏览(79)</span>
+                    <span class="searchItemInfo-related"><a href="https://recomm.cnblogs.com/blogpost/10826641" target="view_window">相关博文</a></span>
+                </div>
+                <div class="searchItemInfo">
+                    <span class="searchURL"><a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" target="_blank" th:text="'http://www.blogsystem.com/'+${blog.releaseTime}">linuxws</a></span>
+                </div>
+            </div>
+        </div>
+        <div id="paging_block" style="margin-left: 40px">
+            <div id="test1" class="pager">
+            </div>
+        </div>
+    </div>
+    <div class="forflow sidebar">
+        <div class="sideRightWidget">
+            <b>按浏览数筛选</b><br>
+            <div class="index_tab">
+                <a class="tab_selected" href="/s/blogpost?Keywords=asdf">全部</a><a href="/s/blogpost?Keywords=asdf&amp;ViewCount=200">200以上</a><a href="/s/blogpost?Keywords=asdf&amp;ViewCount=500">500以上</a><a href="/s/blogpost?Keywords=asdf&amp;ViewCount=1000">1000以上</a>    </div>
+        </div>
+        <div style="        clear: both;"></div>
+        <div class="sideRightWidget">
+            <b>按推荐数筛选</b><br>
+            <div class="index_tab">
+                <a class="tab_selected" href="/s/blogpost?Keywords=asdf">全部</a><a href="/s/blogpost?Keywords=asdf&amp;DiggCount=2">2次以上</a><a href="/s/blogpost?Keywords=asdf&amp;DiggCount=10">10次以上</a><a href="/s/blogpost?Keywords=asdf&amp;DiggCount=100">100次以上</a>    </div>
+        </div>                        <div style="        clear: both;"></div>
+
+
+
+        <div class="sideRightWidget">
+            <b>按时间筛选</b><br>
+            <div class="index_tab">
+                <a class="tab_selected" href="/s/blogpost?Keywords=asdf">全部</a><a href="/s/blogpost?Keywords=asdf&amp;DateTimeRange=OneWeek">一周内</a><a href="/s/blogpost?Keywords=asdf&amp;DateTimeRange=OneMonth">一月内</a><a href="/s/blogpost?Keywords=asdf&amp;DateTimeRange=ThreeMonth">三月内</a><a href="/s/blogpost?Keywords=asdf&amp;DateTimeRange=OneYear">一年内</a>    </div>
+            <p>
+            </p><form action="/s/blogpost" autocomplete="off" method="get"><input id="Keywords" name="Keywords" type="hidden" value="asdf">                <input id="datetimetange" name="datetimerange" type="hidden" value="Customer">
+            自定义: <input class="datepicker min" id="mindate" name="from" type="text" value="">
+            - <input class="datepicker max" id="maxdate" name="to" type="text" value="">
+            <input type="submit" value="确 定">
+        </form>    <p></p>
+        </div>
+
+        <div style="        clear: both;"></div>
+        <div class="sideRightWidget">
+            » 去“<a title="博问是博客园提供的问答系统" href="//q.cnblogs.com/">博问</a>”问一下？
+            <br>
+            » 搜索“<a href="//job.cnblogs.com/search/">招聘职位</a>”
+            <br>
+            » 我有<a href="//group.cnblogs.com/forum/public/">反馈或建议</a>
+        </div>
+    </div>
+</div>
+<div style="clear: both;"></div>
+<div id="footer">
+    Powered by ASP.NET Core on Linux<br>
+    © 2004-2020 <a title="开发者的网上家园" href="//www.cnblogs.com">博客园</a>
+</div>
+<div class="pika-single is-hidden is-bound" style=""></div><div class="pika-single is-hidden is-bound" style=""></div>
+<script src="/third/layui/layui.js"></script>
+<script src="/third/jquery/jquery-3.4.1.js"></script>
+<script th:inline="javascript">
+    layui.use(['laypage','layer'], function () {
+        var laypage = layui.laypage;
+        var layer = layui.layer;
+        var $ = layui.$
+
+        var pageSize = 10;
+        var searchStr = [[${searchStr}]]
+
+        renderPage()
+
+        function getSearchList(current) {
+            $.ajax({
+                url: '/blogEs/allSearch.do',
+                type: 'POST',
+                data: {
+                    size: pageSize,
+                    page: current,
+                    str: searchStr
+                },
+                success: function (result) {
+                    $("#search_list").html(result);
+                }
+            });
+        }
+
+        function renderPage(){
+            getSearchList(0)
+            setTimeout(function () {
+                var totalNum = Number($("#searchTotalNum").text());
+                laypage.render({
+                    elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                    , count: totalNum //数据总数，从服务端得到
+                    , limit: pageSize
+                    , jump: function (obj, first) {
+                        if(!first){
+                            getSearchList(obj.curr-1);
+                            $('html,body').animate({scrollTop: '0px'}, 800);
+                        }
+                    }
+                });
+            },200)
+        }
+
+        $("#search_btn").click(function () {
+            var searchStr =  $('#w').val();
+            if(!searchStr){
+                layer.msg("请输入内容")
+                return;
+            }
+            else {
+                window.open("/blogEs/goSearchList.do?str="+searchStr,"_self");
+            }
+        })
+    })
+</script>
+</body>
+</html>

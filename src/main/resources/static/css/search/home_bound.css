@@ -1,0 +1,328 @@
+body, div, td, ol {
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    line-height: 150%
+}
+
+body {
+    width: 100%;
+    min-width: 980px;
+    font-size: 14px
+}
+
+.clear {
+    clear: both
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: #12c;
+    text-decoration: underline
+}
+
+.top {
+    color: #5b5b5b;
+    font-size: 12px
+}
+
+.top_tabs {
+    float: left;
+    margin: 5px auto auto 10px
+}
+
+#span_userinfo {
+    padding: 5px 5px 0 5px;
+    overflow: hidden;
+    text-align: right;
+    margin: 0 10px auto auto
+}
+
+#span_userinfo a {
+    padding: 0 4px
+}
+
+.index_sozone {
+    width: 500px;
+    border: solid 0 #f00;
+    text-align: left;
+    padding-left: 30px
+}
+
+.index_tab {
+    font-size: 14px;
+    margin: 0 70px 4px 5px;
+    border: solid 0
+}
+
+.index_tab a {
+    margin-right: 20px
+}
+
+a.tab_selected {
+    font-weight: bold;
+    text-decoration: none;
+    color: #000
+}
+
+.input_index {
+    height: 26px;
+    font-size: 14px;
+    border: 1px solid #7e9db9;
+    margin-right: 8px;
+    padding: 2px;
+    vertical-align: middle;
+    width: 350px;
+    -webkit-appearance: none
+}
+
+.index_tab a {
+    margin-right: 15px
+}
+
+.new:after {
+    content: "●";
+    position: relative;
+    top: -9px;
+    left: 0;
+    text-decoration: none;
+    display: inline-block;
+    color: #d01717;
+    font-size: 100%
+}
+
+.index_btn {
+    float: right;
+    margin-left: 5px;
+    width: 120px
+}
+
+.btn_so_index {
+    border: 1px solid #aaa;
+    background-color: #eee;
+    font-size: 13px;
+    height: 26px;
+    vertical-align: middle;
+    width: 80px
+}
+
+.help_link {
+    font-size: 12px;
+    line-height: 150%
+}
+
+@media only screen and (max-width: 767px) {
+    body {
+        min-width: unset
+    }
+
+    #header {
+        height: auto
+    }
+}
+
+a.gray:link {
+    color: #808080;
+    text-decoration: underline
+}
+
+a.gray:visited {
+    color: #808080;
+    text-decoration: underline
+}
+
+a.gray:hover {
+    color: #060;
+    text-decoration: underline
+}
+
+a.gray:active {
+    color: #060;
+    text-decoration: underline
+}
+
+a.green:link {
+    color: #090;
+    text-decoration: underline;
+    font-weight: bold
+}
+
+a.green:visited {
+    color: #090;
+    text-decoration: underline;
+    font-weight: bold
+}
+
+a.green:hover {
+    color: #060;
+    text-decoration: underline;
+    font-weight: bold
+}
+
+a.green:active {
+    color: #060;
+    text-decoration: underline;
+    font-weight: bold
+}
+
+a.orange:link {
+    color: #f90;
+    text-decoration: none
+}
+
+a.orange:visited {
+    color: #f90;
+    text-decoration: none
+}
+
+a.orange:hover {
+    color: #f00;
+    text-decoration: none
+}
+
+a.orange:active {
+    color: #f00;
+    text-decoration: none
+}
+
+a.redlink:link {
+    color: #f00;
+    text-decoration: underline
+}
+
+a.redlink:visited {
+    color: #f00;
+    text-decoration: underline
+}
+
+a.redlink:hover {
+    color: #075db3;
+    text-decoration: underline
+}
+
+a.redlink:active {
+    color: #f00;
+    text-decoration: none
+}
+
+.red {
+    color: #f00
+}
+
+.green {
+    color: #4d8606
+}
+
+.big {
+    font-size: 14px
+}
+
+ol {
+    margin-top: 0
+}
+
+.floatlft {
+    float: left
+}
+
+img {
+    border: 0
+}
+
+input {
+    font-family: verdana
+}
+
+.hidden {
+    display: none
+}
+
+.top_links {
+    padding-top: 5px;
+    float: right;
+    color: #bebebe;
+    padding-right: 10px
+}
+
+.top_links_content {
+    width: 720px;
+    margin: auto;
+    text-align: right;
+    padding: 5px 20px 0 0;
+    color: #bebebe
+}
+
+.center {
+    margin-right: auto;
+    margin-left: auto
+}
+
+.main {
+    padding-top: 100px;
+    text-align: center
+}
+
+.index_tab {
+    margin-top: 45px
+}
+
+.tab_selected {
+    font-weight: bold
+}
+
+.footer {
+    text-align: center;
+    margin-top: 25px;
+    margin-left: 0;
+    font-size: 14px;
+    color: #333
+}
+
+.sfooter {
+    text-align: center;
+    margin-top: 25px;
+    margin-left: 0;
+    font-size: 14px;
+    color: #333;
+    position: fixed;
+    bottom: 20px;
+    font-size: 12px;
+    width: 100%;
+    margin: 0 auto
+}
+
+input[type=button] {
+    -webkit-appearance: button
+}
+
+#msg_count {
+    color: #f00
+}
+
+.index_sozone {
+    margin-left: auto;
+    margin-right: auto
+}
+
+@media only screen and (max-width: 767px) {
+    #span_userinfo {
+        display: none
+    }
+
+    .top {
+        font-size: 14px
+    }
+
+    .index_tab {
+        margin: 10px 5px 10px 10px
+    }
+
+    .input_index {
+        width: 240px;
+        font-size: 16px
+    }
+
+    .index_sozone {
+        width: auto
+    }
+}

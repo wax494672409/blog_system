@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>找找看</title>
+    <link href="/css/search/home_bound.css" rel="stylesheet">
+</head>
+<body>
+<div class="top">
+    <div class="top_tabs">
+        <a href="/goFrontHomePage.do">« 博客园 </a>
+    </div>
+    <div id="span_userinfo">
+        <a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}" th:text="${loginUser.username}">Violet丶</a>
+        ·
+        <!--
+        -->
+        <a id="user_nav_blog_link" th:href="@{'/blog/goBlogListPage.do?id='+${loginUser.id}}">我的博客</a>
+        ·
+        <!--
+        -->
+        <a href="https://msg.cnblogs.com/">短消息<span id="msg_count"></span></a>
+        ·
+        <!--
+        -->
+        <a href="https://home.cnblogs.com/set/">设置</a>
+        ·
+        <!--
+        -->
+        <a href="#">退出</a>
+        <!--
+        -->
+        <span id="current_spaceId" style="display: none">1696808</span>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="main">
+    <div>
+        <a href="//zzk.cnblogs.com">
+            <img alt="找找看logo" src="/upload/logo/logo.gif">
+        </a>
+    </div>
+    <div class="index_sozone">
+        <br><br><br>
+        <form>
+            <input class="input_index" id="w" name="Keywords" type="search" value="">
+            <input type="button" id="search_btn" class="btn_so_index" value="找一下" />
+        </form>
+    </div>
+</div>
+<div class="sfooter">©2004-2020 <a href="//www.cnblogs.com">博客园</a></div>
+<script src="/third/layui/layui.js"></script>
+<script src="/third/jquery/jquery-3.4.1.js"></script>
+<script th:inline="javascript">
+
+    layui.use(['laypage','layer'], function () {
+
+        var $ = layui.$;
+        var layer = layui.layer;
+
+        $("#search_btn").click(function () {
+            var searchStr =  $('#w').val();
+            if(!searchStr){
+                layer.msg("请输入内容")
+                return;
+            }
+            else {
+                window.open("/blogEs/goSearchList.do?str="+searchStr,"_self");
+            }
+        })
+
+    })
+</script>
+</body>
+</html>
