@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping(value = "/blogEs")
 public class BlogEsController {
@@ -29,7 +31,7 @@ public class BlogEsController {
     }
 
     @RequestMapping(value = "/goSearchList.do")
-    public String goSearchList(Model model,String str){
+    public String goSearchList(Model model, String str){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("loginUser",user);
         model.addAttribute("searchStr",str);
@@ -37,8 +39,9 @@ public class BlogEsController {
     }
 
     @PostMapping(value = "/allSearch.do")
-    public String searchAll(String str, Pageable pageable,Model model){
-        Page<BlogEs> page =blogEsService.allSearch(str,pageable);
+    public String searchAll(String str, Pageable pageable,Model model,
+                            Integer likeLimit, Integer viewLimit, Date dateLimit){
+        Page<BlogEs> page =blogEsService.allSearch(str,pageable,likeLimit,viewLimit,dateLimit);
         model.addAttribute("searchList",page.getContent());
         model.addAttribute("searchTotalNum",page.getTotalElements());
         return "search/list::search_list";

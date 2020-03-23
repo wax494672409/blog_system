@@ -65,6 +65,24 @@ a.tab_selected {
     color: #000
 }
 
+a.tab_like_selected {
+    font-weight: bold;
+    text-decoration: none;
+    color: #000
+}
+
+a.tab_veiw_selected {
+    font-weight: bold;
+    text-decoration: none;
+    color: #000
+}
+
+a.tab_date_selected {
+    font-weight: bold;
+    text-decoration: none;
+    color: #000
+}
+
 .input_index {
     height: 26px;
     font-size: 14px;

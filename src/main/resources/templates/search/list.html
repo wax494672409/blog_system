@@ -9,14 +9,14 @@
 <body>
 <div class="top">
     <div class="top_tabs">
-        <a href="//www.cnblogs.com">« 博客园首页 </a>
+        <a href="/goFrontHomePage.do">« 博客园首页 </a>
     </div>
     <div id="span_userinfo">
-        <a href="https://home.cnblogs.com/u/bootyWind">Violet丶</a>
+        <a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}" th:text="${loginUser.username}">Violet丶</a>
         ·
         <!--
         -->
-        <a id="user_nav_blog_link" href="https://www.cnblogs.com/bootyWind/">我的博客</a>
+        <a id="user_nav_blog_link" th:href="@{'/blog/goBlogListPage.do?id='+${loginUser.id}}">我的博客</a>
         ·
         <!--
         -->
@@ -28,7 +28,7 @@
         ·
         <!--
         -->
-        <a href="#" onclick="logout();return false;">退出</a>
+        <a href="#">退出</a>
         <!--
         -->
         <span id="current_spaceId" style="display: none">1696808</span>
@@ -47,7 +47,7 @@
     <div style="        clear: both"></div>
     <div id="searchInfo">
                     <span style="        float: left;
-        margin-left: 15px;"></span><span>找找看，找到相关内容<b id="CountOfResults">4329</b>篇，用时977毫秒</span>
+        margin-left: 15px;"></span><span>找找看，找到相关内容<b id="CountOfResults"></b>篇</span>
     </div>
     <!--end: searchInfo -->
 </div>
@@ -60,10 +60,10 @@
             <span style="display:none" id="searchTotalNum" th:text="${searchTotalNum}"></span>
             <div class="searchItem" th:each="blog:${searchList}">
                 <h3 class="searchItemTitle">
-                    <a target="_blank" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:text="${blog.title}"></a>
+                    <a target="_blank" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:utext="${blog.title}"></a>
                 </h3>
                 <!--end: searchItemTitle -->
-                <span class="searchCon" th:text="${blog.summary}"></span>
+                <span class="searchCon" th:utext="${blog.summary}"></span>
                 <!--end: searchCon -->
                 <div class="searchItemInfo">
                     <span class="searchItemInfo-userName">
@@ -86,31 +86,38 @@
     <div class="forflow sidebar">
         <div class="sideRightWidget">
             <b>按浏览数筛选</b><br>
-            <div class="index_tab">
-                <a class="tab_selected" href="/s/blogpost?Keywords=asdf">全部</a><a href="/s/blogpost?Keywords=asdf&amp;ViewCount=200">200以上</a><a href="/s/blogpost?Keywords=asdf&amp;ViewCount=500">500以上</a><a href="/s/blogpost?Keywords=asdf&amp;ViewCount=1000">1000以上</a>    </div>
+            <div class="index_tab" id="viewBar">
+                <a class="tab_veiw_selected" href="javascript:;">全部</a>
+                <a href="javascript:;" value="10">10以上</a>
+                <a href="javascript:;" value="50">50以上</a>
+                <a href="javascript:;" value="100">100以上</a>
+            </div>
         </div>
         <div style="        clear: both;"></div>
         <div class="sideRightWidget">
             <b>按推荐数筛选</b><br>
-            <div class="index_tab">
-                <a class="tab_selected" href="/s/blogpost?Keywords=asdf">全部</a><a href="/s/blogpost?Keywords=asdf&amp;DiggCount=2">2次以上</a><a href="/s/blogpost?Keywords=asdf&amp;DiggCount=10">10次以上</a><a href="/s/blogpost?Keywords=asdf&amp;DiggCount=100">100次以上</a>    </div>
-        </div>                        <div style="        clear: both;"></div>
-
-
+            <div class="index_tab" id="likeBar">
+                <a class="tab_like_selected" href="javascript:;">全部</a>
+                <a href="javascript:;" value="2">2次以上</a>
+                <a href="javascript:;" value="10">10次以上</a>
+                <a href="javascript:;" value="100">100次以上</a>
+            </div>
+        </div>
+        <div style="clear: both;">
+        </div>
 
         <div class="sideRightWidget">
             <b>按时间筛选</b><br>
-            <div class="index_tab">
-                <a class="tab_selected" href="/s/blogpost?Keywords=asdf">全部</a><a href="/s/blogpost?Keywords=asdf&amp;DateTimeRange=OneWeek">一周内</a><a href="/s/blogpost?Keywords=asdf&amp;DateTimeRange=OneMonth">一月内</a><a href="/s/blogpost?Keywords=asdf&amp;DateTimeRange=ThreeMonth">三月内</a><a href="/s/blogpost?Keywords=asdf&amp;DateTimeRange=OneYear">一年内</a>    </div>
-            <p>
-            </p><form action="/s/blogpost" autocomplete="off" method="get"><input id="Keywords" name="Keywords" type="hidden" value="asdf">                <input id="datetimetange" name="datetimerange" type="hidden" value="Customer">
-            自定义: <input class="datepicker min" id="mindate" name="from" type="text" value="">
-            - <input class="datepicker max" id="maxdate" name="to" type="text" value="">
-            <input type="submit" value="确 定">
-        </form>    <p></p>
+            <div class="index_tab" id="dateBar">
+                <a class="tab_date_selected" href="javascript:;">全部</a>
+                <a href="javascript:;" th:value="${1000L*3600*24*7}">一周内</a>
+                <a href="javascript:;" th:value="${1000L*3600*24*30}">一月内</a>
+                <a href="javascript:;" th:value="${1000L*3600*24*30*3}">三月内</a>
+                <a href="javascript:;" th:value="${1000L*3600*24*30*12}">一年内</a>
+            </div>
         </div>
 
-        <div style="        clear: both;"></div>
+        <div style="clear: both;"></div>
         <div class="sideRightWidget">
             » 去“<a title="博问是博客园提供的问答系统" href="//q.cnblogs.com/">博问</a>”问一下？
             <br>
@@ -137,6 +144,8 @@
         var pageSize = 10;
         var searchStr = [[${searchStr}]]
 
+        var likeLimit,viewLimit,dateLimit;
+
         renderPage()
 
         function getSearchList(current) {
@@ -146,8 +155,12 @@
                 data: {
                     size: pageSize,
                     page: current,
-                    str: searchStr
+                    str: searchStr,
+                    likeLimit:likeLimit,
+                    viewLimit:viewLimit,
+                    dateLimit:dateLimit
                 },
+                dataType:"html",
                 success: function (result) {
                     $("#search_list").html(result);
                 }
@@ -158,6 +171,12 @@
             getSearchList(0)
             setTimeout(function () {
                 var totalNum = Number($("#searchTotalNum").text());
+                $("#CountOfResults").text(totalNum)
+                if(totalNum==0){
+                    $("#test1").html("<h3>无搜索结果</h3>")
+                    return;
+                }
+
                 laypage.render({
                     elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
                     , count: totalNum //数据总数，从服务端得到
@@ -173,6 +192,7 @@
         }
 
         $("#search_btn").click(function () {
+            debugger
             var searchStr =  $('#w').val();
             if(!searchStr){
                 layer.msg("请输入内容")
@@ -182,6 +202,47 @@
                 window.open("/blogEs/goSearchList.do?str="+searchStr,"_self");
             }
         })
+
+        $("#likeBar").on("click", "a", function (e) {
+            var a = $(this)
+            $(".tab_like_selected").removeClass("tab_like_selected")
+            a.addClass("tab_like_selected")
+            if(!a.attr("value")){
+                likeLimit = null
+            }
+            else{
+                likeLimit = Number(a.attr("value"));
+            }
+            renderPage()
+        })
+
+        $("#viewBar").on("click", "a", function (e) {
+            var a = $(this)
+            $(".tab_veiw_selected").removeClass("tab_veiw_selected")
+            a.addClass("tab_veiw_selected")
+            if(!a.attr("value")){
+                viewLimit = null
+            }
+            else{
+                viewLimit = Number(a.attr("value"));
+            }
+            renderPage()
+        })
+
+        $("#dateBar").on("click", "a", function (e) {
+            var a = $(this)
+            $(".tab_date_selected").removeClass("tab_date_selected")
+            a.addClass("tab_date_selected")
+            if(!a.attr("value")){
+                dateLimit = new Date("2019-10-08 00:00:00")
+            }
+            else{
+                var timestamp = (new Date()).getTime();
+                dateLimit = new Date(timestamp - a.attr("value"));
+            }
+            renderPage()
+        })
+
     })
 </script>
 </body>
