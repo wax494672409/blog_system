@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/user/home.css" rel="stylesheet">
+    <link href="/css/personal/msg.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.js"></script>
+    <link href="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.css" rel="stylesheet">
+</head>
+<body>
+<div id="top">
+    <div id="top_left">
+        <a href="/goFrontHomePage.do">首页</a>
+        <a href="/blogEs/goAllSearch.do">找找看</a>
+        <!--        <a href="//academy.cnblogs.com/">学习计划</a>-->
+    </div>
+</div>
+<div class="clear"></div>
+<div id="wrapper">
+    <div id="header">
+        <div id="logo">
+            <a href="//www.cnblogs.com" title="返回博客园首页">
+                <img src="//common.cnblogs.com/images/logo/logo20170227.png" alt="logo" style="width:165px;height:55px;">
+            </a>
+        </div>
+        <div id="nav_block">
+            <a href="/">园子</a> ·
+            <a href="/followees/">关注</a> ·
+            <a href="/followers/">粉丝</a> ·
+            <a href="/feed/all/">随便看看</a> ·
+            <a href="//msg.cnblogs.com/msg/inbox" target="_blank">
+                消息
+                <span id="msg_count"></span>
+            </a>
+        </div>
+        <div class="clear"></div>
+        <div id="header_user"><h1 id="header_user_left" th:text="'欢迎你，'+${loginUser.username}">
+            欢迎你，Violet丶
+        </h1>
+            <div id="header_user_right">
+                <a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}"><img class="pfs" th:src="${loginUser.picUrl}" alt=""></a>
+                <a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}" th:text="${loginUser.username}">Violet丶</a>
+                · <a th:href="@{'/blog/goBlogListPage.do?id='+${loginUser.id}}">我的博客</a>
+                · <a href="//home.cnblogs.com/set/account/">设置</a>
+                · <a href="javascript:void(0);">退出</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="container">
+        <div id="app_bar">
+            <p class="app_r_3"></p><p class="app_r_2"></p><p class="app_r_1"></p>
+            <div id="app_list_wrapper">
+                <ul class="app_list">
+                    <li>
+                        <img src="//common.cnblogs.com/images/ico_ing.gif" alt=""><a id="app_ing" href="https://ing.cnblogs.com/">闪存</a>
+                    </li>
+                    <li>
+                        <em><a href="https://i.cnblogs.com/" target="_blank">写博</a></em><img src="//common.cnblogs.com/images/ico_blog.gif" alt=""><a id="app_blog" href="/blog/">博客</a>
+                    </li>
+                    <li>
+                        <em>
+                            <a id="addBtn" href="javascript:;">撰写</a>
+                        </em><img src="//common.cnblogs.com/images/icon_msg.gif" alt=""><a class="current" id="app_msg" href="/inbox">消息</a>
+                    </li>
+                    <li>
+                        <em><a href="//news.cnblogs.com/n/publish" target="_blank">投递</a></em><img src="//common.cnblogs.com/images/ico_news.gif" alt=""><a id="app_news" href="/news/">新闻</a>
+                    </li>
+                    <li>
+                        <em><a href="https://q.cnblogs.com/q/new" target="_self">提问</a></em><img src="//common.cnblogs.com/images/ico_question.gif" alt=""><a id="app_q" href="https://q.cnblogs.com/">博问</a>
+                    </li>
+                    <li>
+                        <em><a href="#" target="_blank">添加</a></em><img src="//common.cnblogs.com/images/ico_bookmark.gif" alt=""><a id="app_wz" href="//wz.cnblogs.com/">收藏</a>
+                    </li>
+                    <li>
+                        <em><a href="//job.cnblogs.com/admin/" target="_blank">发布</a></em><img src="//common.cnblogs.com/images/ico_job.gif" alt=""><a id="app_job" href="/jobs/">招聘</a>
+                    </li>
+                    <li>
+                        <img src="//common.cnblogs.com/images/ico_kb.gif" alt=""><a id="app_kb" href="/kb/">文库</a>
+                    </li>
+                </ul>
+                <div class="app_setting">
+                    <a href="//group.cnblogs.com/forum/public/" class="flag_edit" target="_blank">问题反馈</a>
+                </div>
+            </div>
+            <p class="app_r_1"></p><p class="app_r_2"></p><p class="app_r_3"></p>
+        </div>
+        <div id="container_content">
+            <div class="main_nav">
+                <ul class="topic_nav_block">
+                    <li>
+                        <a id="lnk_inbox" href="javascript:void(0)" class="current_nav">收件箱</a>
+                    </li>
+                    <li>
+                        <a id="lnk_outbox" href="javascript:void(0)" class="">发件箱</a>
+                    </li>
+                    <li>
+                        <a id="lnk_unread" href="javascript:void(0)" class="">未读消息</a>
+                    </li>
+                    <li>
+                        <a id="lnk_detail" href="javascript:void(0)" class="hide">消息详情</a>
+                    </li>
+                    <li>
+                        <a id="lnk_add" href="javascript:void(0)" class="hide">撰写新短消息</a>
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div id="main">
+                <form id="msgList" class="hide">
+                    <div class="group_topic_block">
+                        <table>
+                            <thead>
+                            <tr>
+                                <td width="100px">
+                                    发件人
+                                </td>
+                                <td width="50px">
+                                    类型
+                                </td>
+                                <td width="355px">
+                                    标题
+                                </td>
+                                <td width="130px" align="center">
+                                    发送时间
+                                </td>
+                                <td width="50px" align="center" colspan="2">
+                                    处理
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody id="msg_list" >
+                                <div th:fragment="msg_list">
+                                    <span class="msgTotalNum" style="display: none" th:text="${msgTotalNum}"></span>
+                                    <tr th:each="msg:${msgList}">
+                                        <td width="100px" style="position: absolute;" class="text_overflow_ellipsis" th:text="${msg.senderName}">
+                                            系统通知
+                                        </td>
+                                        <td th:text="${msg.type}">
+
+                                        </td>
+                                        <td class="text_overflow_ellipsis">
+                                            <a href="javascript:;" th:text="${msg.title}">
+                                                您的博客申请已批准
+                                            </a>
+                                        </td>
+                                        <td th:text="${#dates.format(msg.createTime, 'yyyy-MM-dd hh:mm:ss')}">2020-03-25 08:29:53</td>
+                                        <td align="center" style="width: 50px;" colspan="2">
+                                            <a class="click_del_off" title="删除">删除</a>
+                                        </td>
+                                    </tr>
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <form id="outList" class="hide">
+                    <div class="group_topic_block">
+                        <table>
+                            <thead>
+                            <tr>
+                                <td width="100px">
+                                    收件人
+                                </td>
+                                <td width="405px">
+                                    标题
+                                </td>
+                                <td width="130px" align="center">
+                                    发送时间
+                                </td>
+                                <td width="50px" align="center" colspan="2">
+                                    处理
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody id="out_list" >
+                            <div th:fragment="out_list">
+                                <span class="msgTotalNum" style="display: none" th:text="${msgTotalNum}"></span>
+                                <tr th:each="msg:${msgList}">
+                                    <td width="100px" style="position: absolute;" class="text_overflow_ellipsis" th:text="${msg.receiverName}">
+                                        系统通知
+                                    </td>
+                                    <td class="text_overflow_ellipsis">
+                                        <a href="javascript:;" th:text="${msg.title}">
+                                            您的博客申请已批准
+                                        </a>
+                                    </td>
+                                    <td th:text="${#dates.format(msg.createTime, 'yyyy-MM-dd hh:mm:ss')}">2020-03-25 08:29:53</td>
+                                    <td align="center" style="width: 50px;" colspan="2">
+                                        <a class="click_del_off" title="删除">删除</a>
+                                    </td>
+                                </tr>
+                            </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <form id="addMsg" class="hide">
+                    <div id="span_msg">
+                        <table class="table_compose" cellspacing="10px" align="left" width="560px">
+                            <tbody>
+                            <tr>
+                                <td class="new_table_left">
+                                    收件人：
+                                </td>
+                                <td>
+                                    <input name="txtIncept" type="text" maxlength="90" id="receiverName" style="width: 200px; height:20px;">
+                                </td>
+                            </tr>
+                            <tr id="">
+                                <td class="new_table_left">
+                                    标题：
+                                </td>
+                                <td>
+                                    <input name="title" type="text" id="title" style="width: 400px; height: 20px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="new_table_left">
+                                    内容：
+                                </td>
+                                <td>
+                                    <div class="comment-content">
+                                        <div>
+                                            <div class="comment-form-head tabnav">
+                                            <nav class="tabnav-tabs">
+                                                <a href="javascript:void(0)" id="MarkdownWrite" class="tabnav-tab selected">Write</a>
+                                                <a href="javascript:void(0)" id="MarkdownPreview" class="tabnav-tab unselected">Preview</a>
+                                            </nav>
+                                        </div>
+                                            <div id="commentBox">
+                                            </div>
+                                            <div id="txtContentPreview" class="preview-content" style="min-height: 200px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <input id="btnSend" value=" 发 送 " type="button" class="msg_button">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div id="test1" class="pager">
+
+                </div>
+            </div>
+            <div id="right_sidebar">
+                <div class="right_quick_wrapper">
+                    <ul class="quick_link">
+                        <li>
+                            » <a href="/compose">撰写新短消息</a>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="goTop">
+            <a href="javascript:void(0)">
+                <img src="//common.cnblogs.com/images/ico_top.gif" alt="Top" title="回到页首">
+            </a>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="footer">
+        <a href="//www.cnblogs.com/AboutUS.aspx">关于博客园</a>
+        <a href="//www.cnblogs.com/ContactUs.aspx">联系我们</a>
+        <a href="//www.cnblogs.com/ad.aspx">广告服务</a>
+        © 2004-2020
+        <a href="//www.cnblogs.com">博客园</a>
+        <span id="powered_by">Powered by .NET Core on Kubernetes</span>
+        <span id="profiler_footer"></span>
+    </div>
+</div>
+<script src="/third/layui/layui.js"></script>
+<script th:inline="javascript">
+
+    layui.use(['laypage','jquery','layer'], function () {
+        var laypage = layui.laypage;
+        var $ = layui.$;
+        var layer = layui.layer;
+
+        var type = [[${type}]];
+
+        render();
+        function render(){
+            renderAllPage(5,type)
+        }
+
+        var E = window.wangEditor
+        var editor = new E('#commentBox')
+        // 自定义菜单配置
+        editor.customConfig.menus = [
+            'bold',
+            'italic',
+            'quote',
+            'emoticon',
+            'underline'
+        ]
+        editor.create()
+
+        renderReceiverName();
+
+        function renderReceiverName() {
+            if([[${user}]]){
+                $("#receiverName").val([[${user.username}]])
+            }
+        }
+
+        function renderAllPage(pageSize,pageType) {
+            switch (pageType) {
+                case 'in':
+                    inList(1);
+                    $("#msgList").removeClass("hide")
+                    $("#outList").addClass("hide")
+                    break;
+                case 'out':
+                    outList(1);
+                    $("#outList").removeClass("hide")
+                    $("#msgList").addClass("hide")
+                    break;
+                case 'unRead':
+                    unReadList(1);
+                    $("#msgList").removeClass("hide")
+                    $("#outList").addClass("hide")
+                    break;
+            }
+            setTimeout(function () {
+                var totalNum = Number($(".msgTotalNum").text());
+                if(totalNum == 0){
+                    return
+                }
+                laypage.render({
+                    elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                    , count: totalNum //数据总数，从服务端得到
+                    , limit: pageSize
+                    , jump: function (obj, first) {
+                        if (!first) {
+                            switch (pageType) {
+                                case 'in':
+                                    inList(obj.curr);
+                                    break;
+                                case 'out':
+                                    outList(obj.curr);
+                                    break;
+                                case 'unRead':
+                                    unReadList(obj.curr);
+                                    break;
+                            }
+                        }
+                    }
+                });
+            }, 100)
+        }
+
+        function inList(current){
+            $.ajax({
+                url: '/msg/inList.do',
+                type: 'POST',
+                data: {
+                    current:current,
+                    size:5
+                },
+                dataType : "html",
+                success: function (result) {
+                    $("#msg_list").html(result)
+                }
+            });
+        }
+
+        function outList(current){
+            $.ajax({
+                url: '/msg/outList.do',
+                type: 'POST',
+                data: {
+                    current:current,
+                    size:5
+                },
+                dataType : "html",
+                success: function (result) {
+                    $("#out_list").html(result)
+                }
+            });
+        }
+
+        function unReadList(current){
+            $.ajax({
+                url: '/msg/unReadList.do',
+                type: 'POST',
+                data: {
+                    current:current,
+                    size:5
+                },
+                dataType : "html",
+                success: function (result) {
+                    $("#msg_list").html(result)
+                }
+            });
+        }
+
+        $(".topic_nav_block").on("click", "li", function (e) {
+            $(".current_nav").removeClass("current_nav");
+            var li = $(this)
+            var a = li.children("a").eq(0)
+            var text = a.text();
+            if(text=='收件箱'){
+                type = "in";
+                a.addClass("current_nav");
+                $("#out_list").html("");
+                render();
+            }
+            if(text=='发件箱'){
+                type = "out";
+                a.addClass("current_nav");
+                $("#msg_list").html("");
+                render();
+            }
+            if(text=='未读消息'){
+                type = "unRead";
+                a.addClass("current_nav");
+                $("#out_list").html("");
+                render();
+            }
+        })
+
+
+        $("#btnSend").click(function () {
+            var receiverName = $("#receiverName").val();
+            var title = $("#title").val();
+            var content = editor.txt.html();
+            $.ajax({
+                url: '/msg/addMsg.do',
+                type: 'POST',
+                data: {
+                    title:title,
+                    receiverName:receiverName,
+                    content:content,
+                    type:'私信',
+                    sender:[[${loginUser.id}]],
+                    senderName:[[${loginUser.username}]]
+                },
+                dataType : "json",
+                success: function (result) {
+                    layer.msg(result.msg)
+                }
+            });
+        })
+
+        $("#addBtn").click(function () {
+            var receiverName = $("#receiverName").val();
+            var title = $("#title").val();
+            var content = editor.txt.html();
+        })
+
+    })
+</script>
+</body>
+</html>

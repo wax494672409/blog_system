@@ -106,6 +106,19 @@ public class UserController {
         return "personal/blog";
     }
 
+    @GetMapping(value = "/goPersonalMsg.do")
+    public String goPersonalMsg(String id,Model model,String type){
+        User loginUser = (User) SecurityUtils.getSubject().getPrincipal();
+        User user = new User();
+        if(!StringUtils.isEmpty(id)) {
+            user = userService.selectById(id);
+        }
+        model.addAttribute("loginUser",loginUser);
+        model.addAttribute("type",type);
+        model.addAttribute("user", user);
+        return "personal/msg";
+    }
+
 
     @RequestMapping(value = "/saveOrUpdate.do",method = RequestMethod.POST)
     @ResponseBody
