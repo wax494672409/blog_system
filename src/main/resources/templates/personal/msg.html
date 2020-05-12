@@ -55,30 +55,13 @@
             <div id="app_list_wrapper">
                 <ul class="app_list">
                     <li>
-                        <img src="//common.cnblogs.com/images/ico_ing.gif" alt=""><a id="app_ing" href="https://ing.cnblogs.com/">闪存</a>
+                        <img src="//common.cnblogs.com/images/ico_ing.gif" alt=""><a id="app_ing" th:href="@{'/user/goPersonalMsg.do?id='+${loginUser.id}+'&type=in'}">消息</a>
                     </li>
                     <li>
-                        <em><a href="https://i.cnblogs.com/" target="_blank">写博</a></em><img src="//common.cnblogs.com/images/ico_blog.gif" alt=""><a id="app_blog" href="/blog/">博客</a>
+                        <em><a href="/blog/goAdd.do" target="_blank">写博</a></em><img src="//common.cnblogs.com/images/ico_blog.gif" alt=""><a id="app_blog" th:href="@{'/user/goPersonalBlog.do?id='+${user.id}}">博客</a>
                     </li>
                     <li>
-                        <em>
-                            <a id="addBtn" href="javascript:;">撰写</a>
-                        </em><img src="//common.cnblogs.com/images/icon_msg.gif" alt=""><a class="current" id="app_msg" href="/inbox">消息</a>
-                    </li>
-                    <li>
-                        <em><a href="//news.cnblogs.com/n/publish" target="_blank">投递</a></em><img src="//common.cnblogs.com/images/ico_news.gif" alt=""><a id="app_news" href="/news/">新闻</a>
-                    </li>
-                    <li>
-                        <em><a href="https://q.cnblogs.com/q/new" target="_self">提问</a></em><img src="//common.cnblogs.com/images/ico_question.gif" alt=""><a id="app_q" href="https://q.cnblogs.com/">博问</a>
-                    </li>
-                    <li>
-                        <em><a href="#" target="_blank">添加</a></em><img src="//common.cnblogs.com/images/ico_bookmark.gif" alt=""><a id="app_wz" href="//wz.cnblogs.com/">收藏</a>
-                    </li>
-                    <li>
-                        <em><a href="//job.cnblogs.com/admin/" target="_blank">发布</a></em><img src="//common.cnblogs.com/images/ico_job.gif" alt=""><a id="app_job" href="/jobs/">招聘</a>
-                    </li>
-                    <li>
-                        <img src="//common.cnblogs.com/images/ico_kb.gif" alt=""><a id="app_kb" href="/kb/">文库</a>
+                        <img src="//common.cnblogs.com/images/ico_kb.gif" alt=""><a id="app_kb" href="/kb/">我的博客</a>
                     </li>
                 </ul>
                 <div class="app_setting">
@@ -142,7 +125,7 @@
 
                                         </td>
                                         <td class="text_overflow_ellipsis">
-                                            <a href="javascript:;" th:text="${msg.title}">
+                                            <a class="msgInfo" th:id="${msg.id}" href="javascript:;" th:text="${msg.title}">
                                                 您的博客申请已批准
                                             </a>
                                         </td>
@@ -183,7 +166,7 @@
                                         系统通知
                                     </td>
                                     <td class="text_overflow_ellipsis">
-                                        <a href="javascript:;" th:text="${msg.title}">
+                                        <a class="msgInfo" th:id="${msg.id}" href="javascript:;" th:text="${msg.title}">
                                             您的博客申请已批准
                                         </a>
                                     </td>
@@ -251,12 +234,48 @@
                 <div id="test1" class="pager">
 
                 </div>
+
+
+                <div id="main_wrapper" class="detail hide">
+                    <div id="sideleft">
+                        <div class="module-wrap">
+                            <div id="guide">
+                                <div style="float:left;">
+                                    <h1 class="section-title">
+                                        标题: <span id="lbTitle">您的博客申请已批准</span>
+                                    </h1>
+                                </div>
+                                <div style="float:right;margin-right: 5px; margin-top:10px;">
+                                    <a class="hand" onclick="DetailRemoveMsg('2710617');return false;" href="javascript:void(0)">删除</a>
+                                    <a class="hand" onclick="DetailSetUnRead('2710617');return false;" href="javascript:void(0)">设为未读</a>
+                                </div>
+                            </div>
+                            <div id="div_content" class="bordersection mb20">
+                                <ul class="bubble-wrap notify">
+                                    <li id="li_msg_2710617">
+                                        <img width="48" height="48" style="float:left; border: 1.5px solid #ccc; margin-right:10px;" src="//pic.cnblogs.com/face/sample_face.gif" title="系统通知">
+                                        <div style="color: #999999 !important;">
+                                            系统通知                                            2020-02-05 18:35 <a onclick="DetailRemoveReply('2710617'); return false;" href="javascript:void(0)" style="text-decoration: blink; color: rgb(153, 153, 153);">删除</a>
+                                        </div>
+                                        <div class="bubble-main left" style="margin-top:4px;">
+                                            <div class="bubble-content" style="max-width: 600px !important;">恭喜您！您的博客申请已通过审批，点击下面的链接完成博客注册：<br><a href="http://www.cnblogs.com/BlogRegister.aspx">http://www.cnblogs.com/BlogRegister.aspx</a></div>
+                                            <div class="arrow-left" style="top:4px;"></div>
+                                        </div>
+
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="sms_content_title">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div id="right_sidebar">
                 <div class="right_quick_wrapper">
                     <ul class="quick_link">
                         <li>
-                            » <a href="/compose">撰写新短消息</a>
+                            » <a id="add_btn" href="javascript:void(0)">撰写新短消息</a>
                         </li>
                     </ul>
                     <div class="clear"></div>
@@ -322,16 +341,22 @@
                     inList(1);
                     $("#msgList").removeClass("hide")
                     $("#outList").addClass("hide")
+                    hideAddOrDetail();
                     break;
                 case 'out':
                     outList(1);
                     $("#outList").removeClass("hide")
                     $("#msgList").addClass("hide")
+                    hideAddOrDetail();
                     break;
                 case 'unRead':
                     unReadList(1);
                     $("#msgList").removeClass("hide")
                     $("#outList").addClass("hide")
+                    hideAddOrDetail();
+                    break;
+                case 'add':
+                    showAddOrDetail();
                     break;
             }
             setTimeout(function () {
@@ -430,6 +455,12 @@
                 $("#out_list").html("");
                 render();
             }
+            if(text=='撰写新短消息'){
+                a.addClass("current_nav");
+                $("#msg_list").html("");
+                $("#out_list").html("");
+                render();
+            }
         })
 
 
@@ -455,10 +486,48 @@
             });
         })
 
-        $("#addBtn").click(function () {
-            var receiverName = $("#receiverName").val();
-            var title = $("#title").val();
-            var content = editor.txt.html();
+        $("#add_btn").click(function () {
+            type = "add";
+            $(".current_nav").removeClass("current_nav");
+            $("#lnk_add").removeClass("hide");
+            $("#lnk_add").addClass("current_nav");
+            showAddOrDetail()
+        })
+
+        function showAddOrDetail() {
+            if(type=="add"){
+                $("#test1").addClass("hide");
+                $("#outList").addClass("hide");
+                $("#msgList").addClass("hide");
+                $("#addMsg").removeClass("hide");
+            }
+            if (type="detail"){
+                $("#test1").addClass("hide");
+                $("#outList").addClass("hide");
+                $("#msgList").addClass("hide");
+                $(".detail").removeClass("hide");
+            }
+        }
+
+        function hideAddOrDetail() {
+            if(type=="add"){
+                $("#test1").removeClass("hide");
+                $("#addMsg").addClass("hide");
+                $("#lnk_add").addClass("hide");
+            }
+            if (type="detail"){
+                $("#test1").removeClass("hide");
+                $(".detail").addClass("hide");
+                $("#lnk_detail").addClass("hide");
+            }
+        }
+
+        $("#msgList").on("click", "a.msgInfo", function (e) {
+            type = "detail";
+            $(".current_nav").removeClass("current_nav");
+            $("#lnk_detail").removeClass("hide");
+            $("#lnk_detail").addClass("current_nav");
+            showAddOrDetail()
         })
 
     })

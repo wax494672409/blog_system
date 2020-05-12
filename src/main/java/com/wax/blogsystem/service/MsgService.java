@@ -15,4 +15,6 @@ public interface MsgService {
 
     IPage<Msg> unReadList(Page<Msg> page, User user);
 
+    Msg getDetailById(String id);
+
 }

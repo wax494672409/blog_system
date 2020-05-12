@@ -30,7 +30,7 @@ public class MsgController {
 
 
     @PostMapping("/inList.do")
-    public String addMsg(Page<Msg> page, Model model){
+    public String inList(Page<Msg> page, Model model){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         IPage<Msg> iPage = msgService.inList(page,user);
         model.addAttribute("msgList",iPage.getRecords());
@@ -54,6 +54,13 @@ public class MsgController {
         model.addAttribute("msgList",iPage.getRecords());
         model.addAttribute("msgTotalNum",iPage.getTotal());
         return "/personal/msg::msg_list";
+    }
+
+    @PostMapping("/getDetail.do")
+    @ResponseBody
+    public String getDetail(String id){
+        Msg msg = msgService.getDetailById(id);
+        return JSONUtil.result(true,msg,null);
     }
 
 }

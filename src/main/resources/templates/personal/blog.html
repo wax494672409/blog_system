@@ -54,28 +54,13 @@
             <div id="app_list_wrapper">
                 <ul class="app_list">
                     <li>
-                        <img src="//common.cnblogs.com/images/ico_ing.gif" alt=""><a id="app_ing" href="https://ing.cnblogs.com/">闪存</a>
+                        <img src="//common.cnblogs.com/images/ico_ing.gif" alt=""><a id="app_ing" th:href="@{'/user/goPersonalMsg.do?id='+${loginUser.id}+'&type=in'}">消息</a>
                     </li>
                     <li>
-                        <em><a href="https://i.cnblogs.com/" target="_blank">写博</a></em><img src="//common.cnblogs.com/images/ico_blog.gif" alt=""><a id="app_blog" href="/blog/">博客</a>
+                        <em><a href="/blog/goAdd.do" target="_blank">写博</a></em><img src="//common.cnblogs.com/images/ico_blog.gif" alt=""><a id="app_blog" th:href="@{'/user/goPersonalBlog.do?id='+${user.id}}">博客</a>
                     </li>
                     <li>
-                        <em><a href="//group.cnblogs.com/newpost/">发言</a></em><img src="//common.cnblogs.com/images/ico_group.gif" alt=""><a id="app_group" href="//group.cnblogs.com/">小组</a>
-                    </li>
-                    <li>
-                        <em><a href="//news.cnblogs.com/n/publish" target="_blank">投递</a></em><img src="//common.cnblogs.com/images/ico_news.gif" alt=""><a id="app_news" href="/news/">新闻</a>
-                    </li>
-                    <li>
-                        <em><a href="https://q.cnblogs.com/q/new" target="_self">提问</a></em><img src="//common.cnblogs.com/images/ico_question.gif" alt=""><a id="app_q" href="https://q.cnblogs.com/">博问</a>
-                    </li>
-                    <li>
-                        <em><a href="#" target="_blank" onclick="AddToWz();return false;">添加</a></em><img src="//common.cnblogs.com/images/ico_bookmark.gif" alt=""><a id="app_wz" href="//wz.cnblogs.com/">收藏</a>
-                    </li>
-                    <li>
-                        <em><a href="//job.cnblogs.com/admin/" target="_blank">发布</a></em><img src="//common.cnblogs.com/images/ico_job.gif" alt=""><a id="app_job" href="/jobs/">招聘</a>
-                    </li>
-                    <li>
-                        <img src="//common.cnblogs.com/images/ico_kb.gif" alt=""><a id="app_kb" href="/kb/">文库</a>
+                        <img src="//common.cnblogs.com/images/ico_kb.gif" alt=""><a id="app_kb" href="/kb/">我的博客</a>
                     </li>
                 </ul>
                 <div class="app_setting">

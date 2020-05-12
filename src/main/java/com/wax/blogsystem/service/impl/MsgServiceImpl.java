@@ -64,7 +64,12 @@ public class MsgServiceImpl implements MsgService {
         return msgMapper.selectPage(page,queryWrapper);
     }
 
-
+    @Override
+    public Msg getDetailById(String id) {
+        QueryWrapper<Msg> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("id",id);
+        return msgMapper.selectOne(queryWrapper);
+    }
 
 
 }

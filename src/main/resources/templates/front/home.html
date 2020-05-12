@@ -11,7 +11,7 @@
 <div id="wrapper">
     <div id="hd_info">
         <div id="cnts">
-            <div id="site_nav_top">代码改变世界</div>
+            <div id="site_nav_top">博客管理系统</div>
             <div id="login_area"><span id="span_userinfo"><a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}"
                                                              th:text="${loginUser.username}">Violet丶</a>·<a
                     id="user_nav_blog_link" th:href="@{'/blog/goBlogListPage.do?id='+${loginUser.id}}">我的博客</a><span
@@ -28,7 +28,7 @@
         <div id="header_block">
             <div id="logo">
                 <h1>
-                    <a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="" alt="博客园Logo" width="142"
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="" alt="Logo" width="142"
                                                                              height="55"></a>
                 </h1>
             </div>
@@ -39,11 +39,7 @@
         <p class="h_r_2"></p>
         <p class="h_r_3"></p>
     </div>
-    <div id="nav_menu"><a href="https://home.cnblogs.com/">园子</a><a href="https://news.cnblogs.com">新闻</a><a
-            href="https://q.cnblogs.com/">博问</a><a href="https://ing.cnblogs.com/">闪存</a><a
-            href="https://group.cnblogs.com/">小组</a><a href="https://wz.cnblogs.com/">收藏</a><a
-            href="https://job.cnblogs.com/">招聘</a><a href="https://edu.cnblogs.com/">班级</a><a
-            href="http://zzk.cnblogs.com/">找找看</a></div>
+    <div id="nav_menu"></div>
     <div id="main">
         <div class="post_nav_block_wrapper">
             <ul class="post_nav_block" id="listType">
@@ -215,12 +211,6 @@
                     <input type="text" id="zzk_q" class="search_input" onkeydown="return zzk_go_enter(event);"
                            tabindex="3"><input onclick="zzk_go()" type="button" class="search_btn" value="找找看">
                 </div>
-                <div id="google_search" class="side_search">
-                    <input type="text" id="google_search_q" class="search_input"
-                           onkeydown="return google_search_enter(event);"><input type="button" value="Google"
-                                                                                 class="search_btn"
-                                                                                 onclick="return google_search();">
-                </div>
             </div>
             <div id="cnblogs_a1">
                 <div id="div-gpt-ad-1547816814884-0" style="height:60px; width:468px;"
@@ -312,7 +302,7 @@
 <!--                    </div>-->
 <!--                </div>-->
                 <div class="w_r">
-                    <h4><a href="https://q.cnblogs.com/">博问已解决问题</a><span class="more"><a href="https://q.cnblogs.com/"
+                    <h4><a href="https://q.cnblogs.com/">点赞总榜</a><span class="more"><a href="https://q.cnblogs.com/"
                                                                                           class="right_more">»</a></span>
                     </h4>
                     <ul>
