@@ -66,9 +66,7 @@ public class MsgServiceImpl implements MsgService {
 
     @Override
     public Msg getDetailById(String id) {
-        QueryWrapper<Msg> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("id",id);
-        return msgMapper.selectOne(queryWrapper);
+        return msgMapper.selectById(id);
     }
 
 

@@ -47,4 +47,7 @@ public class Msg {
     @TableField(value = "is_read",exist = true)
     private String isRead;
 
+    @TableField(exist = false)
+    private String picUrl;
+
 }

@@ -245,20 +245,25 @@
                                         标题: <span id="lbTitle">您的博客申请已批准</span>
                                     </h1>
                                 </div>
-                                <div style="float:right;margin-right: 5px; margin-top:10px;">
-                                    <a class="hand" onclick="DetailRemoveMsg('2710617');return false;" href="javascript:void(0)">删除</a>
-                                    <a class="hand" onclick="DetailSetUnRead('2710617');return false;" href="javascript:void(0)">设为未读</a>
-                                </div>
+<!--                                <div style="float:right;margin-right: 5px; margin-top:10px;">-->
+<!--                                    <a class="hand" onclick="DetailRemoveMsg('2710617');return false;" href="javascript:void(0)">删除</a>-->
+<!--                                    <a class="hand" onclick="DetailSetUnRead('2710617');return false;" href="javascript:void(0)">设为未读</a>-->
+<!--                                </div>-->
                             </div>
                             <div id="div_content" class="bordersection mb20">
                                 <ul class="bubble-wrap notify">
                                     <li id="li_msg_2710617">
-                                        <img width="48" height="48" style="float:left; border: 1.5px solid #ccc; margin-right:10px;" src="//pic.cnblogs.com/face/sample_face.gif" title="系统通知">
+                                        <img width="48" height="48" style="float:left; border: 1.5px solid #ccc; margin-right:10px;" id="msgUrl">
                                         <div style="color: #999999 !important;">
-                                            系统通知                                            2020-02-05 18:35 <a onclick="DetailRemoveReply('2710617'); return false;" href="javascript:void(0)" style="text-decoration: blink; color: rgb(153, 153, 153);">删除</a>
+                                            <span class="msg_type_time">系统通知 2020-02-05 18:35</span>
+                                            <a href="javascript:void(0)" style="text-decoration: blink; color: rgb(153, 153, 153);">删除</a>
                                         </div>
                                         <div class="bubble-main left" style="margin-top:4px;">
-                                            <div class="bubble-content" style="max-width: 600px !important;">恭喜您！您的博客申请已通过审批，点击下面的链接完成博客注册：<br><a href="http://www.cnblogs.com/BlogRegister.aspx">http://www.cnblogs.com/BlogRegister.aspx</a></div>
+                                            <div class="bubble-content msg_content" style="max-width: 600px !important;">
+                                                恭喜您！您的博客申请已通过审批，点击下面的链接完成博客注册：
+                                                <br>
+                                                <a href="http://www.cnblogs.com/BlogRegister.aspx">http://www.cnblogs.com/BlogRegister.aspx</a>
+                                            </div>
                                             <div class="arrow-left" style="top:4px;"></div>
                                         </div>
 
@@ -309,6 +314,7 @@
         var layer = layui.layer;
 
         var type = [[${type}]];
+        var addOrDetail = "";
 
         render();
         function render(){
@@ -487,7 +493,7 @@
         })
 
         $("#add_btn").click(function () {
-            type = "add";
+            addOrDetail = "add";
             $(".current_nav").removeClass("current_nav");
             $("#lnk_add").removeClass("hide");
             $("#lnk_add").addClass("current_nav");
@@ -495,27 +501,31 @@
         })
 
         function showAddOrDetail() {
-            if(type=="add"){
+            if(addOrDetail=="add"){
                 $("#test1").addClass("hide");
                 $("#outList").addClass("hide");
                 $("#msgList").addClass("hide");
                 $("#addMsg").removeClass("hide");
+                $(".detail").addClass("hide");
+                $("#lnk_detail").addClass("hide");
             }
-            if (type="detail"){
+            if (addOrDetail=="detail"){
                 $("#test1").addClass("hide");
                 $("#outList").addClass("hide");
                 $("#msgList").addClass("hide");
                 $(".detail").removeClass("hide");
+                $("#addMsg").addClass("hide");
+                $("#lnk_add").addClass("hide");
             }
         }
 
         function hideAddOrDetail() {
-            if(type=="add"){
+            if(addOrDetail=="add"){
                 $("#test1").removeClass("hide");
                 $("#addMsg").addClass("hide");
                 $("#lnk_add").addClass("hide");
             }
-            if (type="detail"){
+            if (addOrDetail=="detail"){
                 $("#test1").removeClass("hide");
                 $(".detail").addClass("hide");
                 $("#lnk_detail").addClass("hide");
@@ -523,12 +533,42 @@
         }
 
         $("#msgList").on("click", "a.msgInfo", function (e) {
-            type = "detail";
+            addOrDetail = "detail";
             $(".current_nav").removeClass("current_nav");
             $("#lnk_detail").removeClass("hide");
             $("#lnk_detail").addClass("current_nav");
             showAddOrDetail()
+            var id = $(this).attr("id")
+            getMsgDetail(id)
         })
+
+        $("#outList").on("click", "a.msgInfo", function (e) {
+            addOrDetail = "detail";
+            $(".current_nav").removeClass("current_nav");
+            $("#lnk_detail").removeClass("hide");
+            $("#lnk_detail").addClass("current_nav");
+            showAddOrDetail()
+            var id = $(this).attr("id")
+            getMsgDetail(id)
+        })
+
+        function getMsgDetail(id) {
+            $.ajax({
+                url: '/msg/getDetail.do',
+                type: 'POST',
+                data: {
+                    id:id
+                },
+                dataType : "json",
+                success: function (result) {
+                    $(".msg_content").html(result.data.content)
+                    $(".msg_type_time").text(result.data.type+' '+result.data.createTime+' ');
+                    $("#lbTitle").text(result.data.title)
+                    $("#msgUrl").attr('src',result.data.picUrl);
+                    $("#msgUrl").attr('title',result.data.type);
+                }
+            });
+        }
 
     })
 </script>
