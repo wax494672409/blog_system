@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>我的博客</title>
     <link href="/css/user/home.css" rel="stylesheet">
     <link href="/css/user/profile.css" rel="stylesheet">
     <link href="/css/personal/blog.css" rel="stylesheet">
@@ -13,7 +13,7 @@
     <div id="top_left">
         <a href="/goFrontHomePage.do">首页</a>
         <a href="//zzk.cnblogs.com/">找找看</a>
-<!--        <a href="//academy.cnblogs.com/">学习计划</a>-->
+        <!--        <a href="//academy.cnblogs.com/">学习计划</a>-->
     </div>
 </div>
 <div class="clear"></div>
@@ -73,15 +73,13 @@
 
             <div>
                 <ul class="post_nav_block">
-                    <li><a class="current_nav favorite_btn" href="javascript:;">我收藏的</a> </li>
-                    <li><a class="follow_btn" href="javascript:;">我关注的</a></li>
-                    <li><a class="like_btn" href="javascript:;">我推荐的</a></li>
-                    <li><a class="comment_btn" href="javascript:;">我评论的</a></li>
+                    <li><a class="current_nav released_btn" href="javascript:;">我发布的</a> </li>
+                    <li><a class="draft_btn" href="javascript:;">草稿</a></li>
                 </ul>
                 <div class="main">
-                    <div class="post_list favorite" id="favorite_list" th:fragment="favorite_list">
+                    <div class="post_list released" id="released_list" th:fragment="released_list">
                         <span class="hide totalBlog" th:text="${blogTotal}"></span>
-                        <div class="post_block" th:each="blog:${favoriteList}">
+                        <div class="post_block" th:each="blog:${releasedList}">
                             <div class="content">
                                 <h2 class="entry_title">
                                     <a th:href="@{'/blog/goBlogListPage.do?id='+${blog.author}}" class="title_author" target="_blank" th:text="'['+${blog.authorName}+']'">[东北小狐狸]</a>
@@ -98,6 +96,8 @@
                                     </span>
                                     <span th:text="'推荐('+${blog.likeNum}+') 发布于'">推荐(0) 发布于</span>
                                     <span class="postdate" th:text="${#dates.format(blog.releaseTime, 'yyyy-MM-dd hh:mm:ss')}">2020-03-17 15:03</span>
+                                    &nbsp;&nbsp;
+                                    <a class="grayline cancelBtn" th:id="${blog.id}" href="javascript:void(0);" >取消发布</a>
                                 </div>
                                 <div class="clear"></div>
                             </div>
@@ -106,13 +106,13 @@
                     </div>
                 </div>
                 <div class="main">
-                    <div class="post_list like" id="like_list" th:fragment="like_list">
+                    <div class="post_list draft" id="draft_list" th:fragment="draft_list">
                         <span class="hide totalBlog" th:text="${blogTotal}"></span>
-                        <div class="post_block" th:each="blog:${likeList}">
+                        <div class="post_block" th:each="blog:${draftList}">
                             <div class="content">
                                 <h2 class="entry_title">
                                     <a th:href="@{'/blog/goBlogListPage.do?id='+${blog.author}}" class="title_author" target="_blank" th:text="'['+${blog.authorName}+']'">[东北小狐狸]</a>
-                                    <a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" target="_blank" th:text="${blog.title}">Docker极简部署Kafka+Zookeeper+ElasticStack</a>
+                                    <a th:href="@{'/blog/goAdd.do?id='+${blog.id}}" target="_blank" th:text="${blog.title}">Docker极简部署Kafka+Zookeeper+ElasticStack</a>
                                 </h2>
                                 <div class="entry_summary" th:text="${blog.summary}">之前写ELK部分时有朋友问有没有能一</div>
                                 <div class="clear"></div>
@@ -123,35 +123,8 @@
                                     <span class="post_view">
                                         <a class="grayline" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:text="'阅读('+${blog.viewNum}+')'">阅读(0)</a>
                                     </span>
-                                    <span th:text="'推荐('+${blog.likeNum}+') 发布于'">推荐(0) 发布于</span>
-                                    <span class="postdate" th:text="${#dates.format(blog.releaseTime, 'yyyy-MM-dd hh:mm:ss')}">2020-03-17 15:03</span>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="main">
-                    <div class="post_list comment" id="comment_list" th:fragment="comment_list">
-                        <span class="hide totalBlog" th:text="${blogTotal}"></span>
-                        <div class="post_block" th:each="blog:${commentList}">
-                            <div class="content">
-                                <h2 class="entry_title">
-                                    <a th:href="@{'/blog/goBlogListPage.do?id='+${blog.author}}" class="title_author" target="_blank" th:text="'['+${blog.authorName}+']'">[东北小狐狸]</a>
-                                    <a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" target="_blank" th:text="${blog.title}">Docker极简部署Kafka+Zookeeper+ElasticStack</a>
-                                </h2>
-                                <div class="entry_summary" th:text="${blog.summary}">之前写ELK部分时有朋友问有没有能一</div>
-                                <div class="clear"></div>
-                                <div class="entry_footer">
-                                    <span class="post_comment">
-                                        <a class="grayline" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:text="'评论('+${blog.commentNum}+')'"> 评论(0)</a>
-                                    </span>
-                                    <span class="post_view">
-                                        <a class="grayline" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" th:text="'阅读('+${blog.viewNum}+')'">阅读(0)</a>
-                                    </span>
-                                    <span th:text="'推荐('+${blog.likeNum}+') 发布于'">推荐(0) 发布于</span>
-                                    <span class="postdate" th:text="${#dates.format(blog.releaseTime, 'yyyy-MM-dd hh:mm:ss')}">2020-03-17 15:03</span>
+                                    <span th:text="'推荐('+${blog.likeNum}+') 创建于'">推荐(0) 发布于</span>
+                                    <span class="postdate" th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd hh:mm:ss')}">2020-03-17 15:03</span>
                                 </div>
                                 <div class="clear"></div>
                             </div>
@@ -190,7 +163,7 @@
         var $ = layui.$;
         var layer = layui.layer;
 
-        var type = 'favorite';
+        var type = 'released';
 
         render();
         function render(){
@@ -199,20 +172,13 @@
 
         function renderAllPage(pageSize,pageType) {
             switch (pageType) {
-                case 'favorite':
-                    getMyFavoriteList(1);
-                    $(".like").html("")
-                    $(".comment").html("")
+                case 'released':
+                    getReleasedList(1);
+                    $(".draft").html("")
                     break;
-                case 'like':
-                    getILikeList(1);
-                    $(".favorite").html("")
-                    $(".comment").html("")
-                    break;
-                case 'comment':
-                    getMyCommentList(1);
-                    $(".like").html("")
-                    $(".favorite").html("")
+                case 'draft':
+                    getDraftList(1);
+                    $(".released").html("")
                     break;
             }
             setTimeout(function () {
@@ -227,14 +193,11 @@
                     , jump: function (obj, first) {
                         if (!first) {
                             switch (pageType) {
-                                case 'favorite':
-                                    getMyFavoriteList(obj.curr);
+                                case 'released':
+                                    getReleasedList(obj.curr);
                                     break;
-                                case 'like':
-                                    getILikeList(obj.curr);
-                                    break;
-                                case 'comment':
-                                    getMyCommentList(obj.curr);
+                                case 'draft':
+                                    getDraftList(obj.curr);
                                     break;
                             }
                         }
@@ -243,9 +206,9 @@
             }, 100)
         }
 
-        function getMyFavoriteList(current){
+        function getReleasedList(current){
             $.ajax({
-                url: '/blog/getMyFavoriteList4Personal.do',
+                url: '/blog/getReleasedList.do',
                 type: 'POST',
                 data: {
                     current:current,
@@ -253,14 +216,14 @@
                 },
                 dataType : "html",
                 success: function (result) {
-                    $("#favorite_list").html(result)
+                    $("#released_list").html(result)
                 }
             });
         }
 
-        function getILikeList(current){
+        function getDraftList(current){
             $.ajax({
-                url: '/blog/getILikeList4Personal.do',
+                url: '/blog/getDraftList.do',
                 type: 'POST',
                 data: {
                     current:current,
@@ -268,56 +231,52 @@
                 },
                 dataType : "html",
                 success: function (result) {
-                    $("#like_list").html(result)
-                }
-            });
-        }
-
-        function getMyCommentList(current){
-            $.ajax({
-                url: '/blog/getMyCommentList4Personal.do',
-                type: 'POST',
-                data: {
-                    current:current,
-                    size:10
-                },
-                dataType : "html",
-                success: function (result) {
-                    $("#comment_list").html(result)
+                    $("#draft_list").html(result)
                 }
             });
         }
 
 
-        $(".favorite_btn").click(function () {
+        $(".released_btn").click(function () {
             $('.current_nav').removeClass("current_nav");
-            $('.favorite').removeClass("hide")
-            $('.like').addClass("hide")
-            $('.comment').addClass("hide")
+            $('.released').removeClass("hide")
+            $('.draft').addClass("hide")
             $(this).addClass("current_nav");
-            renderAllPage(10,'favorite');
+            renderAllPage(10,'released');
         })
 
-        $(".like_btn").click(function () {
+        $(".draft_btn").click(function () {
             $('.current_nav').removeClass("current_nav");
-            $('.like').removeClass("hide")
-            $('.favorite').addClass("hide")
-            $('.comment').addClass("hide")
+            $('.draft').removeClass("hide")
+            $('.released').addClass("hide")
             $(this).addClass("current_nav");
-            renderAllPage(10,'like');
+            renderAllPage(10,'draft');
         })
 
-        $(".comment_btn").click(function () {
-            $('.current_nav').removeClass("current_nav");
-            $('.comment').removeClass("hide")
-            $('.like').addClass("hide")
-            $('.favorite').addClass("hide")
-            $(this).addClass("current_nav");
-            renderAllPage(10,'comment');
-        })
-        
         $("#goTop").click(function () {
             $('html,body').animate({scrollTop: '0px'}, 800);
+        })
+
+        $(".released").on("click", "a.cancelBtn", function (e) {
+            var id = $(this).attr("id");
+            debugger
+            layer.confirm('确定取消发布?', function(index){
+                //do something
+                $.ajax({
+                    url: '/blog/cancelRelease.do',
+                    type: 'POST',
+                    data: {
+                        id:id
+                    },
+                    dataType : "json",
+                    success: function (result) {
+                        if (result.flag){
+                            layer.close(index);
+                            layer.alert(result.msg)
+                        }
+                    }
+                });
+            });
         })
 
     })

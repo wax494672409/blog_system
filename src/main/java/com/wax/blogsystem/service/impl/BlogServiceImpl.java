@@ -238,4 +238,39 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.getBlogByCategory(page,category);
     }
 
+    @Override
+    public IPage<Blog> getReleasedList(Page<Blog> page, String userId) {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.eq("author",userId);
+        queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
+        queryWrapper.orderByDesc("release_time");
+        return blogMapper.selectPage(page,queryWrapper);
+    }
+
+    @Override
+    public IPage<Blog> getDraftList(Page<Blog> page, String userId) {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.eq("author",userId);
+        queryWrapper.eq("status",SysCode.BLOG_STATUS.DRAFT);
+        queryWrapper.orderByDesc("create_time");
+        return blogMapper.selectPage(page,queryWrapper);
+    }
+
+    @Override
+    public void cancelRelease(String id) {
+        Blog blog = selectById(id);
+        blog.setStatus(SysCode.BLOG_STATUS.DRAFT);
+        blogMapper.updateById(blog);
+    }
+
+    @Override
+    public void release(String id) {
+        Blog blog = selectById(id);
+        blog.setStatus(SysCode.BLOG_STATUS.RELEASED);
+        blog.setReleaseTime(new Date());
+        blogMapper.updateById(blog);
+    }
+
 }

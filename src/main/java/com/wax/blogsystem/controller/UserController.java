@@ -119,6 +119,13 @@ public class UserController {
         return "personal/msg";
     }
 
+    @GetMapping(value = "/goPersonalMyBlog.do")
+    public String goPersonalMyBlog(Model model){
+        User loginUser = (User) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("loginUser",loginUser);
+        return "personal/myBlog";
+    }
+
 
     @RequestMapping(value = "/saveOrUpdate.do",method = RequestMethod.POST)
     @ResponseBody

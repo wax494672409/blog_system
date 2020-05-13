@@ -44,16 +44,13 @@
         <div class="layui-col-lg3" style="margin-left: 10px">
             <div class="layui-form">
                 <div class="layui-form-item">
-                    <input type="text" name="title" id="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    <input type="text" name="title" id="title" required  lay-verify="required"  placeholder="请输入标题" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-item" >
                     <select id="category" name="cateogy">
                         <option value="">请选择一个栏目</option>
                         <option th:each="category:${categoryList}" th:value="${category.id}" th:text="${category.name}">张先生</option>
                     </select>
-                </div>
-                <div class="layui-form-item">
-                    <input type="text" name="title" id="label" required  lay-verify="required" placeholder="输入标签" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
@@ -72,7 +69,7 @@
     </div>
 <script src="/third/layui/layui.js"></script>
 <script src="/third/jquery/jquery-3.4.1.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     layui.use(['form','jquery'], function() {
         var form = layui.form;
         var $ = layui.$;
@@ -112,6 +109,9 @@
             }
         }
         editor.create()
+
+        renderEditor()
+
 
         //发布
         $("#btn1").click(function () {
@@ -169,6 +169,26 @@
                 summary = text.substring(0, text.length - 1);
             }
             return summary;
+        }
+
+        function renderEditor(){
+            var blog = [[${blog}]]
+            if(blog.id){
+                $("#title").val(blog.title)
+                $("#category").each(function() {
+                    // this代表的是<option></option>，对option再进行遍历
+                    $(this).children("option").each(function() {
+                        // 判断需要对那个选项进行回显
+                        if (this.value == blog.category) {
+                            console.log($(this).text());
+                            // 进行回显
+                            $(this).attr("selected","selected");
+                        }
+                    });
+                })
+                form.render()
+                editor.txt.html(blog.content)
+            }
         }
     })
 </script>

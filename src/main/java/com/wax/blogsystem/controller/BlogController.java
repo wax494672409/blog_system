@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,10 +50,15 @@ public class BlogController {
 
 
     @GetMapping(value = "/goAdd.do")
-    public String goBlogAdd(Model model) {
+    public String goBlogAdd(String id,Model model) {
         Page<BlogCategory> page = new Page<>(1,10);
         IPage<BlogCategory> iPage = blogCategoryService.selectAll(page);
         User user = (User)SecurityUtils.getSubject().getPrincipal();
+        Blog blog = new Blog();
+        if(!StringUtils.isEmpty(id)){
+            blog = blogService.selectById(id);
+        }
+        model.addAttribute("blog",blog);
         model.addAttribute("loginUser",user);
         model.addAttribute("categoryList",iPage.getRecords());
         return "blog/add";
@@ -230,6 +236,40 @@ public class BlogController {
         model.addAttribute("favoriteList",blogPage.getRecords());
         model.addAttribute("blogTotal",blogPage.getTotal());
         return "personal/blog::favorite_list";
+    }
+
+
+    @PostMapping(value = "/getReleasedList.do")
+    public String getReleasedList(Page<Blog> page, Model model){
+        User user = (User)SecurityUtils.getSubject().getPrincipal();
+        IPage<Blog> blogPage = blogService.getReleasedList(page,user.getId());
+        model.addAttribute("releasedList",blogPage.getRecords());
+        model.addAttribute("blogTotal",blogPage.getTotal());
+        return "personal/myBlog::released_list";
+    }
+
+
+    @PostMapping(value = "/getDraftList.do")
+    public String getDraftList(Page<Blog> page, Model model){
+        User user = (User)SecurityUtils.getSubject().getPrincipal();
+        IPage<Blog> blogPage = blogService.getDraftList(page,user.getId());
+        model.addAttribute("draftList",blogPage.getRecords());
+        model.addAttribute("blogTotal",blogPage.getTotal());
+        return "personal/myBlog::draft_list";
+    }
+
+    @PostMapping(value = "/cancelRelease.do")
+    @ResponseBody
+    public String cancelRelease(String id){
+        blogService.cancelRelease(id);
+        return JSONUtil.success("取消发布成功");
+    }
+
+    @PostMapping(value = "/release.do")
+    @ResponseBody
+    public String release(String id){
+        blogService.release(id);
+        return JSONUtil.success("发布成功");
     }
 
 }

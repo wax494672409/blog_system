@@ -53,4 +53,12 @@ public interface BlogService {
 
     IPage<Blog> getBlogByCategory(Page<Blog> page,String category);
 
+    IPage<Blog> getReleasedList(Page<Blog> page,String userId);
+
+    IPage<Blog> getDraftList(Page<Blog> page,String userId);
+
+    void cancelRelease(String id);
+
+    void release(String id);
+
 }
