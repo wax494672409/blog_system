@@ -94,12 +94,16 @@
                     },
                     dataType : "json",
                     success: function (result) {
-                        debugger
                         if(!result.flag){
                             layer.msg(result.msg)
                         }
                         else{
-                            window.open("/goMainPage.do","_self");
+                            if(result.data.roleCode=="user1"){
+                                window.open("/goFrontHomePage.do","_self");
+                            }
+                            if(result.data.roleCode=="admin"){
+                                window.open("/goMainPage.do","_self");
+                            }
                         }
                     }
                 });

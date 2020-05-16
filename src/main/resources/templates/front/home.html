@@ -45,7 +45,6 @@
             <ul class="post_nav_block" id="listType">
                 <li><a href="/goFrontHomePage.do" class="current_nav" title="">首页</a></li>
                 <li><a href="javascript:;" class="" title="编辑精选博文">推荐</a></li>
-                <li><a href="javascript:;" class="" title="我关注博客的最新博文">关注</a></li>
                 <li><a href="javascript:;" class="" title="我评论过的博文">我评</a></li>
                 <li><a href="javascript:;" class="" title="我推荐过的博文">我赞</a></li>
             </ul>
@@ -57,22 +56,22 @@
                 href="http://feed.cnblogs.com/blog/sitehome/rss"><img src="//common.cnblogs.com/images/icon_rss.gif"
                                                                       alt="点击订阅" style="position:relative;top:2px;"
                                                                       title="订阅博客园文章"></a></div>
-        <div id="headline_block" class="headline">
-            <ul>
-                <li class="editor_pick"><a href="https://www.cnblogs.com/uoyo/p/12377645.html" id="editor_pick_lnk"
-                                           target="_blank">【编辑推荐】后台任务的积木：.Net Core 中的 IHostedService<span
-                        id="editor_pick_count"> (8/680)</span></a> <a href="/aggsite/headline" title="查看更多编辑推荐"
-                                                                      class="right_more">»</a></li>
-                <li><a href="https://www.cnblogs.com/sdflysha/p/20200228-csharp-history-code-demo.html" target="_blank"
-                       title="阅读1045, 评论9, 推荐34">[最多推荐]代码演示C#各版本新功能(9/1045)</a> <a href="/aggsite/topdigged24h"
-                                                                                   title="查看24小时推荐排行"
-                                                                                   class="right_more">»</a></li>
-                <li><a href="https://news.cnblogs.com/n/656602/" target="_blank" title="阅读361, 评论3, 推荐1">[最多评论]盖茨：新冠肺炎可能成为百年不遇的大流行病，应帮助中低收入国家(3/361)</a>
-                    <a href="https://news.cnblogs.com/" title="查看更多新闻" class="right_more">»</a></li>
-                <li><a href="https://news.cnblogs.com/n/656561/" target="_blank" title="阅读1226, 评论2, 推荐13">[最多阅读]2020，咋赚钱？(2/1226)</a>
-                    <a href="https://news.cnblogs.com/n/recommend" title="查看更多博客" class="right_more">»</a></li>
-            </ul>
-        </div>
+<!--        <div id="headline_block" class="headline">-->
+<!--            <ul>-->
+<!--                <li class="editor_pick"><a href="https://www.cnblogs.com/uoyo/p/12377645.html" id="editor_pick_lnk"-->
+<!--                                           target="_blank">【编辑推荐】后台任务的积木：.Net Core 中的 IHostedService<span-->
+<!--                        id="editor_pick_count"> (8/680)</span></a> <a href="/aggsite/headline" title="查看更多编辑推荐"-->
+<!--                                                                      class="right_more">»</a></li>-->
+<!--                <li><a href="https://www.cnblogs.com/sdflysha/p/20200228-csharp-history-code-demo.html" target="_blank"-->
+<!--                       title="阅读1045, 评论9, 推荐34">[最多推荐]代码演示C#各版本新功能(9/1045)</a> <a href="/aggsite/topdigged24h"-->
+<!--                                                                                   title="查看24小时推荐排行"-->
+<!--                                                                                   class="right_more">»</a></li>-->
+<!--                <li><a href="https://news.cnblogs.com/n/656602/" target="_blank" title="阅读361, 评论3, 推荐1">[最多评论]盖茨：新冠肺炎可能成为百年不遇的大流行病，应帮助中低收入国家(3/361)</a>-->
+<!--                    <a href="https://news.cnblogs.com/" title="查看更多新闻" class="right_more">»</a></li>-->
+<!--                <li><a href="https://news.cnblogs.com/n/656561/" target="_blank" title="阅读1226, 评论2, 推荐13">[最多阅读]2020，咋赚钱？(2/1226)</a>-->
+<!--                    <a href="https://news.cnblogs.com/n/recommend" title="查看更多博客" class="right_more">»</a></li>-->
+<!--            </ul>-->
+<!--        </div>-->
 
         <div id="pager_top" style="display:none"></div>
         <div id="post_list_tips" class="hide"></div>
@@ -93,14 +92,14 @@
                     <h3><a class="titlelnk" th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" target="_blank"
                            th:text="${blog.title}">无坑部署vmware搭建最新k8s集群(1.17.3)</a></h3>
                     <p class="post_item_summary">
-                        <a href="https://www.cnblogs.com/yudongdong/" target="_blank"><img width="48" height="48"
+                        <a th:href="@{'/user/goPersonalPage.do?id='+${blog.author}}" target="_blank"><img width="48" height="48"
                                                                                            class="pfs"
                                                                                            th:src="${blog.authorPicUrl}"
                                                                                            alt=""></a>
                         <span th:text="${blog.summary}"></span>
                     </p>
                     <div class="post_item_foot">
-                        <a href="https://www.cnblogs.com/yudongdong/" class="lightblue"
+                        <a th:href="@{'/blog/goBlogListPage.do?id='+${blog.author}}" class="lightblue"
                            th:text="${blog.authorName}">鱼东东</a>
                         <span th:text="'发布于 '+${#dates.format(blog.releaseTime, 'yyyy-MM-dd hh:mm:ss')}">发布于 2020-02-29 19:03</span>
                         <span class="article_comment"><a

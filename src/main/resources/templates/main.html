@@ -14,7 +14,7 @@
     <div class="layui-header">
         <div class="layui-logo">博客后台管理平台</div>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
+            <li class="layui-nav-item" th:text="'欢迎，'+${loginUser.username}">
                 欢迎光临，商户001
             </li>
             <li class="layui-nav-item"><a href="/logout.do">安全退出</a></li>
@@ -31,8 +31,6 @@
                         <dd>
                             <a href="javascript:;" data-id="1" data-title="用户列表" data-url="/goUserList.do"
                                class="site-demo-active" data-type="tabAdd">用户列表</a></dd>
-                        <dd><a href="javascript:;" data-id="2" data-title="管理员列表" data-url="index.php?&a=adminLogList"
-                               class="site-demo-active" data-type="tabAdd">管理员列表</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">

@@ -23,7 +23,9 @@ public class MainController {
 
 
     @RequestMapping(value = "/goMainPage.do")
-    public String goMainPage(){
+    public String goMainPage(Model model){
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("loginUser",user);
         return "main";
     }
 

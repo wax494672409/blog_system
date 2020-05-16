@@ -55,7 +55,7 @@ public class LoginServiceImpl implements LoginService {
             }
             Session session = currentUser.getSession();
             session.setAttribute("username", username);
-            return JSONUtil.success();
+            return JSONUtil.result(true,user,null);
             //return "/index";
         }catch (UnknownAccountException e)
         {
