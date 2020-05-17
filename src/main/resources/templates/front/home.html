@@ -15,8 +15,7 @@
             <div id="login_area"><span id="span_userinfo"><a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}"
                                                              th:text="${loginUser.username}">Violet丶</a>·<a
                     id="user_nav_blog_link" th:href="@{'/blog/goBlogListPage.do?id='+${loginUser.id}}">我的博客</a><span
-                    id="user_nav_blog_split">·</span><a href="https://msg.cnblogs.com/">短消息<span id="msg_count"></span></a>·<a
-                    href="https://home.cnblogs.com/set/">设置</a>·<a href="#" onclick="logout();return false">退出</a><span
+                    id="user_nav_blog_split">·</span><a href="/user/goPersonalMsg.do?type=in">短消息<span id="msg_count"></span></a>·<a href="/logout.do" >退出</a><span
                     id="current_spaceId" style="display:none">1696808</span></span></div>
             <div class="clear"></div>
         </div>
@@ -28,7 +27,7 @@
         <div id="header_block">
             <div id="logo">
                 <h1>
-                    <a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="" alt="Logo" width="142"
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="/img/logo.png" alt="Logo" width="142"
                                                                              height="55"></a>
                 </h1>
             </div>
@@ -95,7 +94,7 @@
                         <a th:href="@{'/user/goPersonalPage.do?id='+${blog.author}}" target="_blank"><img width="48" height="48"
                                                                                            class="pfs"
                                                                                            th:src="${blog.authorPicUrl}"
-                                                                                           alt=""></a>
+                                                                                           alt="" onerror="this.src='/img/noHead.jpg'" ></a>
                         <span th:text="${blog.summary}"></span>
                     </p>
                     <div class="post_item_foot">
@@ -146,27 +145,27 @@
             <div id="user_stats"><p class="r_l_3"></p>
                 <p class="r_l_2"></p>
                 <p class="r_l_1"></p>
-                <div class="w_l">
-                    <h4>最新推荐博客</h4>
-                    <div>
-                        <ul>
-                            <li><a href="//www.cnblogs.com/alisystemsoftware/" target="_blank">阿里巴巴云原生</a></li>
-                            <li><a href="//www.cnblogs.com/harlanc/" target="_blank">HarlanC</a></li>
-                            <li><a href="//www.cnblogs.com/skabyy/" target="_blank">古霜卡比</a></li>
-                            <li><a href="//www.cnblogs.com/rjzheng/" target="_blank">孤独烟</a></li>
-                            <li><a href="//www.cnblogs.com/xueweihan/" target="_blank">削微寒</a></li>
-                            <li class="blogger_more"><a href="//www.cnblogs.com/expert/" target="_blank">» 更多推荐博客</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <p class="r_l_1"></p>
-                <p class="r_l_2"></p>
-                <p class="r_l_3"></p>
-                <div class="l_s"></div>
-                <p class="r_l_3"></p>
-                <p class="r_l_2"></p>
-                <p class="r_l_1"></p>
+<!--                <div class="w_l">-->
+<!--                    <h4>最新推荐博客</h4>-->
+<!--                    <div>-->
+<!--                        <ul>-->
+<!--                            <li><a href="//www.cnblogs.com/alisystemsoftware/" target="_blank">阿里巴巴云原生</a></li>-->
+<!--                            <li><a href="//www.cnblogs.com/harlanc/" target="_blank">HarlanC</a></li>-->
+<!--                            <li><a href="//www.cnblogs.com/skabyy/" target="_blank">古霜卡比</a></li>-->
+<!--                            <li><a href="//www.cnblogs.com/rjzheng/" target="_blank">孤独烟</a></li>-->
+<!--                            <li><a href="//www.cnblogs.com/xueweihan/" target="_blank">削微寒</a></li>-->
+<!--                            <li class="blogger_more"><a href="//www.cnblogs.com/expert/" target="_blank">» 更多推荐博客</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <p class="r_l_1"></p>-->
+<!--                <p class="r_l_2"></p>-->
+<!--                <p class="r_l_3"></p>-->
+<!--                <div class="l_s"></div>-->
+<!--                <p class="r_l_3"></p>-->
+<!--                <p class="r_l_2"></p>-->
+<!--                <p class="r_l_1"></p>-->
                 <div class="w_l">
                     <h4>推荐博客排行</h4>
                     <div id="blogger_list">
@@ -175,10 +174,10 @@
                                     th:text="${userStat.index+1}+'.'"></span><a
                                     th:href="@{'/blog/goBlogListPage.do?id='+${topUser.id}}" target="_blank"
                                     th:text="${topUser.username}">Artech</a></li>
-                            <li class="blogger_more"><a href="//www.cnblogs.com/expert/" target="_blank">» 更多推荐博客</a>
-                            </li>
-                            <li class="blogger_more"><a href="//www.cnblogs.com/AllBloggers.aspx" target="_blank">»
-                                博客列表(按积分)</a></li>
+<!--                            <li class="blogger_more"><a href="//www.cnblogs.com/expert/" target="_blank">» 更多推荐博客</a>-->
+<!--                            </li>-->
+<!--                            <li class="blogger_more"><a href="//www.cnblogs.com/AllBloggers.aspx" target="_blank">»-->
+<!--                                博客列表(按积分)</a></li>-->
                         </ul>
                     </div>
                 </div>
@@ -191,12 +190,11 @@
             <p class="r_l_1"></p>
             <div class="w_l">
                 <h4>统计信息</h4>
-                <div id="site_stats">
+                <div id="site_stats" th:fragment="info">
                     <ul>
-                        <li>博客 - <span>552228</span></li>
-                        <li>随笔 - <span>7715236</span></li>
-                        <li>文章 - <span>774069</span></li>
-                        <li>评论 - <span>3483042</span></li>
+                        <li>博客 - <span th:text="${blogNum}">552228</span></li>
+                        <li>用户 - <span th:text="${userNum}">7715236</span></li>
+                        <li>评论 - <span th:text="${commentNum}">3483042</span></li>
                     </ul>
                 </div>
             </div>
@@ -207,8 +205,8 @@
         <div id="side_right">
             <div id="search_block">
                 <div class="side_search">
-                    <input type="text" id="zzk_q" class="search_input" onkeydown="return zzk_go_enter(event);"
-                           tabindex="3"><input onclick="zzk_go()" type="button" class="search_btn" value="找找看">
+                    <input type="text" id="w" class="search_input"
+                           tabindex="3"><input id="search_btn" type="button" class="search_btn" value="找找看">
                 </div>
             </div>
             <div id="cnblogs_a1">
@@ -304,37 +302,16 @@
                     <h4><a href="https://q.cnblogs.com/">点赞总榜</a><span class="more"><a href="https://q.cnblogs.com/"
                                                                                           class="right_more">»</a></span>
                     </h4>
-                    <ul>
-                        <li><a href="https://q.cnblogs.com/q/125969/" target="_blank">Javascript
+                    <ul id="top_like_list" th:fragment="top_like_list">
+                        <li th:each="blog:${topLikeList}"><a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" target="_blank" th:text="${blog.title}">Javascript
                             这个是什么写法</a></li>
-                        <li><a href="https://q.cnblogs.com/q/125976/" target="_blank">C#List合并</a>
-                        </li>
-                        <li><a href="https://q.cnblogs.com/q/125970/" target="_blank">持续集成中使用
-                            SQL Server Linux 版 Docker 镜像的问题</a></li>
-                        <li><a href="https://q.cnblogs.com/q/125941/" target="_blank">关于EF使用SqlQuery查询到的数据，修改之后，无法通过SaveChanges保存到数据库</a>
-                        </li>
-                        <li><a href="https://q.cnblogs.com/q/125956/" target="_blank">java语言的特点</a>
-                        </li>
-                        <li><a href="https://q.cnblogs.com/q/125836/" target="_blank">微信小程序背景图片无法在手机预览上显示</a>
-                        </li>
-                        <li><a href="https://q.cnblogs.com/q/125364/" target="_blank">C#
-                            本地共有文件夹的网络路径获取</a></li>
-                        <li><a href="https://q.cnblogs.com/q/125948/" target="_blank">asp.netcore
-                            前台线程结束了,后台线程确还是执行了,为什么?求大神指导或者给个方向</a></li>
                     </ul>
                 </div>
                 <div class="w_r">
-                    <h4><a href="https://kb.cnblogs.com/">知识库最新文章</a><span class="more"><a
+                    <h4><a href="https://kb.cnblogs.com/">阅读总榜</a><span class="more"><a
                             href="https://kb.cnblogs.com/" class="right_more">»</a></span></h4>
-                    <ul>
-                        <li><a href="https://kb.cnblogs.com/page/654057/" target="_blank">60年前美国军方的这个编程原则，造就了多少伟大的框架</a></li>
-                        <li><a href="https://kb.cnblogs.com/page/653528/" target="_blank">从零开始入门 K8s | 手把手带你理解 etcd</a></li>
-                        <li><a href="https://kb.cnblogs.com/page/627035/" target="_blank">程序员的重复劳动陷阱</a></li>
-                        <li><a href="https://kb.cnblogs.com/page/651942/" target="_blank">K8s GC设计原则</a></li>
-                        <li><a href="https://kb.cnblogs.com/page/651941/" target="_blank">云原生基础及调研</a></li>
-                        <li><a href="https://kb.cnblogs.com/page/651578/" target="_blank">如何阅读技术书籍</a></li>
-                        <li><a href="https://kb.cnblogs.com/page/651271/" target="_blank">【领导力】论理想中的技术团队</a></li>
-                        <li><a href="https://kb.cnblogs.com/page/647666/" target="_blank">什么是云原生</a></li>
+                    <ul id="top_view_list" th:fragment="top_view_list">
+                        <li th:each="blog:${topViewList}"><a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" target="_blank" th:text="${blog.title}">60年前美国军方的这个编程原则，造就了多少伟大的框架</a></li>
                     </ul>
                 </div>
             </div>
@@ -467,6 +444,9 @@
         getTenDaysTopLikeBlog(1);
         getCategoryList(1);
         getEditorRecommendBlog(1);
+        getTopViewList();
+        getTopLikeList();
+        getInfo();
 
         function getTopUserList(currentPage) {
             $.ajax({
@@ -534,6 +514,34 @@
                 },
                 success: function (result) {
                     $("#recommend_list").html(result);
+                }
+            });
+        }
+
+        function getTopViewList() {
+            $.ajax({
+                url: '/blog/getTopViewList.do',
+                type: 'POST',
+                data: {
+                    size: pageSize,
+                    current: 1
+                },
+                success: function (result) {
+                    $("#top_view_list").html(result);
+                }
+            });
+        }
+
+        function getTopLikeList() {
+            $.ajax({
+                url: '/blog/getTopLikeList.do',
+                type: 'POST',
+                data: {
+                    size: pageSize,
+                    current: 1
+                },
+                success: function (result) {
+                    $("#top_like_list").html(result);
                 }
             });
         }
@@ -655,6 +663,29 @@
             },800)
 
         }
+
+        function getInfo(){
+            $.ajax({
+                url: 'getInfo.do',
+                type: 'POST',
+                success: function (result) {
+                    $("#site_stats").html(result);
+                }
+            });
+        }
+
+
+
+        $("#search_btn").click(function () {
+            var searchStr =  $('#w').val();
+            if(!searchStr){
+                layer.msg("请输入内容")
+                return;
+            }
+            else {
+                window.open("/blogEs/goSearchList.do?str="+searchStr,"_self");
+            }
+        })
 
     });
 

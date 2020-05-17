@@ -35,8 +35,11 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
     }
 
     @Override
-    public IPage<BlogCategory> selectAll(Page<BlogCategory> page) {
+    public IPage<BlogCategory> selectAll(Page<BlogCategory> page,String name) {
         QueryWrapper<BlogCategory> queryWrapper = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(name)){
+            queryWrapper.like("name",name);
+        }
         queryWrapper.eq("del_tag", SysCode.DELTAG.WSC);
         return blogCategoryMapper.selectPage(page,queryWrapper);
     }

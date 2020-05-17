@@ -25,4 +25,10 @@ public interface UserService {
 
     User selectByActivityCode(String activityCode);
 
+    int getAllNum();
+
+    void addFollowNum(User user);
+
+    void delFollowNum(User user);
+
 }

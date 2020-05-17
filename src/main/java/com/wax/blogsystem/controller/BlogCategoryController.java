@@ -44,7 +44,7 @@ public class BlogCategoryController {
 
     @PostMapping(value = "/selectAll4Front.do")
     public String selectAll4Front(Page<BlogCategory> page, Model model){
-        IPage<BlogCategory> ipage = blogCategoryService.selectAll(page);
+        IPage<BlogCategory> ipage = blogCategoryService.selectAll(page,null);
         model.addAttribute("categoryList",ipage.getRecords());
         return "/front/home::category_list";
     }
@@ -52,8 +52,8 @@ public class BlogCategoryController {
 
     @GetMapping(value = "/selectAll.do")
     @ResponseBody
-    public String selectAll(Page<BlogCategory> page){
-        IPage<BlogCategory> ipage = blogCategoryService.selectAll(page);
+    public String selectAll(Page<BlogCategory> page,String name){
+        IPage<BlogCategory> ipage = blogCategoryService.selectAll(page,name);
         return JSONUtil.layUITable(ipage.getRecords(),ipage.getTotal());
     }
 

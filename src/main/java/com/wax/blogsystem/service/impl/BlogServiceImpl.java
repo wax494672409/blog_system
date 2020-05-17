@@ -139,11 +139,23 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> getTopViewList(Page<Blog> page) {
+    public List<Blog> getTopViewList(Page<Blog> page,String id) {
         QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(id)){
+            queryWrapper.eq("author",id);
+        }
         queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
         queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
         queryWrapper.orderByDesc("view_num");
+        return blogMapper.selectPage(page,queryWrapper).getRecords();
+    }
+
+    @Override
+    public List<Blog> getTopLikeList(Page<Blog> page) {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("status",SysCode.BLOG_STATUS.RELEASED);
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.orderByDesc("like_num");
         return blogMapper.selectPage(page,queryWrapper).getRecords();
     }
 

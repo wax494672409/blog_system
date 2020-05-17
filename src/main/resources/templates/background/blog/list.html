@@ -62,9 +62,9 @@
                 ,{field: 'authorName', title: '作者', width:150 }
                 ,{field: 'likeNum', title: '点赞数', width:90 }
                 ,{field: 'viewNum', title: '浏览数', width:90 }
-                ,{field: 'releaseTime', title: '发布时间',templet:'<div>{{ layui.util.toDateString(d.createDate, "yyyy-MM-dd HH:mm:ss") }}</div>'
+                ,{field: 'releaseTime', title: '发布时间',templet:'<div>{{ layui.util.toDateString(d.releaseTime, "yyyy-MM-dd HH:mm:ss") }}</div>'
                    , width:200}
-                ,{fixed: 'right',title:'操作', width: 165, align:'center', toolbar: '#barDemo'}
+                ,{fixed: 'right',title:'操作', align:'center', toolbar: '#barDemo'}
             ]]
         });
 

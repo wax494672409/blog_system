@@ -11,10 +11,8 @@
 <body>
 <div id="top">
     <div id="top_left">
-        <a href="//www.cnblogs.com">首页</a>
-        <a href="//news.cnblogs.com/">新闻</a>
-        <a href="//zzk.cnblogs.com/">找找看</a>
-        <a href="//academy.cnblogs.com/">学习计划</a>
+        <a href="/goFrontHomePage.do">首页</a>
+        <a href="/blogEs/goAllSearch.do">找找看</a>
     </div>
 </div>
 <div class="clear"></div>
@@ -61,7 +59,7 @@
                         <em><a href="/blog/goAdd.do" target="_blank">写博</a></em><img src="//common.cnblogs.com/images/ico_blog.gif" alt=""><a id="app_blog" th:href="@{'/user/goPersonalBlog.do?id='+${loginUser.id}}">博客</a>
                     </li>
                     <li>
-                        <img src="//common.cnblogs.com/images/ico_kb.gif" alt=""><a id="app_kb" href="/kb/">我的博客</a>
+                        <img src="//common.cnblogs.com/images/ico_kb.gif" alt=""><a id="app_kb" href="/user/goPersonalMyBlog.do">我的博客</a>
                     </li>
                 </ul>
                 <div class="app_setting">
@@ -77,23 +75,22 @@
                     <ul id="nav_followees_followers">
                         <li>
                             <a th:if="${loginUser.id == user.id}" href="javascript:;" class="my_follow">
-                                我关注的人(20)
+                                我关注的人
                             </a>
                             <a th:if="${loginUser.id != user.id}" href="javascript:;" class="my_follow">
-                                Ta关注的人(20)
+                                Ta关注的人
                             </a>
                         </li>
                         <li>
                             <a th:if="${loginUser.id == user.id}" href="javascript:;" class="be_follow">
-                                我的粉丝(20)
+                                我的粉丝
                             </a>
                             <a th:if="${loginUser.id != user.id}" href="javascript:;" class="be_follow">
-                                Ta的粉丝(20)
+                                Ta的粉丝
                             </a>
                         </li>
                     </ul>
                     <div class="clear"></div>
-                    <a id="a-edit" class="" href="javascript:void(0)" onclick="enterEdit()">编辑</a>
                 </div>
                 <div>
                     <div class="group_list">
@@ -109,7 +106,7 @@
                             <li th:each="follow:${followerList}">
                                 <a th:href="@{'/user/goPersonalPage.do?id='+${follow.follower}}" th:title="${follow.followerName}">
                                     <div class="avatar_pic">
-                                        <img th:src="${follow.followerPicUrl}">
+                                        <img th:src="${follow.followerPicUrl}" onerror="this.src='/img/noHead.jpg'">
                                     </div>
                                     <div class="avatar_name" th:text="${follow.followerName}">
                                         路人甲Java
@@ -152,18 +149,11 @@
 
                 <div class="user_avatar">
                     <a th:href="@{'/user/goPersonalPage.do?id='+${user.id}}" th:title="${user.username}+'的主页'">
-                        <img th:src="${user.picUrl}" class="img_avatar">
+                        <img th:src="${user.picUrl}" class="img_avatar" onerror="this.src='/img/noHead.jpg'">
                     </a>
                 </div>
                 <div class="right_user_info">
                     <a th:href="@{'/user/goPersonalPage.do?id='+${user.id}}" th:text="${user.username}+'的主页'">Violet丶的主页</a><br>
-                    <div class="search_user">
-                        <div class="search_user_title">园友搜索</div>
-                        <div class="search_user_text">
-                            <input id="txt_user_name" class="txt_user_name" onkeydown="return SearchUserEnter(event);">
-                        </div>
-                        <input type="button" id="btn_blue" class="btn_blue" value="搜索" onclick="SearchUser();">
-                    </div>
                     <div class="clear"></div>
                 </div>
 

@@ -66,7 +66,15 @@ public class MsgServiceImpl implements MsgService {
 
     @Override
     public Msg getDetailById(String id) {
-        return msgMapper.selectById(id);
+        Msg msg = msgMapper.selectById(id);
+        read(msg);
+        return msg;
+    }
+
+    @Override
+    public void read(Msg msg) {
+        msg.setIsRead(SysCode.IS_READ.YES);
+        msgMapper.updateById(msg);
     }
 
 

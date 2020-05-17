@@ -85,6 +85,7 @@ public class BlogEsServiceImpl implements BlogEsService {
                     }
                     blogEs.setViewNum((Integer)map.get("viewNum"));
                     blogEs.setReleaseTime(new Date((Long)map.get("releaseTime")));
+                    blogEs.setId((String)map.get("id"));
                     chunk.add(blogEs);
                 }
                 if (chunk.size() > 0) {

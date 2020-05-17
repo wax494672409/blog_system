@@ -88,6 +88,7 @@ public class UserServiceImpl implements UserService {
     public IPage<User> topBlogUserList(Page<User> page) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.eq("role_code","user1");
         queryWrapper.orderByDesc("follow_num");
         return userMapper.selectPage(page,queryWrapper);
     }
@@ -115,4 +116,25 @@ public class UserServiceImpl implements UserService {
         queryWrapper.eq("activity_code",activityCode);
         return userMapper.selectOne(queryWrapper);
     }
+
+    @Override
+    public int getAllNum() {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        return userMapper.selectCount(queryWrapper);
+    }
+
+    @Override
+    public void addFollowNum(User user) {
+        user.setFollowNum(user.getFollowNum()+1);
+        userMapper.updateById(user);
+    }
+
+    @Override
+    public void delFollowNum(User user) {
+        user.setFollowNum(user.getFollowNum()-1);
+        userMapper.updateById(user);
+    }
+
+
 }

@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wax.blogsystem.common.SysCode;
 import com.wax.blogsystem.domain.Follow;
+import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.mapper.FollowMapper;
 import com.wax.blogsystem.service.FollowService;
+import com.wax.blogsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ import java.util.Date;
 public class FollowServiceImpl implements FollowService {
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private FollowMapper followMapper;
 
     @Override
@@ -23,6 +28,8 @@ public class FollowServiceImpl implements FollowService {
         follow.setCreateTime(new Date());
         follow.setDelTag(SysCode.DELTAG.WSC);
         followMapper.insert(follow);
+        User user = userService.selectById(follow.getBeFollower());
+        userService.addFollowNum(user);
     }
 
     @Override
@@ -39,6 +46,8 @@ public class FollowServiceImpl implements FollowService {
         follow = selectByFollowerAndBeFollower(follow.getFollower(),follow.getBeFollower());
         follow.setDelTag(SysCode.DELTAG.YSC);
         followMapper.updateById(follow);
+        User user = userService.selectById(follow.getBeFollower());
+        userService.delFollowNum(user);
     }
 
     @Override
@@ -55,5 +64,21 @@ public class FollowServiceImpl implements FollowService {
         queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
         queryWrapper.eq("be_follower",id);
         return followMapper.selectPage(page,queryWrapper);
+    }
+
+    @Override
+    public int getFollowerNum(String id) {
+        QueryWrapper<Follow> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.eq("be_follower",id);
+        return followMapper.selectCount(queryWrapper);
+    }
+
+    @Override
+    public int getBeFollowerNum(String id) {
+        QueryWrapper<Follow> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        queryWrapper.eq("follower",id);
+        return followMapper.selectCount(queryWrapper);
     }
 }

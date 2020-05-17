@@ -12,4 +12,5 @@ public interface CommentService {
 
     int getTotalNum(String blogId);
 
+    int getAllNum();
 }

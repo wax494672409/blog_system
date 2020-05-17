@@ -52,7 +52,7 @@ public class BlogController {
     @GetMapping(value = "/goAdd.do")
     public String goBlogAdd(String id,Model model) {
         Page<BlogCategory> page = new Page<>(1,10);
-        IPage<BlogCategory> iPage = blogCategoryService.selectAll(page);
+        IPage<BlogCategory> iPage = blogCategoryService.selectAll(page,null);
         User user = (User)SecurityUtils.getSubject().getPrincipal();
         Blog blog = new Blog();
         if(!StringUtils.isEmpty(id)){
@@ -120,10 +120,17 @@ public class BlogController {
 
 
     @PostMapping(value = "getTopViewList.do")
-    public String getTopViewList(Page<Blog> page, Model model){
-        List<Blog> list = blogService.getTopViewList(page);
+    public String getTopViewList(Page<Blog> page, Model model,String id){
+        List<Blog> list = blogService.getTopViewList(page,id);
         model.addAttribute("topViewList",list);
-        return "blog/blog_one::top_view_list";
+        return "front/home::top_view_list";
+    }
+
+    @PostMapping(value = "getTopLikeList.do")
+    public String getTopViewList(Page<Blog> page, Model model){
+        List<Blog> list = blogService.getTopLikeList(page);
+        model.addAttribute("topLikeList",list);
+        return "front/home::top_like_list";
     }
 
     @PostMapping(value = "/getAllBlogList.do")

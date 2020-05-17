@@ -17,4 +17,6 @@ public interface MsgService {
 
     Msg getDetailById(String id);
 
+    void read(Msg msg);
+
 }

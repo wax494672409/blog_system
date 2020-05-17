@@ -19,7 +19,7 @@
     <div id="header">
         <div id="logo">
             <a href="//www.cnblogs.com" title="返回博客园首页">
-                <img src="//common.cnblogs.com/images/logo/logo20170227.png" alt="logo" style="width:165px;height:55px;">
+                <img src="/img/logo.png" alt="logo" style="width:165px;height:55px;">
             </a>
         </div>
         <div id="nav_block">
@@ -37,11 +37,10 @@
             欢迎你，Violet丶
         </h1>
             <div id="header_user_right">
-                <a href="/u/bootyWind/"><img class="pfs" th:src="${loginUser.picUrl}" alt=""></a>
+                <a href="/u/bootyWind/"><img class="pfs" th:src="${loginUser.picUrl}" alt="" onerror="this.src='/img/noHead.jpg'"></a>
                 <a th:href="@{'/user/goPersonalPage.do?id='+${loginUser.id}}" th:text="${loginUser.username}">Violet丶</a>
                 · <a th:href="@{'/blog/goBlogListPage.do?id='+${loginUser.id}}">我的博客</a>
-                · <a href="//home.cnblogs.com/set/account/">设置</a>
-                · <a href="javascript:void(0);">退出</a>
+                · <a href="/logout.do">退出</a>
             </div>
         </div>
         <div class="clear"></div>
@@ -77,14 +76,13 @@
                         <tr>
                             <td valign="top">
                                 <div class="user_avatar">
-                                    <img th:src="${user.picUrl}" alt="Violet丶的头像" class="img_avatar"><br>
+                                    <img th:src="${user.picUrl}" alt="Violet丶的头像" class="img_avatar" onerror="this.src='/img/noHead.jpg'"><br>
                                     <table class="user_profile_nav_block">
                                         <tbody>
                                         <tr>
                                             <td>
                                                 <ul th:if="${loginUser.id} eq ${user.id}" class="avatar_nav_block" id="avatar_opt_nav">
                                                     <li><a th:href="@{'/user/goHeadPicPage.do?id='+${loginUser.id}}" class="link_modify_info">修改头像</a></li>
-                                                    <li><a href="/u/bootyWind/detail/" class="link_account">个人资料</a></li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -104,14 +102,14 @@
                                         </ul>
                                     </div>
                                     <div class="text_gray" style="padding-top: 10px;">
-                                        <div class="data_count_block" style="padding: 0px 0 15px;">
+                                        <div class="data_count_block" id="num_info" th:fragment="num_info" style="padding: 0px 0 15px;">
                                             <div class="data_left">
-                                                <div class="follow_count"><a id="following_count" href="/u/bootyWind/followees/">20</a></div>
-                                                <a href="/u/bootyWind/followees/">关注</a>
+                                                <div class="follow_count"><a id="following_count" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=follow'}" th:text="${beFollowerNum}">20</a></div>
+                                                <a th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=follow'}">关注</a>
                                             </div>
                                             <div class="data_right">
-                                                <div class="follow_count"><a id="follower_count" href="/u/bootyWind/followers/">0</a></div>
-                                                <a href="/u/bootyWind/followers/">粉丝</a>
+                                                <div class="follow_count"><a id="follower_count" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=beFollow'}" th:text="${followerNum}">0</a></div>
+                                                <a th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=beFollow'}">粉丝</a>
                                             </div>
                                             <div class="clear">
                                             </div>
@@ -135,9 +133,9 @@
                 </div>
                 <div class="topic_nav_block_wrapper">
                     <ul class="mini_nav_block">
-                        <li><a href="javascript:void(0)" data-apptype="question">博问</a></li>
-                        <li><a href="javascript:void(0)" data-apptype="blog">博客</a></li>
-                        <li><a href="javascript:void(0)" data-apptype="all" class="current_nav">全部</a></li>
+<!--                        <li><a href="javascript:void(0)" data-apptype="question">博问</a></li>-->
+<!--                        <li><a href="javascript:void(0)" data-apptype="blog">博客</a></li>-->
+<!--                        <li><a href="javascript:void(0)" data-apptype="all" class="current_nav">全部</a></li>-->
                     </ul>
                     <span class="title_block">最新动态</span>
                     <div class="clear">
@@ -149,7 +147,7 @@
                         <ul id="activity_list" th:fragment="activity_list">
                             <li class="feed_item" th:each="activity:${activityList}">
                                 <div class="feed_avatar">
-                                    <a href="/u/bootyWind"><img th:src="''+${user.picUrl}"></a>
+                                    <a href="/u/bootyWind"><img th:src="''+${user.picUrl}" onerror="this.src='/img/noHead.jpg'"></a>
                                 </div>
                                 <div class="feed_body" id="feed_content_5d2ecbbb63abf8af028461bd">
                                     <div class="feed_title">
@@ -178,14 +176,14 @@
 
                 <div id="relation" data-alias="bootyWind"><div class="avatar_list">
                     <h3 th:switch="${loginUser.id == user.id}">
-                        <a th:case="true" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=follow'}">我关注的人(20)</a>
-                        <a th:case="false" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=follow'}">Ta关注的人(20)</a>
+                        <a th:case="true" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=follow'}">我关注的人</a>
+                        <a th:case="false" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=follow'}">Ta关注的人</a>
                     </h3>
                     <ul id="be_follower_list_side" th:fragment="be_follower_list_side">
                         <li th:each="beFollower:${beFollowerSideList}">
                             <a th:href="@{'/user/goPersonalPage.do?id='+${beFollower.beFollower}}" th:title="${beFollower.beFollowerName}">
                                 <div class="avatar_pic">
-                                    <img th:src="${beFollower.beFollowerPicUrl}">
+                                    <img th:src="${beFollower.beFollowerPicUrl}" onerror="this.src='/img/noHead.jpg'">
                                 </div>
                                 <div class="avatar_name" th:text="${beFollower.beFollowerName}">
                                     路人甲Java
@@ -195,14 +193,14 @@
                     </ul>
                     <div class="clear"></div>
                     <h3 th:switch="${loginUser.id == user.id}">
-                        <a th:case="true" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=beFollow'}">我的粉丝(0)</a>
-                        <a th:case="false" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=beFollow'}">Ta的粉丝(0)</a>
+                        <a th:case="true" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=beFollow'}">我的粉丝</a>
+                        <a th:case="false" th:href="@{'/user/goPersonalFollow.do?id='+${user.id}+'&follow=beFollow'}">Ta的粉丝</a>
                     </h3>
                     <ul id="follower_list_side" th:fragment="follower_list_side">
                         <li th:each="follower:${followerSideList}">
                             <a th:href="@{'/user/goPersonalPage.do?id='+${follower.follower}}" th:title="${follower.followerName}">
                                 <div class="avatar_pic">
-                                    <img th:src="${follower.followerPicUrl}">
+                                    <img th:src="${follower.followerPicUrl}" onerror="this.src='/img/noHead.jpg'">
                                 </div>
                                 <div class="avatar_name" th:text="${follower.followerName}">
                                     路人甲Java
@@ -246,6 +244,7 @@
         getBeFollowerList4Side();
         getFollowerList4Side();
         renderFollowerBtn();
+        getNum();
 
         function getActivityList() {
             $.ajax({
@@ -347,6 +346,19 @@
             getFollowerList4Side();
             getBeFollowerList4Side();
         });
+
+        function getNum() {
+            $.ajax({
+                url: '/follow/getNum.do',
+                type: 'POST',
+                data: {
+                    id: [[${user.id}]]
+                },
+                success: function (result) {
+                    $("#num_info").html(result);
+                }
+            });
+        }
 
     })
 </script>

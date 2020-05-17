@@ -15,20 +15,9 @@
     <legend>用户信息一览</legend>
 </fieldset>
 <div class="demoTable">
-    用户名：
+    栏目名：
     <div class="layui-inline">
-        <input class="layui-input" name="id" id="s_username" autocomplete="off">
-    </div>
-    姓名：
-    <div class="layui-inline">
-        <input class="layui-input" name="id" id="s_name" autocomplete="off">
-    </div>
-    角色：
-    <div class="layui-form layui-inline">
-        <select name="roleId" id="s_roleCode">
-            <option value="">请选择一个角色</option>
-            <option th:each="role:${roleList}" th:text="${role.name}" th:value="${role.code}"></option>
-        </select><div class="layui-unselect layui-form-select"><div class="layui-select-title"><input type="text" placeholder="请选择一个角色" value="" readonly="" class="layui-input layui-unselect"><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit" style=""><dd lay-value="" class="layui-select-tips layui-this">请选择一个角色</dd><dd lay-value="010" class="">北京</dd><dd lay-value="021" class="">上海</dd><dd lay-value="0571" class="">杭州</dd></dl></div>
+        <input class="layui-input" name="id" id="c_name" autocomplete="off">
     </div>
     <button class="layui-btn" data-type="reload" id="searchBtn">搜索</button>
 </div>
@@ -63,7 +52,8 @@
                 {type: 'checkbox', fixed: 'left'}
                 ,{field: 'id', title: 'ID',  sort: true, fixed: 'left'}
                 ,{field: 'name', title: '栏目名' }
-                ,{field: 'createTime', title: '创建时间'}
+                ,{field: 'createTime', title: '创建时间',templet:'<div>{{ layui.util.toDateString(d.createDate, "yyyy-MM-dd HH:mm:ss") }}</div>'
+                    }
             ]]
         });
 
@@ -162,19 +152,13 @@
         });
 
         function queryTable(){
-            var username  = $('#s_username').val();
-            var name = $('#s_name').val();
-            var roleCode = $('#s_roleCode').val();
-            var user = {};
-            user.username = username;
-            user.name = name;
-            user.roleCode = roleCode;
+            var name  = $('#c_name').val();
             //执行重载
             table.reload('demo', {
                 page: {
                     curr: 1 //重新从第 1 页开始
                 }
-                ,where: user
+                ,where: {name:name}
             }, 'data');
         }
 

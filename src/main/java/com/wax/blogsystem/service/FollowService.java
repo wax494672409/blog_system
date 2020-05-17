@@ -15,9 +15,12 @@ public interface FollowService {
 
     void cancelFollow(Follow follow);
 
-
     IPage<Follow> getBeFollowerList4Side(Page<Follow> page,String id);
 
     IPage<Follow> getFollowerList4Side(Page<Follow> page,String id);
+
+    int getFollowerNum(String id);
+
+    int getBeFollowerNum(String id);
 
 }

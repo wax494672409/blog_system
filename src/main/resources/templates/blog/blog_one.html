@@ -29,7 +29,7 @@
                 <li id="nav_sitehome">
                 </li>
                 <li id="nav_myhome">
-                    <a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/zxcoder/">
+                    <a id="blog_nav_myhome" class="menu" href="/goFrontHomePage.do">
                         首页</a>
                 </li>
                 <li id="nav_newpost">
@@ -117,6 +117,7 @@
                             <div class="feedback_area_title">评论列表</div>
                             <div class="feedbackNoItems"></div>
                             <div class="commentList" th:fragment="comment_list">
+                                <span id="commentTotalNum" style="display: none" th:text="${commentTotalNum}"></span>
                                 <div class="feedbackItem" th:each="comment,commentStat:${comments}">
                                     <div class="feedbackListSubtitle">
                                         <div class="feedbackManage">
@@ -341,19 +342,36 @@
         var layer = layui.layer
 
         var pageSize = 10;
-        //执行一个laypage实例
-        laypage.render({
-            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
-            ,count: [[${commentTotalNum}]] //数据总数，从服务端得到
-            ,limit: pageSize
-            ,jump : function(obj, first){
-                getCommentList(obj.curr);
-            }
-        });
+
+        var commentTotalNum = [[${commentTotalNum}]]
+
+
+        function renderPage(){
+            getCommentList(1);
+            setTimeout(function () {
+                commentTotalNum = Number($("#commentTotalNum").text());
+                if (commentTotalNum) {
+                    //执行一个laypage实例
+                    laypage.render({
+                        elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                        , count: commentTotalNum //数据总数，从服务端得到
+                        , limit: pageSize
+                        , jump: function (obj, first) {
+                            getCommentList(obj.curr);
+                        }
+                    });
+                } else {
+                    $("#test1").html("<h3>无评论</h3>")
+                }
+            },300)
+        }
+
 
         getTopViewList();
         addViewNum();
         renderLikeFollowFavoriteBar();
+        renderPage();
+
 
         var E = window.wangEditor
         var editor = new E('#commentBox')
@@ -383,7 +401,7 @@
                 dataType: "json",
                 success: function (result) {
                     alert(result.msg);
-                    getCommentList(1);
+                    renderPage();
                 }
             });
         });
@@ -409,7 +427,8 @@
                 type: 'POST',
                 data: {
                     size: pageSize,
-                    current: 1
+                    current: 1,
+                    id:[[${blog.author}]]
                 },
                 success: function (result) {
                     $("#top_view_list").html(result);

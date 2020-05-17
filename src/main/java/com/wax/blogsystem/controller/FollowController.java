@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wax.blogsystem.common.JSONUtil;
 import com.wax.blogsystem.domain.Follow;
+import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.service.FollowService;
+import com.wax.blogsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,9 @@ public class FollowController {
 
     @Autowired
     private FollowService followService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/follow.do")
     @ResponseBody
@@ -65,6 +70,17 @@ public class FollowController {
         model.addAttribute("followerList",iPage.getRecords());
         model.addAttribute("followerTotalNum",iPage.getTotal());
         return "/personal/follower::follower_list";
+    }
+
+    @PostMapping("/getNum.do")
+    public String getNum(String id,Model model){
+        int followerNum = followService.getFollowerNum(id);
+        int beFollowerNum = followService.getBeFollowerNum(id);
+        User user = userService.selectById(id);
+        model.addAttribute("followerNum",followerNum);
+        model.addAttribute("beFollowerNum",beFollowerNum);
+        model.addAttribute("user",user);
+        return "/user/personal::num_info";
     }
 
 }

@@ -9,7 +9,7 @@ public interface BlogCategoryService {
 
     void saveOrUpdate(BlogCategory blogCategory);
 
-    IPage<BlogCategory> selectAll(Page<BlogCategory> page);
+    IPage<BlogCategory> selectAll(Page<BlogCategory> page,String name);
 
     BlogCategory selectById(String id);
 }

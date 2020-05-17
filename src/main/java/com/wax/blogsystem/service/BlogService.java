@@ -29,7 +29,9 @@ public interface BlogService {
 
     void subtractLikeNum(Blog blog);
 
-    List<Blog> getTopViewList(Page<Blog> page);
+    List<Blog> getTopViewList(Page<Blog> page,String id);
+
+    List<Blog> getTopLikeList(Page<Blog> page);
 
     int getAllNum();
 

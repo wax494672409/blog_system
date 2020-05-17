@@ -38,7 +38,9 @@
     <a id="logo" href="/"><img style="        width: 100%" alt="找找看logo" src="/upload/logo/logo.gif"></a>
     <div class="index_sozone">
         <div class="index_tab">
-            <a class="" href="/s/news?Keywords=asdf">新闻</a><a class="tab_selected " href="/s/blogpost?Keywords=asdf">博客</a><a class="" href="/s/question?Keywords=asdf">博问</a><a class="" href="/s/kb?Keywords=asdf">知识库</a><a class="" href="/s/ing?Keywords=asdf">闪存</a><a href="/my/s/blogpost?Keywords=asdf">个人搜</a></div>
+<!--            <a class="" href="/s/news?Keywords=asdf">新闻</a><a class="tab_selected " href="/s/blogpost?Keywords=asdf">博客</a><a class="" href="/s/question?Keywords=asdf">博问</a><a class="" href="/s/kb?Keywords=asdf">知识库</a><a class="" href="/s/ing?Keywords=asdf">闪存</a><a href="/my/s/blogpost?Keywords=asdf">个人搜</a>-->
+        <br>
+        </div>
         <form>
             <input class="input_index" id="w" name="Keywords" type="search" th:value="${searchStr}">
             <input type="button" id="search_btn" class="btn_so_index" value="找一下" />
@@ -71,7 +73,7 @@
                     </span>
                     <span class="searchItemInfo-publishDate" th:text="${#dates.format(blog.releaseTime, 'yyyy-MM-dd hh:mm:ss')}">2019-05-07</span>
                     <span class="searchItemInfo-views" th:text="'浏览('+${blog.viewNum}+')'">浏览(79)</span>
-                    <span class="searchItemInfo-related"><a href="https://recomm.cnblogs.com/blogpost/10826641" target="view_window">相关博文</a></span>
+<!--                    <span class="searchItemInfo-related"><a href="https://recomm.cnblogs.com/blogpost/10826641" target="view_window">相关博文</a></span>-->
                 </div>
                 <div class="searchItemInfo">
                     <span class="searchURL"><a th:href="@{'/blog/goBlogOnePage.do?id='+${blog.id}}" target="_blank" th:text="'http://www.blogsystem.com/'+${blog.releaseTime}">linuxws</a></span>
@@ -170,6 +172,7 @@
         function renderPage(){
             getSearchList(0)
             setTimeout(function () {
+                debugger
                 var totalNum = Number($("#searchTotalNum").text());
                 $("#CountOfResults").text(totalNum)
                 if(totalNum==0){
@@ -188,7 +191,7 @@
                         }
                     }
                 });
-            },200)
+            },400)
         }
 
         $("#search_btn").click(function () {

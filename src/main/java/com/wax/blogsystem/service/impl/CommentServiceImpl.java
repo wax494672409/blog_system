@@ -66,5 +66,12 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.selectCount(queryWrapper);
     }
 
+    @Override
+    public int getAllNum() {
+        QueryWrapper<Comment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
+        return commentMapper.selectCount(queryWrapper);
+    }
+
 
 }
