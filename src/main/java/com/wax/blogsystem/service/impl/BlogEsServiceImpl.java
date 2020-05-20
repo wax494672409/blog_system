@@ -59,10 +59,6 @@ public class BlogEsServiceImpl implements BlogEsService {
                 ).
                 build();
         searchQuery.setPageable(pageable);
-        //return blogRepository.search(searchQuery);
-        // 不需要高亮直接return ideas
-         //AggregatedPage<BlogEs> ideas = elasticsearchTemplate.queryForPage(searchQuery, BlogEs.class);
-
         // 高亮字段
         AggregatedPage<BlogEs> ideas = elasticsearchTemplate.queryForPage(searchQuery, BlogEs.class, new SearchResultMapper() {
             @Override
