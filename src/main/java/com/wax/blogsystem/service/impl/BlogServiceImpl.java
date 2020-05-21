@@ -55,7 +55,9 @@ public class BlogServiceImpl implements BlogService {
                 blog.setReleaseTime(new Date());
             }
             blogMapper.insert(blog);
-            activityService.addActivity(addActivity(blog));
+            if(blog.getStatus().equals(SysCode.BLOG_STATUS.RELEASED)){
+                activityService.addActivity(addActivity(blog));
+            }
             BlogEs blogEs = new BlogEs();
             BeanUtils.copyProperties(blog,blogEs);
             blogEsService.addBlogEs(blogEs);

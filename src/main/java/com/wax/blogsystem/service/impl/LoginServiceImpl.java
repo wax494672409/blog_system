@@ -7,6 +7,7 @@ import com.wax.blogsystem.common.SysCode;
 import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.mapper.UserMapper;
 import com.wax.blogsystem.service.LoginService;
+import com.wax.blogsystem.service.MsgService;
 import com.wax.blogsystem.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -23,6 +24,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private MsgService msgService;
 
     @Autowired
     UserMapper userMapper;
@@ -94,6 +98,7 @@ public class LoginServiceImpl implements LoginService {
             //把code验证码清空，已经不需要了
             user.setActivityCode("");
             userMapper.updateById(user);
+            msgService.addMsgWhenRegister(user);
             return true;
         }
         return false;

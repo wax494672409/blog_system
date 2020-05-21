@@ -54,7 +54,7 @@ public class CommentServiceImpl implements CommentService {
         QueryWrapper<Comment> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("blog_id",blogId);
         queryWrapper.eq("del_tag",SysCode.DELTAG.WSC);
-        queryWrapper.orderByDesc("create_time");
+        queryWrapper.orderByAsc("create_time");
         return commentMapper.selectPage(page,queryWrapper);
     }
 

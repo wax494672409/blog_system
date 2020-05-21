@@ -58,9 +58,10 @@ public class BlogCategoryController {
     }
 
     @PostMapping(value = "/saveOrUpdate.do")
+    @ResponseBody
     public String saveOrUpdate(BlogCategory blogCategory){
         blogCategoryService.saveOrUpdate(blogCategory);
-        return JSONUtil.success("添加成功");
+        return JSONUtil.success("更新成功");
     }
 
 

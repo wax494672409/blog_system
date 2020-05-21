@@ -5,6 +5,7 @@ import com.wax.blogsystem.common.JSONUtil;
 import com.wax.blogsystem.common.SysCode;
 import com.wax.blogsystem.domain.User;
 import com.wax.blogsystem.service.LoginService;
+import com.wax.blogsystem.service.MsgService;
 import com.wax.blogsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
+
 
     @RequestMapping(value = "/goLoginPage.do")
     public String goLoginPage(){

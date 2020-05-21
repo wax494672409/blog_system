@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class MsgServiceImpl implements MsgService {
@@ -75,6 +76,25 @@ public class MsgServiceImpl implements MsgService {
     public void read(Msg msg) {
         msg.setIsRead(SysCode.IS_READ.YES);
         msgMapper.updateById(msg);
+    }
+
+    @Override
+    public void addMsgWhenRegister(User user) {
+        Msg msg = new Msg();
+        msg.setIsRead(SysCode.IS_READ.NO);
+        msg.setDelTagRe(SysCode.DELTAG.WSC);
+        msg.setCreateTime(new Date());
+        msg.setDelTagSe(SysCode.DELTAG.WSC);
+        msg.setSenderName("系统");
+        msg.setContent("<p>恭喜你成为i博客的一员！</p>");
+        String id = UUID.randomUUID().toString();
+        msg.setId(id);
+        msg.setReceiverName(user.getUsername());
+        msg.setReceiver(user.getId());
+        msg.setTitle("关于新成员的通知");
+        msg.setSender("e15fc129f3dfef9cf265fabf38cf2cc3");
+        msg.setType("通知");
+        msgMapper.insert(msg);
     }
 
 

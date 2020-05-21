@@ -19,4 +19,6 @@ public interface MsgService {
 
     void read(Msg msg);
 
+    void addMsgWhenRegister(User user);
+
 }
